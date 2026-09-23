@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>داشبورد مدیریت تیپاکس</title>
+<style>
+:root{
+  --bg:#f5f8f6;
+  --surface:rgba(255,255,255,.78);
+  --surface-strong:#fff;
+  --text:#18211d;
+  --muted:#7c8781;
+  --line:rgba(27,55,42,.09);
+  --green:#18b86a;
+  --green-2:#0b8f50;
+  --green-soft:#eafaf1;
+  --shadow:0 24px 70px rgba(31,66,48,.10);
+  --shadow-soft:0 12px 35px rgba(31,66,48,.07);
+  --danger:#ef6b73;
+  --warning:#f0ad45;
+  --blue:#6688ff;
+}
+body.dark{
+  --bg:#0d1511;
+  --surface:rgba(21,31,26,.78);
+  --surface-strong:#17221c;
+  --text:#edf7f0;
+  --muted:#9ba9a1;
+  --line:rgba(255,255,255,.08);
+  --green-soft:rgba(24,184,106,.13);
+  --shadow:0 24px 70px rgba(0,0,0,.30);
+  --shadow-soft:0 12px 35px rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Tahoma,"Segoe UI",Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 8% 5%,rgba(24,184,106,.10),transparent 26%),
+    radial-gradient(circle at 95% 18%,rgba(24,184,106,.07),transparent 24%),
+    var(--bg);
+  transition:.3s ease;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:25px 18px;
+  background:rgba(255,255,255,.60);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-left:1px solid var(--line);
+  z-index:20;
+}
+.dark .sidebar{background:rgba(14,23,18,.72)}
+.brand{display:flex;align-items:center;gap:11px;padding:5px 8px 30px}
+.brand-mark{
+  width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#25c979,#078a4d);
+  box-shadow:0 10px 25px rgba(24,184,106,.28);
+  color:#fff;font-weight:900;font-size:20px;
+}
+.brand-text strong{display:block;font-size:17px}
+.brand-text span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.nav-title{font-size:10px;color:var(--muted);padding:8px 13px 10px}
+.nav{display:flex;flex-direction:column;gap:7px}
+.nav a{
+  position:relative;display:flex;align-items:center;gap:12px;padding:12px 13px;
+  border-radius:15px;color:var(--muted);font-size:13px;transition:.25s ease;
+}
+.nav a:hover{background:var(--green-soft);color:var(--green-2);transform:translateX(-3px)}
+.nav a.active{
+  background:linear-gradient(90deg,var(--green-soft),rgba(255,255,255,.25));
+  color:var(--green-2);font-weight:700;
+}
+.nav a.active:before{content:"";position:absolute;right:-18px;width:4px;height:25px;border-radius:8px;background:var(--green)}
+.nav-icon{
+  width:30px;height:30px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(255,255,255,.58);border:1px solid var(--line);font-size:15px;
+}
+.dark .nav-icon{background:rgba(255,255,255,.05)}
+.sidebar-bottom{position:absolute;bottom:20px;left:18px;right:18px}
+.status{
+  padding:14px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);box-shadow:var(--shadow-soft);font-size:11px;
+}
+.status-row{display:flex;align-items:center;justify-content:space-between}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.10)}
+.content{min-width:0;padding:20px 25px 50px}
+.topbar{
+  height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+  margin-bottom:18px;padding:8px 11px 8px 8px;border:1px solid var(--line);
+  background:var(--surface);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-radius:23px;box-shadow:var(--shadow-soft);
+}
+.top-left{display:flex;align-items:center;gap:12px;min-width:0}
+.mobile-menu{display:none}
+.page-title h1{font-size:18px;margin:0 0 3px}
+.page-title p{font-size:10px;color:var(--muted);margin:0}
+.top-actions{display:flex;align-items:center;gap:8px}
+.search{
+  width:220px;height:40px;border-radius:13px;border:1px solid var(--line);
+  background:rgba(255,255,255,.55);display:flex;align-items:center;padding:0 12px;gap:8px;
+}
+.dark .search{background:rgba(255,255,255,.04)}
+.search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);font-size:11px}
+.icon-btn{
+  width:40px;height:40px;border:1px solid var(--line);border-radius:13px;
+  background:var(--surface-strong);color:var(--text);display:grid;place-items:center;
+  transition:.2s;box-shadow:0 5px 15px rgba(0,0,0,.03)
+}
+.icon-btn:hover{transform:translateY(-2px);border-color:rgba(24,184,106,.35)}
+.profile{display:flex;align-items:center;gap:9px;padding:4px 7px}
+.avatar{
+  width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d8f7e5,#a9e8c4);
+  display:grid;place-items:center;color:#087f46;font-weight:800
+}
+.profile small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.dashboard-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:8px 3px 20px
+}
+.dashboard-head h2{margin:0;font-size:26px;letter-spacing:-.7px}
+.dashboard-head p{margin:7px 0 0;color:var(--muted);font-size:11px}
+.filters{display:flex;gap:8px}
+.select{
+  border:1px solid var(--line);background:var(--surface);color:var(--text);
+  padding:10px 13px;border-radius:13px;font-size:11px;outline:none
+}
+.hero-grid{display:grid;grid-template-columns:1.45fr .72fr;gap:16px;margin-bottom:16px}
+.hero{
+  min-height:220px;position:relative;overflow:hidden;border-radius:27px;padding:27px;
+  color:#fff;background:
+    radial-gradient(circle at 80% 15%,rgba(255,255,255,.22),transparent 28%),
+    radial-gradient(circle at 10% 100%,rgba(255,255,255,.13),transparent 30%),
+    linear-gradient(135deg,#0e9d58,#20c875 58%,#80e4ae);
+  box-shadow:0 25px 60px rgba(24,184,106,.22);
+}
+.hero:after{
+  content:"";position:absolute;width:250px;height:250px;border:1px solid rgba(255,255,255,.20);
+  border-radius:50%;left:-70px;bottom:-130px;box-shadow:0 0 0 35px rgba(255,255,255,.04),0 0 0 70px rgba(255,255,255,.025)
+}
+.hero h3{font-size:27px;margin:0 0 9px;position:relative;z-index:2}
+.hero p{font-size:11px;line-height:2;max-width:500px;opacity:.90;position:relative;z-index:2}
+.hero-actions{display:flex;gap:8px;margin-top:22px;position:relative;z-index:2}
+.btn{
+  border:0;border-radius:13px;padding:11px 15px;font-size:11px;font-weight:700;transition:.2s
+}
+.btn-light{background:#fff;color:#09864b}
+.btn-ghost{background:rgba(255,255,255,.13);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.btn:hover{transform:translateY(-2px)}
+.floating-stat{
+  position:absolute;right:38px;top:38px;width:150px;padding:15px;border-radius:19px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.27);
+  backdrop-filter:blur(16px);box-shadow:0 20px 45px rgba(0,0,0,.09);z-index:2
+}
+.floating-stat strong{font-size:28px;display:block;margin-top:5px}
+.floating-stat span{font-size:9px;opacity:.8}
+.mini-panel{
+  min-height:220px;padding:21px;border:1px solid var(--line);background:var(--surface);
+  border-radius:27px;box-shadow:var(--shadow-soft);backdrop-filter:blur(24px)
+}
+.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.panel-title h3{font-size:13px;margin:0}
+.panel-title span{font-size:9px;color:var(--muted)}
+.progress-wrap{display:flex;align-items:center;gap:17px}
+.ring{
+  width:106px;height:106px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--green) 0 78%,#e7eee9 78% 100%);position:relative;flex:none
+}
+.dark .ring{background:conic-gradient(var(--green) 0 78%,#26332c 78% 100%)}
+.ring:after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--surface-strong)}
+.ring b{position:relative;z-index:1;font-size:21px}
+.progress-info{flex:1}.progress-info strong{font-size:12px}.progress-info p{font-size:9px;color:var(--muted);line-height:1.9}
+.legend{display:flex;gap:8px;flex-wrap:wrap}.legend span{font-size:9px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.legend i{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}
+.kpi{
+  position:relative;padding:18px;border:1px solid var(--line);background:var(--surface);
+  border-radius:21px;box-shadow:var(--shadow-soft);overflow:hidden;transition:.25s
+}
+.kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:10px}
+.kpi-icon{width:33px;height:33px;border-radius:11px;background:var(--green-soft);display:grid;place-items:center;color:var(--green-2)}
+.kpi strong{display:block;font-size:25px;margin:14px 0 6px}
+.kpi small{font-size:9px;color:var(--muted)}
+.trend{font-size:9px;color:var(--green-2);font-weight:700}
+.kpi-line{height:3px;border-radius:4px;background:linear-gradient(90deg,var(--green),transparent);margin-top:16px}
+.main-grid{display:grid;grid-template-columns:1.35fr .75fr;gap:16px;margin-bottom:16px}
+.panel{
+  border:1px solid var(--line);background:var(--surface);border-radius:25px;
+  box-shadow:var(--shadow-soft);padding:21px;backdrop-filter:blur(20px)
+}
+.chart-box{height:245px;position:relative}
+.chart-svg{width:100%;height:100%;overflow:visible}
+.chart-grid{stroke:var(--line);stroke-width:1}
+.chart-label{fill:var(--muted);font-size:9px}
+.chart-fill{fill:url(#areaFill)}
+.chart-line{fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart-dot{fill:var(--surface-strong);stroke:var(--green);stroke-width:2.5}
+.delivery-list{display:flex;flex-direction:column;gap:9px}
+.delivery{
+  display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;
+  padding:10px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.35)
+}
+.dark .delivery{background:rgba(255,255,255,.025)}
+.delivery-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--green-soft)}
+.delivery h4{font-size:10px;margin:0 0 4px}.delivery p{font-size:8px;color:var(--muted);margin:0}
+.badge{font-size:8px;padding:5px 8px;border-radius:9px;background:var(--green-soft);color:var(--green-2)}
+.bottom-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:580px}
+th,td{text-align:right;padding:11px 8px;border-bottom:1px solid var(--line);font-size:9px;white-space:nowrap}
+th{color:var(--muted);font-weight:500}
+td{font-weight:600}
+.status-pill{display:inline-flex;padding:5px 8px;border-radius:8px;font-size:8px}
+.status-delivered{background:var(--green-soft);color:var(--green-2)}
+.status-return{background:rgba(239,107,115,.11);color:#d4545c}
+.status-wait{background:rgba(240,173,69,.13);color:#b87918}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.quick{
+  border:1px solid var(--line);background:rgba(255,255,255,.35);border-radius:16px;
+  padding:14px;display:flex;align-items:center;gap:10px;transition:.2s
+}
+.dark .quick{background:rgba(255,255,255,.025)}
+.quick:hover{transform:translateY(-3px);border-color:rgba(24,184,106,.30)}
+.quick b{font-size:10px}.quick small{display:block;font-size:8px;color:var(--muted);margin-top:3px}
+.quick-icon{width:36px;height:36px;border-radius:12px;background:var(--green-soft);display:grid;place-items:center}
+.fab{
+  position:fixed;left:25px;bottom:25px;width:54px;height:54px;border-radius:18px;
+  border:1px solid rgba(24,184,106,.22);background:var(--surface);
+  backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);
+  color:var(--green-2);z-index:50;display:grid;place-items:center;transition:.25s
+}
+.fab:hover{transform:translateY(-5px) rotate(-8deg)}
+.fab .cross{position:absolute;width:20px;height:20px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}
+.fab .arrow{font-size:19px;font-weight:900;position:relative;z-index:2}
+@keyframes spin{to{transform:rotate(405deg)}}
+.mobile-overlay{display:none}
+@media(max-width:1100px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-grid,.main-grid,.bottom-grid{grid-template-columns:1fr}
+  .floating-stat{right:auto;left:30px}
+}
+@media(max-width:820px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.15)}
+  body.menu-open .sidebar{transform:translateX(0)}
+  .mobile-overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:15}
+  body.menu-open .mobile-overlay{display:block}
+  .mobile-menu{display:grid}
+  .content{padding:12px 12px 35px}
+  .search{display:none}
+  .profile div:not(.avatar){display:none}
+  .dashboard-head{align-items:flex-start;flex-direction:column}
+  .floating-stat{display:none}
+}
+@media(max-width:560px){
+  .topbar{height:62px;border-radius:18px}
+  .page-title h1{font-size:15px}
+  .dashboard-head h2{font-size:21px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .kpi{padding:13px;border-radius:17px}
+  .kpi strong{font-size:20px}
+  .hero{padding:21px;min-height:205px;border-radius:22px}
+  .hero h3{font-size:22px}
+  .panel,.mini-panel{border-radius:20px;padding:16px}
+  .fab{left:14px;bottom:14px}
+}
+</style>
+</head>
+<body>
+<div class="mobile-overlay" onclick="toggleMenu()"></div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">ت</div>
+      <div class="brand-text">
+        <strong>مدیریت تیپاکس</strong>
+        <span>سامانه گزارش و مدیریت شعبه</span>
+      </div>
+    </div>
+
+    <div class="nav-title">مدیریت اصلی</div>
+    <nav class="nav">
+      <a class="active" href="dashboard.html"><span class="nav-icon">⌂</span>داشبورد</a>
+      <a href="shipments.html"><span class="nav-icon">▣</span>مرسولات</a>
+      <a href="form.html"><span class="nav-icon">＋</span>ثبت اطلاعات</a>
+      <a href="reports.html"><span class="nav-icon">▤</span>گزارش‌ها</a>
+      <a href="#couriers"><span class="nav-icon">♧</span>پخش‌کننده‌ها</a>
+      <a href="#warehouse"><span class="nav-icon">▦</span>انبار</a>
+    </nav>
+
+    <div class="nav-title" style="margin-top:14px">سیستم و اتصال</div>
+    <nav class="nav">
+      <a href="#import"><span class="nav-icon">⇩</span>ورود از Excel</a>
+      <a href="#api"><span class="nav-icon">⌁</span>اتصال API</a>
+      <a href="#settings"><span class="nav-icon">⚙</span>تنظیمات</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="status">
+        <div class="status-row"><span>وضعیت سامانه</span><span class="dot"></span></div>
+        <div style="color:var(--muted);font-size:9px;margin-top:8px">آماده دریافت و پردازش اطلاعات</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content" id="top">
+    <header class="topbar">
+      <div class="top-left">
+        <button class="icon-btn mobile-menu" onclick="toggleMenu()" aria-label="منو">☰</button>
+        <div class="page-title">
+          <h1>داشبورد شعبه</h1>
+          <p id="dateText">در حال آماده‌سازی اطلاعات...</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="search">
+          <span>⌕</span>
+          <input placeholder="جستجوی مرسوله، مشتری یا کد..." id="searchInput">
+        </div>
+        <button class="icon-btn" title="اعلان‌ها">♧</button>
+        <button class="icon-btn" onclick="toggleTheme()" title="تغییر حالت">◐</button>
+        <div class="profile">
+          <div class="avatar">م</div>
+          <div>
+            <b style="font-size:10px">مدیر شعبه</b>
+            <small>دسترسی کامل</small>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="dashboard-head">
+      <div>
+        <h2>سلام، به پنل مدیریت خوش آمدید 👋</h2>
+        <p>وضعیت کلی مرسولات، عملیات روزانه و عملکرد شعبه را یکجا ببینید.</p>
+      </div>
+      <div class="filters">
+        <select class="select"><option>امروز</option><option>این هفته</option><option>این ماه</option></select>
+        <select class="select"><option>همه مرسولات</option><option>نقدی</option><option>پس‌کرایه</option></select>
+      </div>
+    </section>
+
+    <section class="hero-grid">
+      <div class="hero">
+        <div class="floating-stat">
+          <span>نرخ تحویل موفق</span>
+          <strong>94.8%</strong>
+          <span>بر اساس اطلاعات ثبت‌شده</span>
+        </div>
+        <h3>عملیات شعبه، یک نگاه.</h3>
+        <p>تمام اطلاعات مرسولات، وضعیت پرداخت، تحویل، عودت، مختومه، پخش‌کننده‌ها و گزارش‌های مالی از یک محیط واحد قابل مدیریت است.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="form.html">＋ ثبت اطلاعات</a>
+          <a class="btn btn-ghost" href="reports.html">مشاهده گزارش‌ها ↗</a>
+        </div>
+      </div>
+
+      <div class="mini-panel">
+        <div class="panel-title"><h3>وضعیت عملیات امروز</h3><span>به‌روزرسانی خودکار</span></div>
+        <div class="progress-wrap">
+          <div class="ring"><b>78%</b></div>
+          <div class="progress-info">
+            <strong>پیشرفت عملیات</strong>
+            <p>بخش عمده مرسولات امروز تعیین وضعیت شده‌اند.</p>
+            <div class="legend">
+              <span><i></i>تعیین وضعیت 78%</span>
+              <span><i style="background:#b8c1bb"></i>باقی‌مانده 22%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="kpi-grid">
+      <div class="kpi"><div class="kpi-top"><span>کل مرسولات</span><span class="kpi-icon">▣</span></div><strong>1,248</strong><small><span class="trend">↑ 12.4%</span> نسبت به روز قبل</small><div class="kpi-line"></div></div>
+      <div class="kpi"><div class="kpi-top"><span>نقدی</span><span class="kpi-icon">₮</span></div><strong>684</strong><small><span class="trend">↑ 8.7%</span> از کل مرسولات</small><div class="kpi-line"></div></div>
+      <div class="kpi"><div class="kpi-top"><span>پس‌کرایه</span><span class="kpi-icon">◈</span></div><strong>564</strong><small><span class="trend">↑ 5.2%</span> از کل مرسولات</small><div class="kpi-line"></div></div>
+      <div class="kpi"><div class="kpi-top"><span>تحویل موفق</span><span class="kpi-icon">✓</span></div><strong>1,032</strong><small><span class="trend">82.7%</span> از کل مرسولات</small><div class="kpi-line"></div></div>
+    </section>
+
+    <section class="main-grid">
+      <div class="panel">
+        <div class="panel-title">
+          <h3>روند مرسولات و تحویل</h3>
+          <span>۷ روز اخیر</span>
+        </div>
+        <div class="chart-box">
+          <svg class="chart-svg" viewBox="0 0 700 250" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="areaFill" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#18b86a" stop-opacity=".24"/>
+                <stop offset="1" stop-color="#18b86a" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="chart-grid" x1="45" y1="30" x2="680" y2="30"/>
+            <line class="chart-grid" x1="45" y1="80" x2="680" y2="80"/>
+            <line class="chart-grid" x1="45" y1="130" x2="680" y2="130"/>
+            <line class="chart-grid" x1="45" y1="180" x2="680" y2="180"/>
+            <path class="chart-fill" d="M45 172 C95 160 105 145 145 152 S210 115 245 130 S310 80 350 105 S415 125 450 82 S515 95 555 62 S620 75 680 42 L680 210 L45 210 Z"/>
+            <path class="chart-line" d="M45 172 C95 160 105 145 145 152 S210 115 245 130 S310 80 350 105 S415 125 450 82 S515 95 555 62 S620 75 680 42"/>
+            <g>
+              <circle class="chart-dot" cx="45" cy="172" r="4"/><circle class="chart-dot" cx="145" cy="152" r="4"/>
+              <circle class="chart-dot" cx="245" cy="130" r="4"/><circle class="chart-dot" cx="350" cy="105" r="4"/>
+              <circle class="chart-dot" cx="450" cy="82" r="4"/><circle class="chart-dot" cx="555" cy="62" r="4"/>
+              <circle class="chart-dot" cx="680" cy="42" r="4"/>
+            </g>
+            <text class="chart-label" x="45" y="232">شنبه</text><text class="chart-label" x="145" y="232">یکشنبه</text>
+            <text class="chart-label" x="245" y="232">دوشنبه</text><text class="chart-label" x="350" y="232">سه‌شنبه</text>
+            <text class="chart-label" x="450" y="232">چهارشنبه</text><text class="chart-label" x="555" y="232">پنجشنبه</text>
+            <text class="chart-label" x="665" y="232">امروز</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="panel" id="couriers">
+        <div class="panel-title"><h3>عملکرد پخش‌کننده‌ها</h3><span>امروز</span></div>
+        <div class="delivery-list">
+          <div class="delivery"><div class="delivery-icon">🏍</div><div><h4>پخش موتور</h4><p>تحویل ۱۸۷ از ۲۰۴ مرسوله</p></div><span class="badge">91.7%</span></div>
+          <div class="delivery"><div class="delivery-icon">🚐</div><div><h4>پخش وانت</h4><p>تحویل ۱۵۶ از ۱۷۳ مرسوله</p></div><span class="badge">90.1%</span></div>
+          <div class="delivery"><div class="delivery-icon">🚗</div><div><h4>پخش ماشین</h4><p>تحویل ۲۲۱ از ۲۳۵ مرسوله</p></div><span class="badge">94.0%</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="panel">
+        <div class="panel-title"><h3>آخرین مرسولات</h3><a href="shipments.html" style="font-size:9px;color:var(--green-2)">مشاهده همه ↗</a></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>کد مرسوله</th><th>نوع</th><th>وضعیت</th><th>پخش‌کننده</th><th>مبلغ</th></tr></thead>
+            <tbody>
+              <tr><td>TX-204981</td><td>نقدی</td><td><span class="status-pill status-delivered">تحویل شده</span></td><td>موتور</td><td>۳۸۰,۰۰۰</td></tr>
+              <tr><td>TX-204980</td><td>پس‌کرایه</td><td><span class="status-pill status-wait">در انتظار</span></td><td>وانت</td><td>۵۲۰,۰۰۰</td></tr>
+              <tr><td>TX-204979</td><td>نقدی</td><td><span class="status-pill status-return">عودت</span></td><td>ماشین</td><td>۲۹۰,۰۰۰</td></tr>
+              <tr><td>TX-204978</td><td>پس‌کرایه</td><td><span class="status-pill status-delivered">تحویل شده</span></td><td>موتور</td><td>۶۱۰,۰۰۰</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel" id="import">
+        <div class="panel-title"><h3>دسترسی سریع</h3><span>عملیات پرکاربرد</span></div>
+        <div class="quick-grid">
+          <a class="quick" href="form.html"><span class="quick-icon">＋</span><span><b>ثبت دستی</b><small>ثبت مرسوله و وضعیت</small></span></a>
+          <a class="quick" href="reports.html"><span class="quick-icon">▤</span><span><b>گزارش‌ها</b><small>گزارش مالی و عملیاتی</small></span></a>
+          <a class="quick" href="#api"><span class="quick-icon">⌁</span><span><b>API تیپاکس</b><small>اتصال و همگام‌سازی</small></span></a>
+          <a class="quick" href="#warehouse"><span class="quick-icon">▦</span><span><b>انبار</b><small>کارتن، فلایر و پاکت</small></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="warehouse" style="margin-top:16px">
+      <div class="panel-title"><h3>نمای سریع انبار</h3><span>قابل اتصال به ماژول انبار</span></div>
+      <div class="kpi-grid" style="margin:0">
+        <div class="kpi"><div class="kpi-top"><span>کارتن کوچک</span><span class="kpi-icon">□</span></div><strong>320</strong><small>موجودی فعلی</small></div>
+        <div class="kpi"><div class="kpi-top"><span>کارتن متوسط</span><span class="kpi-icon">□</span></div><strong>184</strong><small>موجودی فعلی</small></div>
+        <div class="kpi"><div class="kpi-top"><span>فلایر A3</span><span class="kpi-icon">▤</span></div><strong>760</strong><small>برگ موجود</small></div>
+        <div class="kpi"><div class="kpi-top"><span>پاکت</span><span class="kpi-icon">✉</span></div><strong>425</strong><small>موجودی فعلی</small></div>
+      </div>
+    </section>
+
+    <section class="panel" id="api" style="margin-top:16px">
+      <div class="panel-title"><h3>وضعیت اتصال داده</h3><span>ساختار آماده API و Excel</span></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div class="quick" style="flex:1;min-width:220px"><span class="quick-icon">⌁</span><span><b>API تیپاکس</b><small>فعلاً متصل نشده — از بخش تنظیمات قابل پیکربندی است.</small></span></div>
+        <div class="quick" style="flex:1;min-width:220px"><span class="quick-icon">⇩</span><span><b>Excel</b><small>برای حالت جایگزین و آفلاین قابل استفاده خواهد بود.</small></span></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا">
+  <span class="cross"></span><span class="arrow">↑</span>
+</button>
+
+<script>
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  localStorage.setItem('tipax-theme',document.body.classList.contains('dark')?'dark':'light');
+}
+function toggleMenu(){document.body.classList.toggle('menu-open')}
+if(localStorage.getItem('tipax-theme')==='dark') document.body.classList.add('dark');
+
+const d=new Date();
+document.getElementById('dateText').textContent =
+  new Intl.DateTimeFormat('fa-IR',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(d);
+
+document.getElementById('searchInput')?.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const q=e.target.value.trim();
+    if(q) alert('جستجو برای: '+q+'\n\nدر مرحله اتصال داده، این بخش به اطلاعات واقعی مرسولات متصل می‌شود.');
+  }
+});
+</script>
+</body>
+</html>
