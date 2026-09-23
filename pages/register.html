@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#f5f8f6">
+<title>ثبت اطلاعات مرسوله | مدیریت تیپاکس</title>
+<style>
+:root{--bg:#f5f8f6;--surface:rgba(255,255,255,.84);--solid:#fff;--text:#18211d;--muted:#7b8780;--line:rgba(27,55,42,.09);--green:#18b86a;--green2:#0a8e4f;--soft:#eafaf1;--red:#e86d76;--amber:#dfa13c;--blue:#6385ff;--shadow:0 20px 55px rgba(31,66,48,.08)}
+body.dark{--bg:#0d1511;--surface:rgba(21,31,26,.86);--solid:#17221c;--text:#edf7f0;--muted:#9ba9a1;--line:rgba(255,255,255,.08);--soft:rgba(24,184,106,.13);--shadow:0 20px 55px rgba(0,0,0,.28)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 7% 4%,rgba(24,184,106,.09),transparent 25%),radial-gradient(circle at 95% 15%,rgba(99,133,255,.06),transparent 25%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.3s}button,input,select,textarea{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:25px 18px;background:rgba(255,255,255,.62);backdrop-filter:blur(24px);border-left:1px solid var(--line);z-index:30}.dark .sidebar{background:rgba(14,23,18,.72)}
+.brand{display:flex;align-items:center;gap:11px;padding:5px 8px 30px}.brand-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#25c979,#078a4d);color:#fff;font-weight:900;box-shadow:0 10px 25px rgba(24,184,106,.25)}.brand strong{display:block;font-size:17px}.brand span{display:block;color:var(--muted);font-size:10px;margin-top:4px}.nav-title{font-size:10px;color:var(--muted);padding:8px 13px 10px}.nav{display:flex;flex-direction:column;gap:7px}.nav a{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:15px;color:var(--muted);font-size:13px;transition:.2s}.nav a:hover{background:var(--soft);color:var(--green2);transform:translateX(-3px)}.nav a.active{background:var(--soft);color:var(--green2);font-weight:700}.nav-icon{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:rgba(255,255,255,.58);border:1px solid var(--line)}.dark .nav-icon{background:rgba(255,255,255,.05)}.sidebar-bottom{position:absolute;bottom:20px;left:18px;right:18px}.status{padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--surface);font-size:11px}.status-row{display:flex;justify-content:space-between}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.1)}
+.content{min-width:0;padding:20px 25px 55px}.topbar{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px;padding:8px 11px;border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(24px);border-radius:23px;box-shadow:var(--shadow)}.top-left{display:flex;align-items:center;gap:12px}.mobile-menu{display:none}.page-title h1{font-size:18px;margin:0 0 3px}.page-title p{font-size:10px;color:var(--muted);margin:0}.top-actions{display:flex;align-items:center;gap:8px}.icon-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:var(--solid);color:var(--text);display:grid;place-items:center;transition:.2s}.icon-btn:hover{transform:translateY(-2px)}.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d8f7e5,#a9e8c4);display:grid;place-items:center;color:#087f46;font-weight:800}.profile{display:flex;align-items:center;gap:9px}.profile small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:5px 3px 18px}.page-head h2{margin:0;font-size:25px}.page-head p{margin:7px 0 0;color:var(--muted);font-size:11px}.head-actions{display:flex;gap:8px}.btn{border:0;border-radius:13px;padding:11px 15px;font-size:11px;font-weight:700;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn-primary{background:linear-gradient(135deg,#18b86a,#0b9854);color:#fff;box-shadow:0 10px 25px rgba(24,184,106,.18)}.btn-soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}
+.form-shell{border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(22px);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}.form-top{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.form-top h3{font-size:14px;margin:0}.form-top p{font-size:9px;color:var(--muted);margin:5px 0 0}.source-badge{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;background:var(--soft);color:var(--green2);font-size:8px;font-weight:700}.section{padding:20px;border-bottom:1px solid var(--line)}.section:last-child{border-bottom:0}.section-title{display:flex;align-items:center;gap:9px;margin-bottom:16px}.section-no{width:30px;height:30px;border-radius:10px;background:var(--soft);color:var(--green2);display:grid;place-items:center;font-size:10px;font-weight:900}.section-title h4{margin:0;font-size:12px}.section-title span{display:block;color:var(--muted);font-size:8px;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}.field.half{grid-column:span 2}.field label{display:flex;justify-content:space-between;align-items:center;margin:0 0 7px;font-size:9px;font-weight:700}.field label small{font-size:7px;color:var(--muted);font-weight:400}.input,.select,.textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.55);color:var(--text);padding:0 12px;height:42px;outline:0;font-size:10px;transition:.2s}.textarea{height:78px;padding-top:12px;resize:vertical;line-height:1.8}.dark .input,.dark .select,.dark .textarea{background:rgba(255,255,255,.035)}.input:focus,.select:focus,.textarea:focus{border-color:rgba(24,184,106,.45);box-shadow:0 0 0 3px rgba(24,184,106,.07)}.required{color:var(--red)}.radio-group{display:flex;gap:8px;flex-wrap:wrap}.radio{position:relative}.radio input{position:absolute;opacity:0}.radio label{height:42px;min-width:110px;padding:0 15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;gap:7px;font-size:9px;cursor:pointer;transition:.2s}.dark .radio label{background:rgba(255,255,255,.035)}.radio input:checked+label{background:var(--soft);border-color:rgba(24,184,106,.3);color:var(--green2);font-weight:800}.hint{padding:11px 13px;border-radius:12px;background:rgba(99,133,255,.07);border:1px solid rgba(99,133,255,.12);color:#5870c7;font-size:8px;line-height:1.8}.dark .hint{color:#9eafff}.check-row{display:flex;align-items:center;gap:9px;font-size:9px;color:var(--muted)}.check-row input{accent-color:var(--green);width:16px;height:16px}
+.actions{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.18)}.action-right,.action-left{display:flex;gap:8px}.btn-danger{background:rgba(232,109,118,.09);color:var(--red);border:1px solid rgba(232,109,118,.12)}.error{border-color:rgba(232,109,118,.5)!important;box-shadow:0 0 0 3px rgba(232,109,118,.06)!important}.error-text{font-size:7px;color:var(--red);margin-top:5px;display:none}.error-text.show{display:block}
+.preview{margin-top:14px;border:1px solid var(--line);background:var(--surface);border-radius:21px;padding:15px;display:none}.preview.open{display:block}.preview h4{font-size:11px;margin:0 0 12px}.preview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.preview-item{padding:10px;border:1px solid var(--line);border-radius:11px}.preview-item small{display:block;color:var(--muted);font-size:7px;margin-bottom:5px}.preview-item b{font-size:9px}
+.fab{position:fixed;left:25px;bottom:25px;width:54px;height:54px;border-radius:18px;border:1px solid rgba(24,184,106,.22);background:var(--surface);backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);color:var(--green2);z-index:50;display:grid;place-items:center;transition:.25s}.fab:hover{transform:translateY(-5px) rotate(-8deg)}.fab .cross{position:absolute;width:20px;height:20px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}.fab .arrow{font-size:19px;font-weight:900;position:relative;z-index:2}@keyframes spin{to{transform:rotate(405deg)}}
+.toast{position:fixed;right:25px;bottom:25px;min-width:240px;max-width:350px;padding:13px 15px;border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(20px);border-radius:15px;box-shadow:var(--shadow);font-size:9px;transform:translateY(30px);opacity:0;pointer-events:none;transition:.3s;z-index:80}.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.preview-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.15)}body.menu-open .sidebar{transform:translateX(0)}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:25;display:none}body.menu-open .overlay{display:block}.mobile-menu{display:grid}.content{padding:12px}.profile div:not(.avatar){display:none}.page-head{align-items:flex-start;flex-direction:column}.head-actions{width:100%}.head-actions .btn{flex:1}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.field.half{grid-column:span 1}.preview-grid{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}.action-right,.action-left{width:100%}.action-right .btn,.action-left .btn{flex:1}.form-top{align-items:flex-start;flex-direction:column}.fab{left:14px;bottom:14px}}
+</style>
+</head>
+<body>
+<div class="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brand-mark">ت</div><div><strong>مدیریت تیپاکس</strong><span>سامانه گزارش و مدیریت شعبه</span></div></div>
+<div class="nav-title">مدیریت اصلی</div>
+<nav class="nav">
+<a href="../dashboard.html"><span class="nav-icon">⌂</span>داشبورد</a>
+<a href="shipments.html"><span class="nav-icon">▣</span>مرسولات</a>
+<a class="active" href="register.html"><span class="nav-icon">＋</span>ثبت اطلاعات</a>
+<a href="reports.html"><span class="nav-icon">▤</span>گزارش‌ها</a>
+<a href="couriers.html"><span class="nav-icon">♧</span>پخش‌کننده‌ها</a>
+<a href="warehouse.html"><span class="nav-icon">▦</span>انبار</a>
+</nav>
+<div class="nav-title" style="margin-top:14px">سیستم و اتصال</div>
+<nav class="nav">
+<a href="import-excel.html"><span class="nav-icon">⇩</span>ورود از Excel</a>
+<a href="api.html"><span class="nav-icon">⌁</span>اتصال API</a>
+<a href="settings.html"><span class="nav-icon">⚙</span>تنظیمات</a>
+</nav>
+<div class="sidebar-bottom"><div class="status"><div class="status-row"><span>وضعیت سامانه</span><span class="dot"></span></div><div style="color:var(--muted);font-size:9px;margin-top:8px">آماده ثبت اطلاعات</div></div></div>
+</aside>
 
+<main class="content" id="top">
+<header class="topbar">
+<div class="top-left"><button class="icon-btn mobile-menu" onclick="toggleMenu()">☰</button><div class="page-title"><h1>ثبت اطلاعات مرسوله</h1><p>ثبت دستی اطلاعات برای زمانی که Excel یا API در دسترس نیست</p></div></div>
+<div class="top-actions"><button class="icon-btn" onclick="toggleTheme()" title="تغییر حالت">◐</button><div class="profile"><div class="avatar">م</div><div><b style="font-size:10px">مدیر شعبه</b><small>دسترسی کامل</small></div></div></div>
+</header>
+
+<section class="page-head">
+<div><h2>ثبت مرسوله جدید</h2><p>اطلاعات کامل مرسوله، پرداخت، وضعیت تحویل و پخش‌کننده را وارد کنید.</p></div>
+<div class="head-actions"><a class="btn btn-soft" href="shipments.html">← بازگشت به مرسولات</a></div>
+</section>
+
+<form id="shipmentForm" class="form-shell" novalidate>
+<div class="form-top"><div><h3>فرم ثبت و تکمیل اطلاعات</h3><p>فیلدهای ستاره‌دار برای ثبت اولیه ضروری هستند.</p></div><div class="source-badge">● ثبت دستی</div></div>
+
+<section class="section">
+<div class="section-title"><div class="section-no">01</div><div><h4>شناسه و اطلاعات پایه</h4><span>اطلاعات شناسایی مرسوله</span></div></div>
+<div class="grid">
+<div class="field"><label>بارکد / شماره مرسوله <span class="required">*</span></label><input id="barcode" class="input" name="barcode" placeholder="مثلاً TX-204986" required></div>
+<div class="field"><label>تاریخ ثبت <span class="required">*</span></label><input id="date" class="input" name="date" placeholder="1405/07/01" required></div>
+<div class="field"><label>شماره قرارداد / مشتری</label><input class="input" name="contract" placeholder="کد قرارداد یا مشتری"></div>
+<div class="field"><label>نوع سرویس</label><select class="select" name="service"><option>عادی</option><option>ویژه</option><option>فوری</option><option>بین‌شهری</option></select></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title"><div class="section-no">02</div><div><h4>فرستنده و گیرنده</h4><span>مشخصات طرفین مرسوله</span></div></div>
+<div class="grid">
+<div class="field"><label>نام فرستنده <span class="required">*</span></label><input class="input" name="sender" placeholder="نام شخص یا شرکت" required></div>
+<div class="field"><label>نام گیرنده <span class="required">*</span></label><input class="input" name="receiver" placeholder="نام گیرنده" required></div>
+<div class="field"><label>استان مقصد</label><input class="input" name="province" placeholder="استان"></div>
+<div class="field"><label>شهر مقصد <span class="required">*</span></label><input class="input" name="dest" placeholder="مثلاً تهران" required></div>
+<div class="field half"><label>شماره تماس گیرنده</label><input class="input" name="receiverPhone" inputmode="tel" placeholder="09xxxxxxxxx"></div>
+<div class="field half"><label>آدرس / محدوده تحویل</label><input class="input" name="address" placeholder="آدرس یا محدوده توزیع"></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title"><div class="section-no">03</div><div><h4>مبلغ و پرداخت</h4><span>تفکیک نقدی و پس‌کرایه</span></div></div>
+<div class="grid">
+<div class="field half"><label>نوع پرداخت <span class="required">*</span></label><div class="radio-group">
+<div class="radio"><input type="radio" name="payment" id="cash" value="نقدی" checked><label for="cash">● نقدی</label></div>
+<div class="radio"><input type="radio" name="payment" id="post" value="پس‌کرایه"><label for="post">↔ پس‌کرایه</label></div>
+</div></div>
+<div class="field"><label>مبلغ مرسوله</label><input class="input" name="amount" inputmode="numeric" placeholder="مثلاً 1,850,000"></div>
+<div class="field"><label>وضعیت پرداخت</label><select class="select" name="paymentStatus"><option>پرداخت شده</option><option>در انتظار پرداخت</option><option>نامشخص</option></select></div>
+<div class="field full"><div class="hint">در نسخه نهایی، نوع پرداخت و وضعیت آن می‌تواند مستقیماً از اطلاعات Excel یا API پر شود و در صورت نبود اتصال، دستی قابل ویرایش باشد.</div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title"><div class="section-no">04</div><div><h4>بسته و کارتن</h4><span>اطلاعات لازم برای گزارش و انبار</span></div></div>
+<div class="grid">
+<div class="field"><label>وزن</label><input class="input" name="weight" placeholder="مثلاً 2.4 kg"></div>
+<div class="field"><label>تعداد بسته</label><input class="input" name="packageCount" type="number" min="1" value="1"></div>
+<div class="field"><label>سایز کارتن</label><select class="select" name="box"><option>پاکت</option><option>A3</option><option>B4</option><option>کارتن کوچک</option><option>کارتن متوسط</option><option>کارتن بزرگ</option><option>سایر</option></select></div>
+<div class="field"><label>نوع محتوا</label><input class="input" name="content" placeholder="مثلاً اسناد، کالا، نمونه"></div>
+<div class="field full"><div class="hint">سایز کارتن در آینده برای گزارش موجودی انبار و مصرف کارتن‌ها به‌صورت خودکار قابل جمع‌آوری خواهد بود.</div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-title"><div class="section-no">05</div><div><h4>پخش و وضعیت مرسوله</h4><span>برای مدیریت سه پخش‌کننده شعبه</span></div></div>
+<div class="grid">
+<div class="field"><label>پخش‌کننده</label><select class="select" name="vehicle"><option value="">انتخاب کنید</option><option>موتور</option><option>وانت</option><option>ماشین</option></select></div>
+<div class="field"><label>وضعیت مرسوله <span class="required">*</span></label><select class="select" name="status" required><option>در انتظار</option><option>تحویل شده</option><option>عودتی</option><option>مختومه</option></select></div>
+<div class="field"><label>تحویل به پخش‌کننده</label><select class="select" name="handed"><option>خیر</option><option>بله</option></select></div>
+<div class="field"><label>اشتباه مسیر</label><select class="select" name="routeError"><option>خیر</option><option>بله</option></select></div>
+<div class="field full"><label>توضیحات / علت عودت / وضعیت خاص</label><textarea class="textarea" name="notes" placeholder="توضیحات تکمیلی، علت عودت، اشتباه مسیر، عدم تحویل و ..."></textarea></div>
+</div>
+</section>
+
+<div class="actions">
+<div class="action-left"><button type="button" class="btn btn-danger" onclick="resetForm()">پاک کردن فرم</button><button type="button" class="btn btn-soft" onclick="previewForm()">پیش‌نمایش</button></div>
+<div class="action-right"><button type="button" class="btn btn-soft" onclick="saveDraft()">ذخیره موقت</button><button type="submit" class="btn btn-primary">✓ ثبت مرسوله</button></div>
+</div>
+</form>
+
+<section class="preview" id="preview"><h4>پیش‌نمایش اطلاعات</h4><div class="preview-grid" id="previewGrid"></div></section>
+</main>
+</div>
+
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا"><span class="cross"></span><span class="arrow">↑</span></button>
+<div class="toast" id="toast"></div>
+
+<script>
+const form=document.getElementById('shipmentForm');
+const fields=['barcode','date','contract','service','sender','receiver','province','dest','receiverPhone','address','amount','paymentStatus','weight','packageCount','box','content','vehicle','status','handed','routeError','notes'];
+const params=new URLSearchParams(location.search);
+if(params.get('barcode')) document.getElementById('barcode').value=params.get('barcode');
+if(localStorage.getItem('tipax-theme')==='dark') document.body.classList.add('dark');
+
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('tipax-theme',document.body.classList.contains('dark')?'dark':'light')}
+function toggleMenu(){document.body.classList.toggle('menu-open')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+function getData(){
+ const d={}; fields.forEach(id=>{const el=form.querySelector(`[name="${id}"]`);if(el)d[id]=el.value});
+ d.payment=form.querySelector('input[name="payment"]:checked')?.value||'نقدی';
+ return d;
+}
+function validate(){
+ let ok=true;
+ form.querySelectorAll('[required]').forEach(el=>{
+   el.classList.remove('error');
+   const err=el.parentElement.querySelector('.error-text');
+   if(!el.value.trim()){el.classList.add('error');ok=false}
+ });
+ if(!ok) toast('لطفاً فیلدهای ضروری را تکمیل کنید.');
+ return ok;
+}
+function resetForm(){
+ form.reset();
+ document.getElementById('preview').classList.remove('open');
+ form.querySelectorAll('.error').forEach(x=>x.classList.remove('error'));
+ toast('فرم پاک شد.');
+}
+function previewForm(){
+ if(!validate())return;
+ const d=getData(), labels={barcode:'بارکد',date:'تاریخ',sender:'فرستنده',receiver:'گیرنده',dest:'مقصد',payment:'پرداخت',amount:'مبلغ',weight:'وزن',box:'کارتن',vehicle:'پخش‌کننده',status:'وضعیت',handed:'تحویل به پخش‌کننده',routeError:'اشتباه مسیر'};
+ document.getElementById('previewGrid').innerHTML=Object.entries(labels).map(([k,l])=>`<div class="preview-item"><small>${l}</small><b>${d[k]||'—'}</b></div>`).join('');
+ document.getElementById('preview').classList.add('open');
+ document.getElementById('preview').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function saveDraft(){
+ const d=getData();localStorage.setItem('tipax-draft-register',JSON.stringify(d));toast('اطلاعات به‌صورت موقت در همین مرورگر ذخیره شد.');
+}
+form.addEventListener('submit',e=>{
+ e.preventDefault();
+ if(!validate())return;
+ const d=getData();
+ const saved=JSON.parse(localStorage.getItem('tipax-manual-shipments')||'[]');
+ saved.push({...d,id:'MAN-'+Date.now(),createdAt:new Date().toISOString()});
+ localStorage.setItem('tipax-manual-shipments',JSON.stringify(saved));
+ localStorage.removeItem('tipax-draft-register');
+ toast('مرسوله با موفقیت ثبت شد.');
+ setTimeout(()=>location.href='shipments.html',700);
+});
+</script>
+</body>
+</html>
