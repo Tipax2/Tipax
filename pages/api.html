@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>اتصال API | سامانه مدیریت تیپاکس</title>
+<style>
+:root{--bg:#f4f8f5;--card:rgba(255,255,255,.93);--solid:#fff;--text:#17221b;--muted:#7d8b82;--line:rgba(20,55,36,.09);--green:#18b86a;--green2:#07894c;--soft:rgba(24,184,106,.09);--red:#df6872;--amber:#d39a36;--blue:#6584ee;--shadow:0 18px 55px rgba(23,61,40,.08)}
+body.dark{--bg:#090f0c;--card:rgba(17,27,21,.97);--solid:#141e18;--text:#e7f0ea;--muted:#8d9a92;--line:rgba(160,205,177,.09);--soft:rgba(24,184,106,.1);--shadow:0 18px 55px rgba(0,0,0,.34)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 0 0,rgba(24,184,106,.06),transparent 27%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.3s}body.dark{background:radial-gradient(circle at 0 0,rgba(24,184,106,.04),transparent 25%),#090f0c}button,input,select,textarea{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:23px 16px;background:rgba(255,255,255,.62);backdrop-filter:blur(25px);border-left:1px solid var(--line);z-index:40}.dark .sidebar{background:rgba(8,14,11,.9)}
+.brand{display:flex;align-items:center;gap:10px;padding:5px 8px 27px}.brandmark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#2acc7c,#078b4c);color:#fff;font-weight:900;box-shadow:0 12px 30px rgba(24,184,106,.2)}.brand b{display:block;font-size:15px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:4px}.navtitle{padding:8px 13px;color:var(--muted);font-size:9px}.nav{display:flex;flex-direction:column;gap:5px}.nav a{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:15px;color:var(--muted);font-size:11px;transition:.2s}.nav a:hover,.nav a.active{background:var(--soft);color:var(--green2);transform:translateX(-2px)}.nav a.active{font-weight:bold}.navicon{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.38)}.dark .navicon{background:rgba(255,255,255,.025)}.side-status{position:absolute;bottom:17px;left:16px;right:16px;padding:12px;border:1px solid var(--line);border-radius:17px;background:var(--card);font-size:8px}.side-status div{display:flex;justify-content:space-between}.online{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.09)}
+.content{min-width:0;padding:20px 25px 70px}.topbar{height:67px;padding:8px 11px;border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.top-left,.top-actions,.profile{display:flex;align-items:center;gap:9px}.mobile{display:none}.page-title h1{font-size:18px;margin:0 0 3px}.page-title small{font-size:8px;color:var(--muted)}.iconbtn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:var(--solid);color:var(--text);display:grid;place-items:center;transition:.2s}.iconbtn:hover{transform:translateY(-2px)}.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d9f8e7,#a7e9c3);display:grid;place-items:center;color:#087d45;font-weight:bold}.profile small{display:block;color:var(--muted);font-size:7px;margin-top:3px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 3px 18px}.hero h2{font-size:26px;margin:0}.hero p{font-size:9px;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:8px}.btn{border:0;border-radius:13px;padding:10px 14px;font-size:8px;font-weight:bold;transition:.2s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(135deg,#18b86a,#078d4e);color:#fff;box-shadow:0 10px 25px rgba(24,184,106,.15)}.soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}.danger{background:rgba(223,104,114,.09);color:var(--red);border:1px solid rgba(223,104,114,.14)}
+.statusbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);margin-bottom:15px}.statusinfo{display:flex;align-items:center;gap:10px}.statusdot{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 6px rgba(211,154,54,.08)}.statusdot.connected{background:var(--green);box-shadow:0 0 0 6px rgba(24,184,106,.08)}.statusinfo b{font-size:9px}.statusinfo small{display:block;color:var(--muted);font-size:7px;margin-top:4px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:15px;margin-bottom:15px}.panel{border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(23px);box-shadow:var(--shadow);overflow:hidden}.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panelhead h3{font-size:11px;margin:0}.panelhead small{font-size:7px;color:var(--muted)}.form{padding:16px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.group{margin-bottom:12px}.group label{display:block;font-size:8px;font-weight:bold;margin-bottom:6px}.group small{display:block;font-size:6px;color:var(--muted);margin-top:5px}.field{height:41px;width:100%;padding:0 11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.4);color:var(--text);outline:none;font-size:8px;transition:.2s}.dark .field{background:#121b16;color:#e7f0ea;color-scheme:dark}.dark select.field option{background:#121b16;color:#e7f0ea}.field:focus{border-color:rgba(24,184,106,.45);box-shadow:0 0 0 3px rgba(24,184,106,.07)}textarea.field{height:83px;padding-top:11px;resize:vertical}.input-wrap{position:relative}.input-wrap .field{padding-left:45px}.copy{position:absolute;left:6px;top:5px;height:31px;border:0;border-radius:9px;background:var(--soft);color:var(--green2);font-size:7px;padding:0 8px}.secret{position:absolute;left:7px;top:7px;border:0;background:transparent;color:var(--muted);font-size:12px}.toggleline{display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(24,184,106,.035);font-size:8px}.switch{width:38px;height:21px;border-radius:20px;background:#bcc6bf;padding:3px;border:0}.switch i{display:block;width:15px;height:15px;border-radius:50%;background:#fff;transition:.2s}.switch.on{background:var(--green)}.switch.on i{transform:translateX(-17px)}
+.cards{padding:8px 15px}.mini{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.mini:last-child{border:0}.miniicon{width:35px;height:35px;border-radius:11px;background:var(--soft);display:grid;place-items:center;color:var(--green2);font-size:13px}.mini b{display:block;font-size:8px}.mini small{display:block;color:var(--muted);font-size:6px;margin-top:4px}.pill{margin-right:auto;padding:5px 8px;border-radius:8px;background:var(--soft);color:var(--green2);font-size:6px}.pill.amber{background:rgba(211,154,54,.1);color:var(--amber)}
+.endpoints{padding:14px 15px}.endpoint{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.method{padding:4px 6px;border-radius:6px;background:rgba(101,132,238,.1);color:var(--blue);font-size:6px;font-weight:bold}.endpoint code{font-size:7px;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.testbox{margin:15px;padding:13px;border-radius:14px;background:var(--soft);font-size:7px;color:var(--muted);line-height:1.8}.logs{max-height:220px;overflow:auto;padding:5px 15px}.log{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:7px}.logtime{color:var(--muted);direction:ltr}.ok{color:var(--green2)}.warn{color:var(--amber)}.error{color:var(--red)}
+.fab{position:fixed;left:25px;bottom:25px;width:55px;height:55px;border:1px solid rgba(24,184,106,.2);border-radius:18px;background:var(--card);backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);z-index:60;color:var(--green2);display:grid;place-items:center}.cross{position:absolute;width:21px;height:21px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}.up{position:relative;z-index:2;font-size:19px;font-weight:900}@keyframes spin{to{transform:rotate(405deg)}}.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:220px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);backdrop-filter:blur(20px);box-shadow:var(--shadow);font-size:8px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:none}.footer{margin-top:15px;padding:12px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);display:flex;justify-content:space-between;color:var(--muted);font-size:7px}.footer b{color:var(--green2)}
+@media(max-width:1050px){.grid{grid-template-columns:1fr}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}body.menu-open .sidebar{transform:none}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:35;display:none}body.menu-open .overlay{display:block}.mobile{display:grid}.content{padding:12px}.profile div:last-child{display:none}.hero{flex-direction:column;align-items:stretch}}
+@media(max-width:560px){.row{grid-template-columns:1fr}.hero h2{font-size:21px}.actions{flex-direction:column}.statusbar{align-items:flex-start;flex-direction:column}.footer{flex-direction:column;gap:7px}.fab{left:14px;bottom:14px}}
+</style>
+</head>
+<body>
+<div class="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brandmark">ت</div><div><b>مدیریت تیپاکس</b><small>سامانه گزارش و مدیریت شعبه</small></div></div>
+<div class="navtitle">مدیریت اصلی</div>
+<nav class="nav">
+<a href="../dashboard.html"><span class="navicon">⌂</span>داشبورد</a>
+<a href="shipments.html"><span class="navicon">▣</span>مرسولات</a>
+<a href="register.html"><span class="navicon">＋</span>ثبت اطلاعات</a>
+<a href="reports.html"><span class="navicon">▤</span>گزارش‌ها</a>
+<a href="couriers.html"><span class="navicon">♧</span>پخش‌کننده‌ها</a>
+<a href="warehouse.html"><span class="navicon">▦</span>انبار</a>
+</nav>
+<div class="navtitle" style="margin-top:13px">سیستم و اتصال</div>
+<nav class="nav">
+<a href="import-excel.html"><span class="navicon">⇩</span>ورود از Excel</a>
+<a class="active" href="api.html"><span class="navicon">⌁</span>اتصال API</a>
+<a href="settings.html"><span class="navicon">⚙</span>تنظیمات</a>
+</nav>
+<div class="side-status"><div><span>وضعیت سامانه</span><i class="online"></i></div><div style="margin-top:8px;color:var(--muted)">اتصال API آماده پیکربندی</div></div>
+</aside>
+
+<main class="content" id="top">
+<header class="topbar">
+<div class="top-left"><button class="iconbtn mobile" onclick="toggleMenu()">☰</button><div class="page-title"><h1>اتصال API</h1><small>مدیریت ارتباط سامانه با سرویس داده</small></div></div>
+<div class="top-actions"><button class="iconbtn" onclick="toggleTheme()">◐</button><div class="profile"><div class="avatar">م</div><div><b style="font-size:9px">مدیر شعبه</b><small>دسترسی کامل</small></div></div></div>
+</header>
+
+<section class="hero"><div><h2>اتصال به API</h2><p>تنظیمات ارتباط، تست اتصال و کنترل دریافت اطلاعات را از یک محیط واحد مدیریت کنید.</p></div><div class="actions"><button class="btn soft" onclick="resetForm()">پاک‌سازی</button><button class="btn primary" onclick="testConnection()">✓ تست اتصال</button></div></section>
+
+<section class="statusbar">
+<div class="statusinfo"><i id="dot" class="statusdot"></i><div><b id="statusTitle">اتصال پیکربندی نشده</b><small id="statusText">برای شروع، اطلاعات سرویس API را وارد کنید.</small></div></div>
+<div><span id="lastTest" style="font-size:7px;color:var(--muted)">آخرین تست: انجام نشده</span></div>
+</section>
+
+<section class="grid">
+<div class="panel">
+<div class="panelhead"><div><h3>تنظیمات اتصال</h3><small>اطلاعات API را در این بخش وارد کنید.</small></div><span class="pill">امن</span></div>
+<div class="form">
+<div class="group"><label>آدرس پایه API</label><div class="input-wrap"><input id="baseUrl" class="field" dir="ltr" placeholder="https://api.example.com/v1"><button class="copy" onclick="copyValue('baseUrl')">کپی</button></div><small>آدرس واقعی سرویس پس از دریافت مستندات API جایگزین می‌شود.</small></div>
+<div class="row">
+<div class="group"><label>کلید API</label><div class="input-wrap"><input id="apiKey" class="field" dir="ltr" type="password" placeholder="API Key"><button class="secret" onclick="toggleSecret('apiKey',this)">◉</button></div></div>
+<div class="group"><label>شناسه شعبه</label><input id="branch" class="field" placeholder="مثلاً 1025"></div>
+</div>
+<div class="row">
+<div class="group"><label>نوع احراز هویت</label><select id="auth" class="field"><option>Bearer Token</option><option>API Key</option><option>Basic Authentication</option></select></div>
+<div class="group"><label>Timeout</label><select id="timeout" class="field"><option value="10">10 ثانیه</option><option value="20">20 ثانیه</option><option value="30">30 ثانیه</option><option value="60">60 ثانیه</option></select></div>
+</div>
+<div class="group"><label>Endpoint دریافت مرسولات</label><input id="shipmentsEndpoint" class="field" dir="ltr" placeholder="/shipments"></div>
+<div class="row">
+<div class="group"><label>Endpoint وضعیت‌ها</label><input id="statusEndpoint" class="field" dir="ltr" placeholder="/shipments/status"></div>
+<div class="group"><label>Endpoint گزارش مالی</label><input id="financeEndpoint" class="field" dir="ltr" placeholder="/reports/finance"></div>
+</div>
+<div class="toggleline"><div><b>همگام‌سازی خودکار</b><div style="font-size:6px;color:var(--muted);margin-top:4px">بعد از فعال شدن، سیستم در بازه تعیین‌شده داده‌ها را بررسی می‌کند.</div></div><button id="autoSwitch" class="switch" onclick="toggleSwitch(this)"><i></i></button></div>
+<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:13px"><button class="btn soft" onclick="saveConfig()">ذخیره تنظیمات</button><button class="btn primary" onclick="testConnection()">تست اتصال</button></div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panelhead"><div><h3>وضعیت سرویس</h3><small>نمایش سریع تنظیمات فعلی</small></div></div>
+<div class="cards">
+<div class="mini"><span class="miniicon">⌁</span><div><b>API</b><small id="serviceName">پیکربندی نشده</small></div><span id="servicePill" class="pill amber">غیرفعال</span></div>
+<div class="mini"><span class="miniicon">⌁</span><div><b>احراز هویت</b><small id="authView">Bearer Token</small></div><span class="pill">امن</span></div>
+<div class="mini"><span class="miniicon">↕</span><div><b>همگام‌سازی</b><small id="syncView">دستی</small></div><span class="pill amber" id="syncPill">دستی</span></div>
+<div class="mini"><span class="miniicon">◷</span><div><b>آخرین دریافت</b><small id="receiveView">هنوز انجام نشده</small></div></div>
+</div>
+<div class="testbox">⚠️ تا زمانی که آدرس و مشخصات واقعی سرویس را نداشته باشیم، این صفحه فقط رابط آماده اتصال است. پس از دریافت API رسمی، endpointها و پاسخ‌های واقعی دقیقاً در همین ساختار متصل می‌شوند.</div>
+</div>
+</section>
+
+<section class="panel" style="margin-bottom:15px">
+<div class="panelhead"><div><h3>Endpointهای مورد استفاده</h3><small>ساختار پیشنهادی؛ مقادیر واقعی با مستندات سرویس جایگزین می‌شوند.</small></div></div>
+<div class="endpoints">
+<div class="endpoint"><span class="method">GET</span><code>/shipments</code><span style="margin-right:auto;font-size:6px;color:var(--muted)">دریافت مرسولات</span></div>
+<div class="endpoint"><span class="method">GET</span><code>/shipments/status</code><span style="margin-right:auto;font-size:6px;color:var(--muted)">وضعیت مرسولات</span></div>
+<div class="endpoint"><span class="method">GET</span><code>/reports/finance</code><span style="margin-right:auto;font-size:6px;color:var(--muted)">اطلاعات مالی</span></div>
+<div class="endpoint"><span class="method">GET</span><code>/couriers</code><span style="margin-right:auto;font-size:6px;color:var(--muted)">اطلاعات پخش‌کننده‌ها</span></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="panelhead"><div><h3>گزارش اتصال</h3><small>رویدادهای تست و همگام‌سازی</small></div><button class="btn soft" onclick="clearLogs()">پاک کردن</button></div>
+<div id="logs" class="logs">
+<div class="log"><span class="logtime">--:--</span><span>هنوز رویدادی ثبت نشده است.</span></div>
+</div>
+</section>
+
+<div class="footer"><span>پیکربندی API در مرورگر ذخیره می‌شود.</span><span>وضعیت: <b>آماده اتصال</b></span></div>
+</main>
+</div>
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا"><i class="cross"></i><span class="up">↑</span></button>
+<div id="toast" class="toast"></div>
+
+<script>
+if(localStorage.getItem("tipax-theme")==="dark")document.body.classList.add("dark");
+const $=id=>document.getElementById(id);
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("tipax-theme",document.body.classList.contains("dark")?"dark":"light")}
+function toggleMenu(){document.body.classList.toggle("menu-open")}
+function showToast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
+function copyValue(id){const e=$(id);if(!e.value){showToast("مقداری برای کپی وجود ندارد.");return}navigator.clipboard?.writeText(e.value);showToast("مقدار کپی شد.")}
+function toggleSecret(id,b){const e=$(id);e.type=e.type==="password"?"text":"password";b.textContent=e.type==="password"?"◉":"○"}
+function toggleSwitch(b){b.classList.toggle("on");$("syncView").textContent=b.classList.contains("on")?"خودکار":"دستی";$("syncPill").textContent=b.classList.contains("on")?"فعال":"دستی";$("syncPill").className="pill "+(b.classList.contains("on")?"":"amber")}
+function saveConfig(){
+ const data={baseUrl:$("baseUrl").value,apiKey:$("apiKey").value,branch:$("branch").value,auth:$("auth").value,timeout:$("timeout").value,shipmentsEndpoint:$("shipmentsEndpoint").value,statusEndpoint:$("statusEndpoint").value,financeEndpoint:$("financeEndpoint").value,auto:$("autoSwitch").classList.contains("on")};
+ localStorage.setItem("tipax-api-config",JSON.stringify(data));$("serviceName").textContent=data.baseUrl||"آدرس وارد نشده";$("authView").textContent=data.auth;showToast("تنظیمات API ذخیره شد.");addLog("تنظیمات اتصال در مرورگر ذخیره شد.","ok");
+}
+function loadConfig(){
+ try{const d=JSON.parse(localStorage.getItem("tipax-api-config")||"null");if(!d)return;
+ $("baseUrl").value=d.baseUrl||"";$("apiKey").value=d.apiKey||"";$("branch").value=d.branch||"";$("auth").value=d.auth||"Bearer Token";$("timeout").value=d.timeout||"10";$("shipmentsEndpoint").value=d.shipmentsEndpoint||"";$("statusEndpoint").value=d.statusEndpoint||"";$("financeEndpoint").value=d.financeEndpoint||"";
+ if(d.auto&&!$("autoSwitch").classList.contains("on"))toggleSwitch($("autoSwitch"));$("serviceName").textContent=d.baseUrl||"آدرس وارد نشده";$("authView").textContent=d.auth||"Bearer Token";
+ }catch(e){}
+}
+function resetForm(){["baseUrl","apiKey","branch","shipmentsEndpoint","statusEndpoint","financeEndpoint"].forEach(id=>$(id).value="");$("statusTitle").textContent="اتصال پیکربندی نشده";$("statusText").textContent="برای شروع، اطلاعات سرویس API را وارد کنید.";$("dot").className="statusdot";$("servicePill").textContent="غیرفعال";$("servicePill").className="pill amber";showToast("فرم پاک شد.")}
+function testConnection(){
+ const url=$("baseUrl").value.trim();
+ if(!url){showToast("ابتدا آدرس پایه API را وارد کنید.");addLog("تست اتصال انجام نشد: آدرس API خالی است.","warn");return}
+ $("statusTitle").textContent="در حال بررسی اتصال...";$("statusText").textContent="در حال آماده‌سازی درخواست تست";$("dot").className="statusdot";addLog("درخواست تست برای "+url+" آماده شد.","warn");
+ setTimeout(()=>{
+   $("statusTitle").textContent="آماده برای اتصال واقعی";$("statusText").textContent="رابط کاربری آماده است؛ تست شبکه واقعی بعد از مشخص شدن API رسمی فعال می‌شود."; $("lastTest").textContent="آخرین تست: "+new Date().toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"});
+   $("servicePill").textContent="آماده";$("servicePill").className="pill";addLog("ساختار اتصال بررسی شد؛ API واقعی هنوز پیکربندی نشده است.","ok");showToast("ساختار اتصال بررسی شد.");
+ },700);
+}
+function addLog(text,type="ok"){const box=$("logs");if(box.children.length===1&&box.textContent.includes("هنوز رویدادی"))box.innerHTML="";const d=document.createElement("div");d.className="log";d.innerHTML='<span class="logtime">'+new Date().toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})+'</span><span class="'+type+'">'+text+"</span>";box.prepend(d)}
+function clearLogs(){$("logs").innerHTML='<div class="log"><span class="logtime">--:--</span><span>گزارش‌ها پاک شدند.</span></div>'}
+loadConfig();
+</script>
+</body>
+</html>
