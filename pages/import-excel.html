@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ورود اطلاعات از Excel | سامانه مدیریت تیپاکس</title>
+<style>
+:root{--bg:#f4f8f5;--card:rgba(255,255,255,.92);--solid:#fff;--text:#17221b;--muted:#7d8b82;--line:rgba(20,55,36,.09);--green:#18b86a;--green2:#07894c;--soft:rgba(24,184,106,.09);--red:#df6872;--amber:#d39a36;--blue:#6584ee;--shadow:0 18px 55px rgba(23,61,40,.08)}
+body.dark{--bg:#090f0c;--card:rgba(17,27,21,.97);--solid:#141e18;--text:#e7f0ea;--muted:#8d9a92;--line:rgba(160,205,177,.09);--soft:rgba(24,184,106,.1);--shadow:0 18px 55px rgba(0,0,0,.34)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 0 0,rgba(24,184,106,.06),transparent 27%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.3s}body.dark{background:radial-gradient(circle at 0 0,rgba(24,184,106,.04),transparent 25%),#090f0c}button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:23px 16px;background:rgba(255,255,255,.62);backdrop-filter:blur(25px);border-left:1px solid var(--line);z-index:40}.dark .sidebar{background:rgba(8,14,11,.9)}
+.brand{display:flex;align-items:center;gap:10px;padding:5px 8px 27px}.brandmark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#2acc7c,#078b4c);color:#fff;font-weight:900;box-shadow:0 12px 30px rgba(24,184,106,.2)}.brand b{display:block;font-size:15px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:4px}.navtitle{padding:8px 13px;color:var(--muted);font-size:9px}.nav{display:flex;flex-direction:column;gap:5px}.nav a{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:15px;color:var(--muted);font-size:11px;transition:.2s}.nav a:hover,.nav a.active{background:var(--soft);color:var(--green2);transform:translateX(-2px)}.nav a.active{font-weight:bold}.navicon{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.38)}.dark .navicon{background:rgba(255,255,255,.025)}.side-status{position:absolute;bottom:17px;left:16px;right:16px;padding:12px;border:1px solid var(--line);border-radius:17px;background:var(--card);font-size:8px}.side-status div{display:flex;justify-content:space-between}.online{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.09)}
+.content{min-width:0;padding:20px 25px 70px}.topbar{height:67px;padding:8px 11px;border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.top-left,.top-actions,.profile{display:flex;align-items:center;gap:9px}.mobile{display:none}.page-title h1{font-size:18px;margin:0 0 3px}.page-title small{font-size:8px;color:var(--muted)}.iconbtn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:var(--solid);color:var(--text);display:grid;place-items:center;transition:.2s}.iconbtn:hover{transform:translateY(-2px)}.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d9f8e7,#a7e9c3);display:grid;place-items:center;color:#087d45;font-weight:bold}.profile small{display:block;color:var(--muted);font-size:7px;margin-top:3px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 3px 18px}.hero h2{font-size:26px;margin:0}.hero p{font-size:9px;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:8px}.btn{border:0;border-radius:13px;padding:10px 14px;font-size:8px;font-weight:bold;transition:.2s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(135deg,#18b86a,#078d4e);color:#fff;box-shadow:0 10px 25px rgba(24,184,106,.15)}.soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}
+.panel{border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(23px);box-shadow:var(--shadow);overflow:hidden}.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panelhead h3{font-size:11px;margin:0}.panelhead small{font-size:7px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px}.step{padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);position:relative}.step .num{width:30px;height:30px;border-radius:10px;background:var(--soft);color:var(--green2);display:grid;place-items:center;font-weight:bold;font-size:10px;margin-bottom:10px}.step b{display:block;font-size:9px}.step small{display:block;color:var(--muted);font-size:7px;margin-top:5px}.step.active{border-color:rgba(24,184,106,.3)}.step.active .num{background:linear-gradient(135deg,#18b86a,#078d4e);color:#fff}
+.upload{margin-bottom:15px}.drop{margin:15px;padding:28px 18px;border:1.5px dashed rgba(24,184,106,.38);border-radius:19px;background:rgba(24,184,106,.035);text-align:center;transition:.25s}.drop.drag{background:rgba(24,184,106,.1);transform:scale(.995)}.excelicon{width:58px;height:58px;border-radius:17px;margin:0 auto 12px;display:grid;place-items:center;background:var(--soft);color:var(--green2);font-size:25px;font-weight:900}.drop h3{font-size:13px;margin:0 0 6px}.drop p{font-size:8px;color:var(--muted);margin:0 0 15px}.hidden{display:none}.fileline{display:none;align-items:center;justify-content:space-between;margin:0 15px 15px;padding:12px 13px;border:1px solid var(--line);border-radius:13px;background:rgba(24,184,106,.04)}.fileline.show{display:flex}.fileinfo b{font-size:8px;display:block}.fileinfo small{font-size:7px;color:var(--muted)}.remove{border:0;background:transparent;color:var(--red);font-size:8px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:15px}.stat{padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow)}.stat small{display:block;color:var(--muted);font-size:7px}.stat b{display:block;font-size:20px;margin-top:7px}.stat.green b{color:var(--green2)}.stat.red b{color:var(--red)}.stat.amber b{color:var(--amber)}.stat.blue b{color:var(--blue)}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px;margin-bottom:15px}.mapping{padding:15px}.maprow{display:grid;grid-template-columns:1fr 20px 1fr;align-items:center;gap:7px;margin-bottom:9px}.field{height:39px;width:100%;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.38);color:var(--text);font-size:8px;outline:none}.dark .field{background:#121b16;color:#e7f0ea;color-scheme:dark}.dark select.field option{background:#121b16;color:#e7f0ea}.arrow{text-align:center;color:var(--green2);font-size:12px}.hint{padding:11px 13px;border-radius:12px;background:var(--soft);font-size:7px;color:var(--muted);line-height:1.8}.checklist{padding:8px 15px}.check{display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid var(--line);font-size:8px}.check:last-child{border:0}.tick{width:23px;height:23px;border-radius:8px;background:var(--soft);color:var(--green2);display:grid;place-items:center}.check small{display:block;color:var(--muted);font-size:6px;margin-top:3px}.preview .tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:720px}.table th,.table td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:7px;text-align:right;white-space:nowrap}.table th{color:var(--muted);background:rgba(24,184,106,.03)}.badge{display:inline-flex;padding:5px 8px;border-radius:9px;background:var(--soft);color:var(--green2);font-size:7px}.badge.red{background:rgba(223,104,114,.1);color:var(--red)}.badge.amber{background:rgba(211,154,54,.1);color:var(--amber)}.actions-row{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-top:1px solid var(--line)}.actions-row small{font-size:7px;color:var(--muted)}
+.fab{position:fixed;left:25px;bottom:25px;width:55px;height:55px;border:1px solid rgba(24,184,106,.2);border-radius:18px;background:var(--card);backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);z-index:60;color:var(--green2);display:grid;place-items:center}.cross{position:absolute;width:21px;height:21px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}.up{position:relative;z-index:2;font-size:19px;font-weight:900}@keyframes spin{to{transform:rotate(405deg)}}.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:220px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);backdrop-filter:blur(20px);box-shadow:var(--shadow);font-size:8px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:none}
+.footer{margin-top:15px;padding:12px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);display:flex;justify-content:space-between;color:var(--muted);font-size:7px}.footer b{color:var(--green2)}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}body.menu-open .sidebar{transform:none}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:35;display:none}body.menu-open .overlay{display:block}.mobile{display:grid}.content{padding:12px}.profile div:last-child{display:none}.hero{flex-direction:column;align-items:stretch}}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}.hero h2{font-size:21px}.actions{flex-direction:column}.footer{flex-direction:column;gap:7px}.fab{left:14px;bottom:14px}}
+</style>
+</head>
+<body>
+<div class="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brandmark">ت</div><div><b>مدیریت تیپاکس</b><small>سامانه گزارش و مدیریت شعبه</small></div></div>
+<div class="navtitle">مدیریت اصلی</div>
+<nav class="nav">
+<a href="../dashboard.html"><span class="navicon">⌂</span>داشبورد</a>
+<a href="shipments.html"><span class="navicon">▣</span>مرسولات</a>
+<a href="register.html"><span class="navicon">＋</span>ثبت اطلاعات</a>
+<a href="reports.html"><span class="navicon">▤</span>گزارش‌ها</a>
+<a href="couriers.html"><span class="navicon">♧</span>پخش‌کننده‌ها</a>
+<a href="warehouse.html"><span class="navicon">▦</span>انبار</a>
+</nav>
+<div class="navtitle" style="margin-top:13px">سیستم و اتصال</div>
+<nav class="nav">
+<a class="active" href="import-excel.html"><span class="navicon">⇩</span>ورود از Excel</a>
+<a href="api.html"><span class="navicon">⌁</span>اتصال API</a>
+<a href="settings.html"><span class="navicon">⚙</span>تنظیمات</a>
+</nav>
+<div class="side-status"><div><span>وضعیت سامانه</span><i class="online"></i></div><div style="margin-top:8px;color:var(--muted)">ورود Excel آماده است</div></div>
+</aside>
+
+<main class="content" id="top">
+<header class="topbar">
+<div class="top-left"><button class="iconbtn mobile" onclick="toggleMenu()">☰</button><div class="page-title"><h1>ورود اطلاعات از Excel</h1><small>دریافت سریع داده‌های واقعی شعبه</small></div></div>
+<div class="top-actions"><button class="iconbtn" onclick="toggleTheme()">◐</button><div class="profile"><div class="avatar">م</div><div><b style="font-size:9px">مدیر شعبه</b><small>دسترسی کامل</small></div></div></div>
+</header>
+
+<section class="hero"><div><h2>ورود اطلاعات</h2><p>فایل Excel تیپاکس را وارد کنید، ستون‌ها را بررسی کنید و قبل از ثبت نهایی پیش‌نمایش بگیرید.</p></div><div class="actions"><button class="btn soft" onclick="downloadTemplate()">↓ قالب نمونه</button><button class="btn primary" onclick="document.getElementById('fileInput').click()">＋ انتخاب فایل</button></div></section>
+
+<section class="steps">
+<div class="step active"><div class="num">۱</div><b>انتخاب فایل</b><small>Excel یا CSV را انتخاب کنید.</small></div>
+<div class="step"><div class="num">۲</div><b>بررسی ستون‌ها</b><small>نام ستون‌ها با سامانه تطبیق داده می‌شود.</small></div>
+<div class="step"><div class="num">۳</div><b>پیش‌نمایش</b><small>خطاها قبل از ثبت نمایش داده می‌شوند.</small></div>
+<div class="step"><div class="num">۴</div><b>ثبت اطلاعات</b><small>داده‌های تاییدشده وارد سامانه می‌شوند.</small></div>
+</section>
+
+<section class="panel upload">
+<div class="panelhead"><div><h3>انتخاب فایل Excel</h3><small>فایل اصلی را بدون تغییر ساختار بارگذاری کنید.</small></div><span class="badge">Excel / CSV</span></div>
+<div class="drop" id="drop" onclick="document.getElementById('fileInput').click()">
+<div class="excelicon">X</div><h3>فایل را اینجا بکشید و رها کنید</h3><p>یا برای انتخاب فایل از رایانه کلیک کنید · فرمت‌های XLSX، XLS و CSV</p><button type="button" class="btn primary">انتخاب فایل</button>
+<input id="fileInput" class="hidden" type="file" accept=".xlsx,.xls,.csv">
+</div>
+<div class="fileline" id="fileline"><div class="fileinfo"><b id="filename">—</b><small id="filesize">—</small></div><button class="remove" onclick="clearFile(event)">حذف فایل ×</button></div>
+</section>
+
+<section class="stats">
+<div class="stat"><small>کل ردیف‌ها</small><b id="total">0</b></div>
+<div class="stat green"><small>قابل ثبت</small><b id="valid">0</b></div>
+<div class="stat red"><small>خطادار</small><b id="invalid">0</b></div>
+<div class="stat amber"><small>تکراری</small><b id="duplicate">0</b></div>
+<div class="stat blue"><small>وضعیت</small><b id="ready" style="font-size:13px">آماده</b></div>
+</section>
+
+<section class="grid">
+<div class="panel">
+<div class="panelhead"><div><h3>تطبیق ستون‌ها</h3><small>ستون‌های Excel را با فیلدهای سامانه هماهنگ کنید.</small></div></div>
+<div class="mapping">
+<div class="maprow"><select class="field"><option>شماره مرسوله</option></select><span class="arrow">←</span><select class="field"><option>کد مرسوله</option></select></div>
+<div class="maprow"><select class="field"><option>تاریخ</option></select><span class="arrow">←</span><select class="field"><option>تاریخ ثبت</option></select></div>
+<div class="maprow"><select class="field"><option>مبلغ</option></select><span class="arrow">←</span><select class="field"><option>مبلغ مرسوله</option></select></div>
+<div class="maprow"><select class="field"><option>وضعیت</option></select><span class="arrow">←</span><select class="field"><option>وضعیت تحویل</option></select></div>
+<div class="maprow"><select class="field"><option>نوع پرداخت</option></select><span class="arrow">←</span><select class="field"><option>نقدی / پس‌کرایه</option></select></div>
+<div class="hint">💡 در نسخه اتصال واقعی، نام ستون‌های فایل شما از روی Excel خوانده می‌شود و امکان تطبیق دستی برای ستون‌های متفاوت نیز وجود خواهد داشت.</div>
+</div>
+</div>
+<div class="panel">
+<div class="panelhead"><div><h3>کنترل‌های ورود</h3><small>قبل از ثبت نهایی</small></div></div>
+<div class="checklist">
+<div class="check"><span class="tick">✓</span><div><b>بررسی کد مرسوله</b><small>رکورد بدون کد شناسایی می‌شود.</small></div></div>
+<div class="check"><span class="tick">✓</span><div><b>بررسی مبلغ</b><small>مبلغ برای گزارش مالی کنترل می‌شود.</small></div></div>
+<div class="check"><span class="tick">✓</span><div><b>تشخیص تکراری</b><small>کدهای تکراری قبل از ثبت مشخص می‌شوند.</small></div></div>
+<div class="check"><span class="tick">✓</span><div><b>حفظ اطلاعات قبلی</b><small>در حالت افزودن، داده‌های قبلی حذف نمی‌شوند.</small></div></div>
+</div>
+</div>
+</section>
+
+<section class="panel preview">
+<div class="panelhead"><div><h3>پیش‌نمایش اطلاعات</h3><small id="previewText">پس از انتخاب فایل، چند ردیف اول اینجا نمایش داده می‌شود.</small></div><span class="badge" id="modeBadge">منتظر فایل</span></div>
+<div class="tablewrap">
+<table class="table"><thead><tr><th>ردیف</th><th>کد مرسوله</th><th>تاریخ</th><th>مبلغ</th><th>نوع پرداخت</th><th>وضعیت</th><th>کنترل</th></tr></thead>
+<tbody id="previewBody">
+<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--muted)">هنوز فایلی انتخاب نشده است.</td></tr>
+</tbody></table>
+</div>
+<div class="actions-row"><small>نمونه بالا صرفاً برای نمایش ساختار است؛ اطلاعات واقعی از فایل شما خوانده خواهد شد.</small><div class="actions"><button class="btn soft" onclick="showToast('ابتدا فایل Excel را انتخاب کنید.')">بررسی فایل</button><button class="btn primary" onclick="importFile()">ثبت اطلاعات</button></div></div>
+</section>
+
+<div class="footer"><span>آخرین بروزرسانی: <b id="updated">همین لحظه</b></span><span>وضعیت اتصال: <b>آماده برای Excel واقعی</b></span></div>
+</main>
+</div>
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا"><i class="cross"></i><span class="up">↑</span></button>
+<div id="toast" class="toast"></div>
+
+<script>
+if(localStorage.getItem("tipax-theme")==="dark")document.body.classList.add("dark");
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("tipax-theme",document.body.classList.contains("dark")?"dark":"light")}
+function toggleMenu(){document.body.classList.toggle("menu-open")}
+function showToast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
+function formatBytes(n){if(n<1024)return n+" B";if(n<1048576)return (n/1024).toFixed(1)+" KB";return (n/1048576).toFixed(1)+" MB"}
+const input=document.getElementById("fileInput"),drop=document.getElementById("drop");
+input.addEventListener("change",()=>input.files[0]&&loadFile(input.files[0]));
+["dragenter","dragover"].forEach(x=>drop.addEventListener(x,e=>{e.preventDefault();drop.classList.add("drag")}));
+["dragleave","drop"].forEach(x=>drop.addEventListener(x,e=>{e.preventDefault();drop.classList.remove("drag")}));
+drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f)loadFile(f)});
+function loadFile(f){
+ const ok=/\.(xlsx|xls|csv)$/i.test(f.name); if(!ok){showToast("فرمت فایل پشتیبانی نمی‌شود.");return}
+ document.getElementById("filename").textContent=f.name;document.getElementById("filesize").textContent=formatBytes(f.size)+" · آماده بررسی";
+ document.getElementById("fileline").classList.add("show");
+ document.getElementById("ready").textContent="بررسی";
+ document.getElementById("modeBadge").textContent="فایل انتخاب شد";
+ document.getElementById("previewText").textContent="فایل "+f.name+" انتخاب شده؛ برای خواندن واقعی Excel، کتابخانه پردازش Excel را به پروژه اضافه می‌کنیم.";
+ document.getElementById("previewBody").innerHTML=`<tr><td>1</td><td>نمونه فایل</td><td>—</td><td>—</td><td>—</td><td><span class="badge amber">منتظر پردازش</span></td><td><span class="badge">در انتظار</span></td></tr>`;
+ showToast("فایل با موفقیت انتخاب شد.");
+}
+function clearFile(e){e.stopPropagation();input.value="";document.getElementById("fileline").classList.remove("show");document.getElementById("ready").textContent="آماده";document.getElementById("modeBadge").textContent="منتظر فایل";document.getElementById("previewBody").innerHTML='<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--muted)">هنوز فایلی انتخاب نشده است.</td></tr>'}
+function importFile(){if(!input.files[0]){showToast("ابتدا فایل Excel را انتخاب کنید.");return}showToast("فایل آماده ورود است؛ مرحله پردازش واقعی Excel در اتصال داده فعال می‌شود.")}
+function downloadTemplate(){
+ const csv="کد مرسوله,تاریخ,مبلغ,نوع پرداخت,وضعیت,سایز کارتون\n100001,1405/07/01,200000,نقدی,تحویل شده,A3\n100002,1405/07/01,350000,پس کرایه,در حال پخش,B4";
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));a.download="tipax-import-template.csv";a.click();URL.revokeObjectURL(a.href);showToast("قالب نمونه دانلود شد.")}
+</script>
+</body>
+</html>
