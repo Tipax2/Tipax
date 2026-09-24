@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پخش‌کننده‌ها | سامانه مدیریت تیپاکس</title>
+<style>
+:root{--bg:#f4f8f5;--card:rgba(255,255,255,.9);--solid:#fff;--text:#17221b;--muted:#7d8b82;--line:rgba(20,55,36,.09);--green:#18b86a;--green2:#07894c;--soft:rgba(24,184,106,.09);--red:#df6872;--amber:#d39a36;--blue:#6584ee;--shadow:0 18px 55px rgba(23,61,40,.08)}
+body.dark{--bg:#090f0c;--card:rgba(17,27,21,.96);--solid:#141e18;--text:#e7f0ea;--muted:#8d9a92;--line:rgba(160,205,177,.09);--soft:rgba(24,184,106,.1);--shadow:0 18px 55px rgba(0,0,0,.34)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 0 0,rgba(24,184,106,.06),transparent 27%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.3s}body.dark{background:radial-gradient(circle at 0 0,rgba(24,184,106,.04),transparent 25%),#090f0c}
+button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;padding:23px 16px;background:rgba(255,255,255,.62);backdrop-filter:blur(25px);border-left:1px solid var(--line);z-index:40}.dark .sidebar{background:rgba(8,14,11,.9)}
+.brand{display:flex;align-items:center;gap:10px;padding:5px 8px 27px}.brandmark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#2acc7c,#078b4c);color:#fff;font-weight:900;box-shadow:0 12px 30px rgba(24,184,106,.2)}.brand b{display:block;font-size:15px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:4px}
+.navtitle{padding:8px 13px;color:var(--muted);font-size:9px}.nav{display:flex;flex-direction:column;gap:5px}.nav a{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:15px;color:var(--muted);font-size:11px;transition:.2s}.nav a:hover,.nav a.active{background:var(--soft);color:var(--green2);transform:translateX(-2px)}.nav a.active{font-weight:bold}.navicon{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.38)}.dark .navicon{background:rgba(255,255,255,.025)}
+.side-status{position:absolute;bottom:17px;left:16px;right:16px;padding:12px;border:1px solid var(--line);border-radius:17px;background:var(--card);font-size:8px}.side-status div{display:flex;justify-content:space-between}.online{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.09)}
+.content{min-width:0;padding:20px 25px 70px}.topbar{height:67px;padding:8px 11px;border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.top-left,.top-actions,.profile{display:flex;align-items:center;gap:9px}.mobile{display:none}.page-title h1{font-size:18px;margin:0 0 3px}.page-title small{font-size:8px;color:var(--muted)}.iconbtn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:var(--solid);color:var(--text);display:grid;place-items:center;transition:.2s}.iconbtn:hover{transform:translateY(-2px)}.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d9f8e7,#a7e9c3);display:grid;place-items:center;color:#087d45;font-weight:bold}.profile small{display:block;color:var(--muted);font-size:7px;margin-top:3px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 3px 18px}.hero h2{font-size:26px;margin:0}.hero p{font-size:9px;color:var(--muted);margin:7px 0 0}.actions{display:flex;gap:8px}.btn{border:0;border-radius:13px;padding:10px 14px;font-size:8px;font-weight:bold;transition:.2s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(135deg,#18b86a,#078d4e);color:#fff;box-shadow:0 10px 25px rgba(24,184,106,.15)}.soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}
+.panel{border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(23px);box-shadow:var(--shadow);overflow:hidden}.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panelhead h3{font-size:11px;margin:0}.panelhead small{font-size:7px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:16px}.kpi{position:relative;overflow:hidden;padding:15px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);transition:.25s}.kpi:hover{transform:translateY(-4px)}.kpi:after{content:"";position:absolute;left:-35px;bottom:-50px;width:105px;height:105px;border-radius:50%;background:var(--soft)}.kpitop{display:flex;justify-content:space-between;align-items:center}.kpitop small{font-size:7px;color:var(--muted)}.ki{width:34px;height:34px;border-radius:11px;background:var(--soft);color:var(--green2);display:grid;place-items:center}.kpi b{display:block;font-size:20px;margin-top:10px}.kpi em{font-style:normal;font-size:7px;color:var(--muted)}.kpi.red .ki{color:var(--red);background:rgba(223,104,114,.1)}.kpi.amber .ki{color:var(--amber);background:rgba(211,154,54,.1)}.kpi.blue .ki{color:var(--blue);background:rgba(101,132,238,.1)}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:15px;margin-bottom:15px}
+.courier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;padding:15px}.courier{position:relative;padding:16px;border:1px solid var(--line);border-radius:19px;background:rgba(255,255,255,.15);overflow:hidden;transition:.25s}.dark .courier{background:rgba(255,255,255,.018)}.courier:hover{transform:translateY(-4px)}.vehicle{display:flex;align-items:center;justify-content:space-between}.vehicleicon{width:45px;height:45px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:21px}.status{font-size:7px;padding:6px 8px;border-radius:9px;background:rgba(24,184,106,.1);color:var(--green2)}.status.busy{background:rgba(101,132,238,.1);color:var(--blue)}.status.route{background:rgba(211,154,54,.1);color:var(--amber)}.courier h3{font-size:13px;margin:13px 0 3px}.courier p{font-size:7px;color:var(--muted);margin:0 0 12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding-top:11px;gap:5px}.stats div{text-align:center}.stats b{display:block;font-size:15px}.stats small{font-size:6px;color:var(--muted)}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:7px;text-align:right;white-space:nowrap}.table th{color:var(--muted);background:rgba(24,184,106,.03)}.table td strong{font-size:8px}.person{display:flex;align-items:center;gap:8px}.miniavatar{width:30px;height:30px;border-radius:10px;background:var(--soft);display:grid;place-items:center;color:var(--green2);font-weight:bold}.badge{display:inline-flex;padding:5px 8px;border-radius:9px;background:var(--soft);color:var(--green2);font-size:7px}.badge.blue{background:rgba(101,132,238,.1);color:var(--blue)}.badge.amber{background:rgba(211,154,54,.1);color:var(--amber)}.badge.red{background:rgba(223,104,114,.1);color:var(--red)}
+.route-list{padding:8px 15px}.route{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.route:last-child{border:0}.routeicon{width:34px;height:34px;border-radius:11px;background:var(--soft);display:grid;place-items:center;color:var(--green2)}.route div{flex:1}.route strong{font-size:8px;display:block}.route small{font-size:7px;color:var(--muted);display:block;margin-top:3px}.route b{font-size:9px}
+.form{padding:15px}.formgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:8px}.field{height:39px;width:100%;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.38);color:var(--text);font-size:8px;outline:none}.dark .field{background:#121b16;color:#e7f0ea;color-scheme:dark}.dark select.field option{background:#121b16;color:#e7f0ea}.field:focus{border-color:rgba(24,184,106,.45);box-shadow:0 0 0 3px rgba(24,184,106,.05)}
+.actions-row{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-top:1px solid var(--line)}.actions-row small{font-size:7px;color:var(--muted)}
+.fab{position:fixed;left:25px;bottom:25px;width:55px;height:55px;border:1px solid rgba(24,184,106,.2);border-radius:18px;background:var(--card);backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);z-index:60;color:var(--green2);display:grid;place-items:center}.cross{position:absolute;width:21px;height:21px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}.up{position:relative;z-index:2;font-size:19px;font-weight:900}@keyframes spin{to{transform:rotate(405deg)}}
+.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:210px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);backdrop-filter:blur(20px);box-shadow:var(--shadow);font-size:8px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:none}
+.footer{margin-top:15px;padding:12px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);display:flex;justify-content:space-between;color:var(--muted);font-size:7px}.footer b{color:var(--green2)}
+@media(max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.courier-grid{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:950px){.grid{grid-template-columns:1fr}}
+@media(max-width:820px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}body.menu-open .sidebar{transform:none}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:35;display:none}body.menu-open .overlay{display:block}.mobile{display:grid}.content{padding:12px}.profile div:last-child{display:none}.hero{flex-direction:column;align-items:stretch}.formgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr 1fr}.courier-grid{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.actions{flex-direction:column}.movement{grid-template-columns:1fr}.fab{left:14px;bottom:14px}.footer{flex-direction:column;gap:7px}}
+</style>
+</head>
+<body>
+<div class="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brandmark">ت</div><div><b>مدیریت تیپاکس</b><small>سامانه گزارش و مدیریت شعبه</small></div></div>
+<div class="navtitle">مدیریت اصلی</div>
+<nav class="nav">
+<a href="../dashboard.html"><span class="navicon">⌂</span>داشبورد</a>
+<a href="shipments.html"><span class="navicon">▣</span>مرسولات</a>
+<a href="register.html"><span class="navicon">＋</span>ثبت اطلاعات</a>
+<a href="reports.html"><span class="navicon">▤</span>گزارش‌ها</a>
+<a class="active" href="couriers.html"><span class="navicon">♧</span>پخش‌کننده‌ها</a>
+<a href="warehouse.html"><span class="navicon">▦</span>انبار</a>
+</nav>
+<div class="navtitle" style="margin-top:13px">سیستم و اتصال</div>
+<nav class="nav">
+<a href="import-excel.html"><span class="navicon">⇩</span>ورود از Excel</a>
+<a href="api.html"><span class="navicon">⌁</span>اتصال API</a>
+<a href="settings.html"><span class="navicon">⚙</span>تنظیمات</a>
+</nav>
+<div class="side-status"><div><span>وضعیت سامانه</span><i class="online"></i></div><div style="margin-top:8px;color:var(--muted)">مدیریت پخش فعال است</div></div>
+</aside>
+
+<main class="content" id="top">
+<header class="topbar">
+<div class="top-left"><button class="iconbtn mobile" onclick="toggleMenu()">☰</button><div class="page-title"><h1>مدیریت پخش‌کننده‌ها</h1><small>کنترل ناوگان، مسیر و وضعیت تحویل</small></div></div>
+<div class="top-actions"><button class="iconbtn" onclick="toggleTheme()">◐</button><div class="profile"><div class="avatar">م</div><div><b style="font-size:9px">مدیر شعبه</b><small>دسترسی کامل</small></div></div></div>
+</header>
+
+<section class="hero">
+<div><h2>پخش شعبه</h2><p>وضعیت موتور، وانت و ماشین را یکجا ببینید و عملکرد تحویل را ثبت کنید.</p></div>
+<div class="actions"><button class="btn soft" onclick="showToast('گزارش عملکرد آماده اتصال به Excel است.')">↓ گزارش عملکرد</button><button class="btn primary" onclick="document.getElementById('add').scrollIntoView({behavior:'smooth'})">＋ ثبت وضعیت</button></div>
+</section>
+
+<section class="kpis">
+<div class="kpi"><div class="kpitop"><small>پخش‌کننده فعال</small><div class="ki">♧</div></div><b>3</b><em>موتور، وانت، ماشین</em></div>
+<div class="kpi"><div class="kpitop"><small>مرسولات امروز</small><div class="ki">▣</div></div><b>146</b><em>اختصاص داده‌شده</em></div>
+<div class="kpi red"><div class="kpitop"><small>تحویل شده</small><div class="ki">✓</div></div><b>118</b><em>مرسوله موفق</em></div>
+<div class="kpi amber"><div class="kpitop"><small>در حال پخش</small><div class="ki">↗</div></div><b>24</b><em>مرسوله در مسیر</em></div>
+<div class="kpi blue"><div class="kpitop"><small>برگشتی / مشکل</small><div class="ki">!</div></div><b>4</b><em>نیازمند بررسی</em></div>
+</section>
+
+<section class="panel" style="margin-bottom:15px">
+<div class="panelhead"><div><h3>وضعیت ناوگان</h3><small>نمای لحظه‌ای وضعیت پخش‌کننده‌های شعبه</small></div><span class="badge">۳ پخش‌کننده</span></div>
+<div class="courier-grid">
+<div class="courier"><div class="vehicle"><div class="vehicleicon">🏍</div><span class="status">در حال پخش</span></div><h3>پخش موتور</h3><p>پخش‌کننده شماره ۱</p><div class="stats"><div><b>52</b><small>اختصاصی</small></div><div><b>44</b><small>تحویل</small></div><div><b>8</b><small>در مسیر</small></div></div></div>
+<div class="courier"><div class="vehicle"><div class="vehicleicon">🚐</div><span class="status busy">در حال پخش</span></div><h3>پخش وانت</h3><p>پخش‌کننده شماره ۲</p><div class="stats"><div><b>61</b><small>اختصاصی</small></div><div><b>49</b><small>تحویل</small></div><div><b>10</b><small>در مسیر</small></div></div></div>
+<div class="courier"><div class="vehicle"><div class="vehicleicon">🚗</div><span class="status route">بررسی مسیر</span></div><h3>پخش ماشین</h3><p>پخش‌کننده شماره ۳</p><div class="stats"><div><b>33</b><small>اختصاصی</small></div><div><b>25</b><small>تحویل</small></div><div><b>6</b><small>در مسیر</small></div></div></div>
+</div>
+</section>
+
+<section class="grid">
+<div class="panel">
+<div class="panelhead"><div><h3>لیست پخش‌کننده‌ها</h3><small>جزئیات عملکرد و وضعیت هر نفر</small></div><button class="btn soft" onclick="filterTable()">فیلتر وضعیت</button></div>
+<div class="table-wrap">
+<table class="table" id="courierTable">
+<thead><tr><th>پخش‌کننده</th><th>وسیله</th><th>اختصاص</th><th>تحویل</th><th>برگشتی</th><th>اشتباه مسیر</th><th>وضعیت</th></tr></thead>
+<tbody>
+<tr><td><div class="person"><div class="miniavatar">۱</div><strong>پخش‌کننده ۱</strong></div></td><td>موتور</td><td>52</td><td>44</td><td>2</td><td>1</td><td><span class="badge">در حال پخش</span></td></tr>
+<tr><td><div class="person"><div class="miniavatar">۲</div><strong>پخش‌کننده ۲</strong></div></td><td>وانت</td><td>61</td><td>49</td><td>1</td><td>0</td><td><span class="badge blue">در حال پخش</span></td></tr>
+<tr><td><div class="person"><div class="miniavatar">۳</div><strong>پخش‌کننده ۳</strong></div></td><td>ماشین</td><td>33</td><td>25</td><td>1</td><td>2</td><td><span class="badge amber">بررسی مسیر</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="actions-row"><small>اطلاعات فعلی نمونه است و بعداً از داده واقعی مرسولات تغذیه می‌شود.</small><button class="btn soft" onclick="showToast('جزئیات پخش‌کننده آماده اتصال است.')">جزئیات</button></div>
+</div>
+
+<div class="panel">
+<div class="panelhead"><div><h3>مسیرهای امروز</h3><small>خلاصه وضعیت مسیر</small></div></div>
+<div class="route-list">
+<div class="route"><div class="routeicon">⌁</div><div><strong>مسیر شهری A</strong><small>موتور · 18 مرسوله</small></div><b>✓</b></div>
+<div class="route"><div class="routeicon">⌁</div><div><strong>مسیر شهری B</strong><small>وانت · 31 مرسوله</small></div><b>24</b></div>
+<div class="route"><div class="routeicon">!</div><div><strong>مسیر شهری C</strong><small>ماشین · نیازمند بررسی</small></div><b>2</b></div>
+<div class="route"><div class="routeicon">⌁</div><div><strong>مسیر خارج شهر</strong><small>وانت · 12 مرسوله</small></div><b>9</b></div>
+</div>
+</div>
+</section>
+
+<section class="panel" id="add">
+<div class="panelhead"><div><h3>ثبت وضعیت پخش‌کننده</h3><small>برای ثبت دستی و اتصال بعدی به وضعیت مرسولات</small></div></div>
+<div class="form"><div class="formgrid">
+<select class="field" id="driver"><option value="">پخش‌کننده</option><option>پخش‌کننده ۱ · موتور</option><option>پخش‌کننده ۲ · وانت</option><option>پخش‌کننده ۳ · ماشین</option></select>
+<select class="field" id="state"><option value="">وضعیت</option><option>تحویل شد</option><option>در حال پخش</option><option>عودت</option><option>اشتباه مسیر</option><option>مختومه</option></select>
+<input class="field" id="parcel" placeholder="کد / شماره مرسوله">
+<input class="field" id="note" placeholder="توضیحات">
+<button class="btn primary" onclick="addStatus()">ثبت وضعیت</button>
+</div></div>
+<div class="actions-row"><small>این فرم در مرحله بعد می‌تواند مستقیماً با داده‌های واردشده از Excel یا API پر شود.</small><span class="badge">آماده اتصال</span></div>
+</section>
+
+<div class="footer"><span>آخرین بروزرسانی: <b id="updated">همین لحظه</b></span><span>وضعیت اتصال: <b>آماده اتصال به داده واقعی</b></span></div>
+</main>
+</div>
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا"><i class="cross"></i><span class="up">↑</span></button>
+<div id="toast" class="toast"></div>
+<script>
+if(localStorage.getItem("tipax-theme")==="dark")document.body.classList.add("dark");
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("tipax-theme",document.body.classList.contains("dark")?"dark":"light")}
+function toggleMenu(){document.body.classList.toggle("menu-open")}
+function showToast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2300)}
+function filterTable(){const t=prompt("وضعیت موردنظر را وارد کنید؛ مثلاً «در حال پخش» یا «بررسی مسیر»:");if(t===null)return;let n=0;document.querySelectorAll("#courierTable tbody tr").forEach(r=>{const ok=!t.trim()||r.textContent.includes(t.trim());r.style.display=ok?"":"none";if(ok)n++});showToast(n+" مورد نمایش داده شد.")}
+function addStatus(){const d=document.getElementById("driver").value,s=document.getElementById("state").value,p=document.getElementById("parcel").value.trim(),n=document.getElementById("note").value.trim()||"ثبت دستی";if(!d||!s||!p){showToast("پخش‌کننده، وضعیت و کد مرسوله را وارد کنید.");return}document.getElementById("updated").textContent=new Date().toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"});document.getElementById("driver").value="";document.getElementById("state").value="";document.getElementById("parcel").value="";document.getElementById("note").value="";showToast("وضعیت مرسوله "+p+" ثبت شد.")}
+</script>
+</body>
+</html>
