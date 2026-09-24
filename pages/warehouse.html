@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>انبار | سامانه مدیریت تیپاکس</title>
+<style>
+:root{
+--bg:#f4f8f5;--card:rgba(255,255,255,.88);--solid:#fff;--text:#17221b;
+--muted:#7d8b82;--line:rgba(20,55,36,.09);--green:#18b86a;--green2:#07894c;
+--soft:rgba(24,184,106,.09);--red:#e66d76;--amber:#d59b37;--blue:#6685f5;
+--shadow:0 18px 55px rgba(23,61,40,.08);--radius:22px
+}
+body.dark{
+--bg:#090f0c;--card:rgba(17,27,21,.95);--solid:#141e18;--text:#e7f0ea;
+--muted:#8d9a92;--line:rgba(160,205,177,.09);--soft:rgba(24,184,106,.10);
+--shadow:0 18px 55px rgba(0,0,0,.34)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;background:
+radial-gradient(circle at 0 0,rgba(24,184,106,.07),transparent 27%),
+radial-gradient(circle at 100% 10%,rgba(20,90,55,.05),transparent 24%),var(--bg);
+color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.3s
+}
+body.dark{background:radial-gradient(circle at 0 0,rgba(24,184,106,.045),transparent 25%),#090f0c}
+button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.sidebar{
+position:sticky;top:0;height:100vh;padding:23px 16px;background:rgba(255,255,255,.62);
+backdrop-filter:blur(25px);border-left:1px solid var(--line);z-index:40
+}
+.dark .sidebar{background:rgba(8,14,11,.88)}
+.brand{display:flex;align-items:center;gap:10px;padding:5px 8px 27px}
+.brandmark{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#2acc7c,#078b4c);color:#fff;font-weight:900;box-shadow:0 12px 30px rgba(24,184,106,.2)}
+.brand b{display:block;font-size:15px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:4px}
+.navtitle{padding:8px 13px;color:var(--muted);font-size:9px}.nav{display:flex;flex-direction:column;gap:5px}
+.nav a{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:15px;color:var(--muted);font-size:11px;transition:.2s}
+.nav a:hover,.nav a.active{background:var(--soft);color:var(--green2);transform:translateX(-2px)}.nav a.active{font-weight:bold}
+.navicon{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.38)}
+.dark .navicon{background:rgba(255,255,255,.025)}
+.side-status{position:absolute;bottom:17px;left:16px;right:16px;padding:12px;border:1px solid var(--line);border-radius:17px;background:var(--card);font-size:8px}
+.side-status div{display:flex;justify-content:space-between}.online{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,184,106,.09)}
+.content{min-width:0;padding:20px 25px 70px}
+.topbar{height:67px;padding:8px 11px;border:1px solid var(--line);border-radius:22px;background:var(--card);backdrop-filter:blur(22px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.top-left,.top-actions,.profile{display:flex;align-items:center;gap:9px}.mobile{display:none}
+.page-title h1{font-size:18px;margin:0 0 3px}.page-title small{font-size:8px;color:var(--muted)}
+.iconbtn{width:40px;height:40px;border:1px solid var(--line);border-radius:13px;background:var(--solid);color:var(--text);display:grid;place-items:center;transition:.2s}.iconbtn:hover{transform:translateY(-2px)}
+.avatar{width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#d9f8e7,#a7e9c3);display:grid;place-items:center;color:#087d45;font-weight:bold}
+.profile small{display:block;color:var(--muted);font-size:7px;margin-top:3px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 3px 18px}.hero h2{font-size:26px;margin:0}.hero p{font-size:9px;color:var(--muted);margin:7px 0 0}
+.actions{display:flex;gap:8px}.btn{border:0;border-radius:13px;padding:10px 14px;font-size:8px;font-weight:bold;transition:.2s}.btn:hover{transform:translateY(-2px)}
+.primary{background:linear-gradient(135deg,#18b86a,#078d4e);color:#fff;box-shadow:0 10px 25px rgba(24,184,106,.15)}
+.soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}
+.panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);backdrop-filter:blur(23px);box-shadow:var(--shadow);overflow:hidden}
+.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panelhead h3{font-size:11px;margin:0}.panelhead small{font-size:7px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:16px}
+.kpi{position:relative;overflow:hidden;padding:15px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);transition:.25s}.kpi:hover{transform:translateY(-4px)}
+.kpi:after{content:"";position:absolute;left:-35px;bottom:-50px;width:105px;height:105px;border-radius:50%;background:var(--soft)}
+.kpitop{display:flex;justify-content:space-between;align-items:center}.kpitop small{font-size:7px;color:var(--muted)}
+.ki{width:34px;height:34px;border-radius:11px;background:var(--soft);color:var(--green2);display:grid;place-items:center}.kpi b{display:block;font-size:20px;margin-top:10px}.kpi em{font-style:normal;font-size:7px;color:var(--muted)}
+.kpi.red .ki{color:var(--red);background:rgba(230,109,118,.1)}.kpi.amber .ki{color:var(--amber);background:rgba(213,155,55,.1)}.kpi.blue .ki{color:var(--blue);background:rgba(102,133,245,.1)}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:15px;margin-bottom:15px}
+.stock-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:15px}
+.stock{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:18px;padding:15px;background:rgba(255,255,255,.16)}
+.dark .stock{background:rgba(255,255,255,.018)}
+.stock:after{content:"";position:absolute;width:75px;height:75px;border-radius:50%;left:-25px;bottom:-30px;background:var(--soft)}
+.stocktop{display:flex;align-items:center;justify-content:space-between}.stockicon{width:35px;height:35px;border-radius:11px;background:var(--soft);display:grid;place-items:center;color:var(--green2)}
+.stock small{font-size:7px;color:var(--muted)}.stock h3{font-size:23px;margin:10px 0 3px}.stock p{font-size:7px;color:var(--muted);margin:0}
+.level{height:6px;border-radius:10px;background:rgba(24,184,106,.07);margin-top:12px;overflow:hidden}.level i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,#18b86a,#6ddca2);border-radius:10px}
+.inventory-table{width:100%;border-collapse:collapse;min-width:650px}.table-wrap{overflow:auto}.inventory-table th,.inventory-table td{padding:12px 14px;border-bottom:1px solid var(--line);font-size:7px;text-align:right;white-space:nowrap}.inventory-table th{color:var(--muted);background:rgba(24,184,106,.03)}.inventory-table td strong{font-size:8px}
+.badge{display:inline-flex;padding:5px 8px;border-radius:9px;background:var(--soft);color:var(--green2);font-size:7px}.badge.low{background:rgba(213,155,55,.1);color:var(--amber)}.badge.out{background:rgba(230,109,118,.1);color:var(--red)}
+.form{padding:15px}.formgrid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr 1fr auto;gap:8px}.field{height:38px;width:100%;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.38);color:var(--text);font-size:8px;outline:none}.dark .field{background:#121b16;color:#e7f0ea;color-scheme:dark}.dark select.field option{background:#121b16;color:#e7f0ea}.field:focus{border-color:rgba(24,184,106,.45);box-shadow:0 0 0 3px rgba(24,184,106,.05)}
+.actions-row{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-top:1px solid var(--line)}.actions-row small{font-size:7px;color:var(--muted)}
+.alerts{display:flex;flex-direction:column;padding:9px 15px}.alert{display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.alert:last-child{border:0}.alerticon{width:32px;height:32px;border-radius:10px;background:rgba(213,155,55,.1);color:var(--amber);display:grid;place-items:center}.alert.red .alerticon{background:rgba(230,109,118,.1);color:var(--red)}.alert div{flex:1}.alert strong{display:block;font-size:8px}.alert small{display:block;color:var(--muted);font-size:7px;margin-top:3px}.alert b{font-size:9px}
+.movement{padding:15px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.move{border:1px solid var(--line);border-radius:16px;padding:13px}.movehead{display:flex;justify-content:space-between;align-items:center}.movehead strong{font-size:8px}.movehead span{font-size:7px;color:var(--muted)}.move b{display:block;font-size:18px;margin:9px 0}.move small{font-size:7px;color:var(--muted)}
+.fab{position:fixed;left:25px;bottom:25px;width:55px;height:55px;border:1px solid rgba(24,184,106,.2);border-radius:18px;background:var(--card);backdrop-filter:blur(20px);box-shadow:0 18px 45px rgba(0,0,0,.13);z-index:60;color:var(--green2);display:grid;place-items:center}.cross{position:absolute;width:21px;height:21px;border:1.5px solid var(--green);border-radius:7px;transform:rotate(45deg);animation:spin 7s linear infinite}.up{position:relative;z-index:2;font-size:19px;font-weight:900}@keyframes spin{to{transform:rotate(405deg)}}
+.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:210px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);backdrop-filter:blur(20px);box-shadow:var(--shadow);font-size:8px;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s}.toast.show{opacity:1;transform:none}
+.footer{margin-top:15px;padding:12px 15px;border:1px solid var(--line);border-radius:15px;background:var(--card);display:flex;justify-content:space-between;color:var(--muted);font-size:7px}.footer b{color:var(--green2)}
+@media(max-width:1150px){.formgrid{grid-template-columns:repeat(3,1fr)}.kpis{grid-template-columns:repeat(3,1fr)}.stock-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:950px){.grid{grid-template-columns:1fr}.movement{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){
+.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:280px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}
+body.menu-open .sidebar{transform:none}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(3px);z-index:35;display:none}body.menu-open .overlay{display:block}
+.mobile{display:grid}.content{padding:12px}.profile div:last-child{display:none}.hero{flex-direction:column;align-items:stretch}.formgrid{grid-template-columns:1fr 1fr}.movement{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){.formgrid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.stock-grid,.movement{grid-template-columns:1fr 1fr}.actions{flex-direction:column}.fab{left:14px;bottom:14px}.footer{flex-direction:column;gap:7px}}
+</style>
+</head>
+<body>
+<div class="overlay" onclick="toggleMenu()"></div>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brandmark">ت</div><div><b>مدیریت تیپاکس</b><small>سامانه گزارش و مدیریت شعبه</small></div></div>
+<div class="navtitle">مدیریت اصلی</div>
+<nav class="nav">
+<a href="../dashboard.html"><span class="navicon">⌂</span>داشبورد</a>
+<a href="shipments.html"><span class="navicon">▣</span>مرسولات</a>
+<a href="register.html"><span class="navicon">＋</span>ثبت اطلاعات</a>
+<a href="reports.html"><span class="navicon">▤</span>گزارش‌ها</a>
+<a href="couriers.html"><span class="navicon">♧</span>پخش‌کننده‌ها</a>
+<a class="active" href="warehouse.html"><span class="navicon">▦</span>انبار</a>
+</nav>
+<div class="navtitle" style="margin-top:13px">سیستم و اتصال</div>
+<nav class="nav">
+<a href="import-excel.html"><span class="navicon">⇩</span>ورود از Excel</a>
+<a href="api.html"><span class="navicon">⌁</span>اتصال API</a>
+<a href="settings.html"><span class="navicon">⚙</span>تنظیمات</a>
+</nav>
+<div class="side-status"><div><span>وضعیت سامانه</span><i class="online"></i></div><div style="margin-top:8px;color:var(--muted)">مدیریت انبار فعال است</div></div>
+</aside>
+
+<main class="content" id="top">
+<header class="topbar">
+<div class="top-left">
+<button class="iconbtn mobile" onclick="toggleMenu()">☰</button>
+<div class="page-title"><h1>مدیریت انبار</h1><small>موجودی، ورود، خروج و مصرف اقلام</small></div>
+</div>
+<div class="top-actions">
+<button class="iconbtn" onclick="toggleTheme()" title="تغییر حالت">◐</button>
+<div class="profile"><div class="avatar">م</div><div><b style="font-size:9px">مدیر شعبه</b><small>دسترسی کامل</small></div></div>
+</div>
+</header>
+
+<section class="hero">
+<div><h2>انبار شعبه</h2><p>موجودی اقلام مصرفی را کنترل کنید و ورود و خروج را برای گزارش‌های آینده ثبت کنید.</p></div>
+<div class="actions"><button class="btn soft" onclick="exportStock()">↓ خروجی موجودی</button><button class="btn primary" onclick="focusAdd()">＋ ثبت ورود / خروج</button></div>
+</section>
+
+<section class="kpis">
+<div class="kpi"><div class="kpitop"><small>کل اقلام</small><div class="ki">▦</div></div><b id="totalItems">1,561</b><em>عدد موجود در انبار</em></div>
+<div class="kpi"><div class="kpitop"><small>ورودی این ماه</small><div class="ki">↓</div></div><b>2,140</b><em>عدد واردشده</em></div>
+<div class="kpi red"><div class="kpitop"><small>مصرف این ماه</small><div class="ki">↑</div></div><b>1,386</b><em>عدد مصرف‌شده</em></div>
+<div class="kpi amber"><div class="kpitop"><small>نیازمند سفارش</small><div class="ki">!</div></div><b id="lowCount">2</b><em>قلم کم‌موجود</em></div>
+<div class="kpi blue"><div class="kpitop"><small>تنوع اقلام</small><div class="ki">◇</div></div><b>8</b><em>قلم فعال</em></div>
+</section>
+
+<section class="panel" style="margin-bottom:15px">
+<div class="panelhead"><div><h3>موجودی سریع</h3><small>سطح فعلی اقلام اصلی شعبه</small></div><span class="badge">به‌روز</span></div>
+<div class="stock-grid">
+<div class="stock"><div class="stocktop"><small>کارتن سایز 1</small><div class="stockicon">□</div></div><h3>186</h3><p>عدد موجود</p><div class="level"><i style="--w:74%"></i></div></div>
+<div class="stock"><div class="stocktop"><small>کارتن سایز 2</small><div class="stockicon">□</div></div><h3>94</h3><p>عدد موجود</p><div class="level"><i style="--w:48%"></i></div></div>
+<div class="stock"><div class="stocktop"><small>فلایر A3</small><div class="stockicon">▤</div></div><h3>640</h3><p>عدد موجود</p><div class="level"><i style="--w:82%"></i></div></div>
+<div class="stock"><div class="stocktop"><small>پاکت</small><div class="stockicon">▱</div></div><h3>315</h3><p>عدد موجود</p><div class="level"><i style="--w:61%"></i></div></div>
+</div>
+</section>
+
+<section class="grid">
+<div class="panel">
+<div class="panelhead"><div><h3>فهرست موجودی</h3><small>تمام اقلام قابل مدیریت</small></div><button class="btn soft" onclick="filterStock()">فیلتر</button></div>
+<div class="table-wrap">
+<table class="inventory-table" id="stockTable">
+<thead><tr><th>قلم</th><th>دسته</th><th>موجودی</th><th>حد سفارش</th><th>واحد</th><th>وضعیت</th></tr></thead>
+<tbody>
+<tr><td><strong>کارتن سایز 1</strong></td><td>کارتن</td><td data-value="186">186</td><td>80</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+<tr><td><strong>کارتن سایز 2</strong></td><td>کارتن</td><td data-value="94">94</td><td>80</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+<tr><td><strong>کارتن سایز 3</strong></td><td>کارتن</td><td data-value="38">38</td><td>60</td><td>عدد</td><td><span class="badge low">کم</span></td></tr>
+<tr><td><strong>فلایر A3</strong></td><td>مصرفی</td><td data-value="640">640</td><td>200</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+<tr><td><strong>B4</strong></td><td>مصرفی</td><td data-value="420">420</td><td>150</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+<tr><td><strong>پاکت</strong></td><td>مصرفی</td><td data-value="315">315</td><td>150</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+<tr><td><strong>لیبل</strong></td><td>مصرفی</td><td data-value="52">52</td><td>75</td><td>رول</td><td><span class="badge low">کم</span></td></tr>
+<tr><td><strong>چسب بسته‌بندی</strong></td><td>مصرفی</td><td data-value="124">124</td><td>50</td><td>عدد</td><td><span class="badge">مناسب</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="actions-row"><small id="tableInfo">۸ قلم در فهرست موجودی</small><button class="btn soft" onclick="orderLow()">مشاهده اقلام کم</button></div>
+</div>
+
+<div class="panel">
+<div class="panelhead"><div><h3>هشدارهای انبار</h3><small>مواردی که نیاز به توجه دارند</small></div></div>
+<div class="alerts">
+<div class="alert"><div class="alerticon">!</div><div><strong>کارتن سایز 3</strong><small>موجودی از حد سفارش کمتر است.</small></div><b>38</b></div>
+<div class="alert red"><div class="alerticon">!</div><div><strong>لیبل</strong><small>به‌زودی نیاز به سفارش دارد.</small></div><b>52</b></div>
+<div class="alert"><div class="alerticon">↻</div><div><strong>بررسی موجودی</strong><small>آخرین بروزرسانی ثبت شده است.</small></div><b>✓</b></div>
+</div>
+</div>
+</section>
+
+<section class="panel" id="addSection" style="margin-top:15px">
+<div class="panelhead"><div><h3>ثبت ورود / خروج انبار</h3><small>برای اتصال بعدی به گزارش‌ها و Excel آماده است.</small></div></div>
+<div class="form">
+<div class="formgrid">
+<select id="item" class="field">
+<option value="">انتخاب قلم</option><option>کارتن سایز 1</option><option>کارتن سایز 2</option><option>کارتن سایز 3</option><option>فلایر A3</option><option>B4</option><option>پاکت</option><option>لیبل</option><option>چسب بسته‌بندی</option>
+</select>
+<select id="type" class="field"><option value="">نوع عملیات</option><option>ورود</option><option>خروج</option></select>
+<input id="qty" class="field" type="number" min="1" placeholder="تعداد">
+<input id="operator" class="field" placeholder="نام ثبت‌کننده">
+<input id="desc" class="field" placeholder="توضیحات">
+<button class="btn primary" onclick="addMovement()">ثبت</button>
+</div>
+</div>
+<div class="note" style="padding:11px 15px;border-top:1px solid var(--line);font-size:7px;color:var(--muted);line-height:1.9">
+ثبت‌های این صفحه در نسخه فعلی نمایشی هستند و ساختار آن برای اتصال به Excel/API در مراحل بعدی آماده شده است.
+</div>
+</section>
+
+<section class="panel" style="margin-top:15px">
+<div class="panelhead"><div><h3>آخرین گردش انبار</h3><small>ورود و خروج ثبت‌شده</small></div><span class="badge">تاریخچه</span></div>
+<div class="movement" id="movements">
+<div class="move"><div class="movehead"><strong>ورود · کارتن سایز 1</strong><span>امروز 08:40</span></div><b>+120</b><small>تحویل از تامین‌کننده</small></div>
+<div class="move"><div class="movehead"><strong>خروج · فلایر A3</strong><span>امروز 09:25</span></div><b>-80</b><small>مصرف شعبه</small></div>
+<div class="move"><div class="movehead"><strong>خروج · پاکت</strong><span>دیروز 15:10</span></div><b>-45</b><small>مصرف شعبه</small></div>
+</div>
+</section>
+
+<div class="footer"><span>آخرین بروزرسانی: <b id="updated">همین لحظه</b></span><span>منبع داده: <b>نمونه / آماده اتصال</b></span></div>
+</main>
+</div>
+
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="بازگشت به بالا"><i class="cross"></i><span class="up">↑</span></button>
+<div id="toast" class="toast"></div>
+
+<script>
+if(localStorage.getItem("tipax-theme")==="dark")document.body.classList.add("dark");
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("tipax-theme",document.body.classList.contains("dark")?"dark":"light")}
+function toggleMenu(){document.body.classList.toggle("menu-open")}
+function showToast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2300)}
+function focusAdd(){document.getElementById("addSection").scrollIntoView({behavior:"smooth",block:"center"});setTimeout(()=>document.getElementById("item").focus(),450)}
+function addMovement(){
+const item=document.getElementById("item").value,type=document.getElementById("type").value,qty=Number(document.getElementById("qty").value),operator=document.getElementById("operator").value.trim()||"مدیر شعبه",desc=document.getElementById("desc").value.trim()||"ثبت دستی";
+if(!item||!type||!qty){showToast("قلم، نوع عملیات و تعداد را وارد کنید.");return}
+const box=document.createElement("div");box.className="move";
+const sign=type==="ورود"?"+":"-";
+box.innerHTML='<div class="movehead"><strong>'+type+" · "+item+'</strong><span>همین لحظه</span></div><b>'+sign+qty+'</b><small>'+desc+" · "+operator+"</small>";
+document.getElementById("movements").prepend(box);
+document.getElementById("item").value="";document.getElementById("type").value="";document.getElementById("qty").value="";document.getElementById("desc").value="";
+document.getElementById("updated").textContent=new Date().toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"});
+showToast("گردش انبار ثبت شد.");
+}
+function filterStock(){
+const term=prompt("نام قلم یا دسته را وارد کنید:");
+if(term===null)return;
+let count=0;
+document.querySelectorAll("#stockTable tbody tr").forEach(tr=>{
+const ok=tr.textContent.includes(term.trim());
+tr.style.display=ok?"":"none";if(ok)count++;
+});
+document.getElementById("tableInfo").textContent=count+" قلم نمایش داده شد";
+showToast(count+" مورد پیدا شد.");
+}
+function orderLow(){
+document.querySelectorAll("#stockTable tbody tr").forEach(tr=>{
+const badge=tr.querySelector(".badge");tr.style.display=badge&&badge.classList.contains("low")?"":"none";
+});
+document.getElementById("tableInfo").textContent="فقط اقلام کم‌موجود نمایش داده می‌شوند";
+showToast("اقلام کم‌موجود نمایش داده شدند.");
+}
+function exportStock(){
+const rows=[["قلم","دسته","موجودی","حد سفارش","واحد"],["کارتن سایز 1","کارتن","186","80","عدد"],["کارتن سایز 2","کارتن","94","80","عدد"],["کارتن سایز 3","کارتن","38","60","عدد"],["فلایر A3","مصرفی","640","200","عدد"],["B4","مصرفی","420","150","عدد"],["پاکت","مصرفی","315","150","عدد"],["لیبل","مصرفی","52","75","رول"],["چسب بسته‌بندی","مصرفی","124","50","عدد"]];
+const blob=new Blob(["\ufeff"+rows.map(r=>r.join(",")).join("\n")],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="tipax-warehouse.csv";a.click();URL.revokeObjectURL(a.href);showToast("خروجی موجودی آماده شد.");
+}
+</script>
+</body>
+</html>
