@@ -1,0 +1,794 @@
+/* =========================================================
+   TIPAX SVG PANEL — RESPONSIVE SYSTEM
+   File: css/responsive.css
+   Mobile / Tablet / Laptop / Wide Screens
+   ========================================================= */
+
+/* =========================================================
+   GLOBAL RESPONSIVE SAFETY
+   ========================================================= */
+
+html{
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+body{
+  min-width:320px;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+img,
+svg,
+video,
+canvas{
+  max-width:100%;
+}
+
+button,
+input,
+select,
+textarea{
+  max-width:100%;
+}
+
+table{
+  max-width:100%;
+}
+
+*{
+  min-width:0;
+}
+
+/* Prevent accidental horizontal overflow from long data */
+.tipax-page,
+.page-shell,
+.dashboard-page,
+.page-container,
+.dashboard-grid,
+.page-grid{
+  width:100%;
+  max-width:100%;
+}
+
+/* =========================================================
+   LARGE DESKTOP — 1440px+
+   ========================================================= */
+
+@media (min-width:1440px){
+
+  .page-container{
+    width:min(100%,1560px);
+  }
+
+  .dashboard-kpis{
+    gap:17px;
+  }
+
+  .dashboard-grid,
+  .page-grid{
+    gap:19px;
+  }
+
+  .page-section-body,
+  .dashboard-card-body{
+    padding:21px;
+  }
+
+  .page-table{
+    font-size:10px;
+  }
+}
+
+/* =========================================================
+   DESKTOP — 1200px to 1439px
+   ========================================================= */
+
+@media (max-width:1439px) and (min-width:1201px){
+
+  .dashboard-kpis{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+
+  .page-stats{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+
+/* =========================================================
+   SMALL DESKTOP / LARGE TABLET
+   ========================================================= */
+
+@media (max-width:1200px){
+
+  .dashboard-grid{
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  .dashboard-side{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:start;
+  }
+
+  .page-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-grid.equal{
+    grid-template-columns:1fr;
+  }
+
+  .page-grid.three{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .page-form-grid.four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .inventory-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  .courier-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+/* =========================================================
+   TABLET — 992px
+   ========================================================= */
+
+@media (max-width:991px){
+
+  .dashboard-kpis{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .dashboard-side{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard-header{
+    align-items:flex-start;
+  }
+
+  .page-hero{
+    align-items:flex-start;
+  }
+
+  .page-stats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .page-toolbar{
+    align-items:stretch;
+  }
+
+  .page-toolbar-group{
+    flex:1;
+  }
+
+  .page-search{
+    flex:1;
+  }
+
+  .page-table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+
+  .page-table{
+    min-width:780px;
+  }
+}
+
+/* =========================================================
+   TABLET PORTRAIT — 768px
+   ========================================================= */
+
+@media (max-width:767px){
+
+  .dashboard-header,
+  .page-hero{
+    margin-bottom:15px;
+  }
+
+  .dashboard-header h1,
+  .page-hero h1{
+    font-size:23px;
+  }
+
+  .dashboard-header p,
+  .page-hero p{
+    font-size:9px;
+  }
+
+  .dashboard-header-actions,
+  .page-hero-actions{
+    width:100%;
+    justify-content:flex-start;
+  }
+
+  .dashboard-kpis{
+    gap:10px;
+  }
+
+  .dashboard-kpi{
+    padding:14px;
+    border-radius:18px;
+  }
+
+  .dashboard-kpi-value{
+    font-size:21px;
+  }
+
+  .dashboard-side{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard-card,
+  .page-section,
+  .page-table-card{
+    border-radius:20px;
+  }
+
+  .dashboard-card-header,
+  .page-section-header{
+    padding:14px 15px;
+  }
+
+  .dashboard-card-body,
+  .page-section-body{
+    padding:15px;
+  }
+
+  .dashboard-quick-actions{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .page-grid.three{
+    grid-template-columns:1fr;
+  }
+
+  .page-form-grid,
+  .page-form-grid.three,
+  .page-form-grid.four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .page-toolbar{
+    padding:10px;
+  }
+
+  .page-toolbar-group{
+    width:100%;
+  }
+
+  .page-search{
+    min-width:0;
+  }
+
+  .inventory-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .courier-grid{
+    grid-template-columns:1fr;
+  }
+
+  .api-connection{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE — 600px
+   ========================================================= */
+
+@media (max-width:600px){
+
+  /* ---------- Global typography ---------- */
+
+  body{
+    font-size:13px;
+  }
+
+  /* ---------- Main spacing ---------- */
+
+  .dashboard-page,
+  .page-shell,
+  .page-container{
+    padding-inline:0;
+  }
+
+  .dashboard-header,
+  .page-hero{
+    gap:12px;
+  }
+
+  /* ---------- Buttons ---------- */
+
+  .dashboard-header-actions,
+  .page-hero-actions{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+
+  .dashboard-header-actions > *,
+  .page-hero-actions > *{
+    width:100%;
+  }
+
+  /* ---------- KPI ---------- */
+
+  .dashboard-kpis{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard-kpi-label{
+    font-size:9px;
+  }
+
+  .dashboard-kpi-value{
+    font-size:20px;
+  }
+
+  .dashboard-kpi-icon{
+    width:35px;
+    height:35px;
+  }
+
+  /* ---------- Quick actions ---------- */
+
+  .dashboard-quick-actions{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard-action{
+    min-height:85px;
+    padding:12px;
+  }
+
+  /* ---------- Operations ---------- */
+
+  .dashboard-operations{
+    grid-template-columns:1fr 1fr;
+  }
+
+  /* ---------- Status ---------- */
+
+  .dashboard-status-row{
+    grid-template-columns:minmax(80px,1fr) auto;
+    gap:8px;
+  }
+
+  .dashboard-status-track{
+    grid-column:1 / -1;
+    grid-row:2;
+  }
+
+  /* ---------- Charts ---------- */
+
+  .dashboard-chart{
+    min-height:205px;
+    padding-inline:5px;
+    gap:5px;
+  }
+
+  .dashboard-chart-grid{
+    inset-inline:5px;
+  }
+
+  .dashboard-chart-label{
+    font-size:7px;
+  }
+
+  .dashboard-chart-value{
+    font-size:7px;
+  }
+
+  /* ---------- Page stats ---------- */
+
+  .page-stats{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .page-stat{
+    padding:12px;
+    border-radius:16px;
+  }
+
+  .page-stat-label{
+    font-size:8px;
+  }
+
+  .page-stat-value{
+    font-size:18px;
+  }
+
+  /* ---------- Forms ---------- */
+
+  .page-form-grid,
+  .page-form-grid.three,
+  .page-form-grid.four{
+    grid-template-columns:1fr;
+  }
+
+  .page-form-section{
+    padding:12px;
+  }
+
+  /* ---------- Toolbar ---------- */
+
+  .page-toolbar-group{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .page-search{
+    grid-column:1 / -1;
+    width:100%;
+  }
+
+  .page-filter{
+    width:100%;
+    min-width:0;
+  }
+
+  /* ---------- Tabs ---------- */
+
+  .page-tabs{
+    width:100%;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .page-tabs::-webkit-scrollbar{
+    display:none;
+  }
+
+  .page-tab{
+    min-height:35px;
+    padding-inline:11px;
+  }
+
+  /* ---------- Tables ---------- */
+
+  .page-table-wrap{
+    margin-inline:-1px;
+    width:calc(100% + 2px);
+  }
+
+  .page-table{
+    min-width:720px;
+  }
+
+  .page-table th,
+  .page-table td{
+    padding:11px 10px;
+  }
+
+  /* ---------- Pagination ---------- */
+
+  .page-pagination{
+    align-items:stretch;
+    flex-direction:column;
+    gap:9px;
+  }
+
+  .page-pagination-info{
+    text-align:center;
+  }
+
+  .page-pagination-buttons{
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- Metrics ---------- */
+
+  .page-metric{
+    grid-template-columns:1fr auto;
+  }
+
+  .page-metric .page-progress{
+    grid-column:1 / -1;
+    grid-row:2;
+  }
+
+  /* ---------- Inventory ---------- */
+
+  .inventory-grid{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .inventory-item{
+    padding:12px;
+  }
+
+  .inventory-item-count{
+    font-size:18px;
+  }
+
+  /* ---------- Courier ---------- */
+
+  .courier-grid{
+    grid-template-columns:1fr;
+  }
+
+  /* ---------- Modal ---------- */
+
+  .page-modal{
+    align-items:flex-end;
+    padding:0;
+  }
+
+  .page-modal-card{
+    width:100%;
+    max-height:92vh;
+    border-radius:24px 24px 0 0;
+  }
+
+  .page-modal-footer{
+    position:sticky;
+    bottom:0;
+    background:var(--tipax-surface-solid);
+  }
+
+  /* ---------- Dropzone ---------- */
+
+  .page-dropzone{
+    min-height:190px;
+    padding:18px;
+  }
+
+  /* ---------- API ---------- */
+
+  .api-connection-url{
+    max-width:100%;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE — 480px
+   ========================================================= */
+
+@media (max-width:480px){
+
+  .dashboard-header-actions,
+  .page-hero-actions{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard-kpis{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard-kpi{
+    min-height:0;
+  }
+
+  .dashboard-quick-actions{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard-operations{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard-courier{
+    grid-template-columns:36px minmax(0,1fr) auto;
+  }
+
+  .page-stats{
+    grid-template-columns:1fr;
+  }
+
+  .page-section-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .page-section-header > *{
+    max-width:100%;
+  }
+
+  .page-section-header .page-hero-actions,
+  .page-section-header .dashboard-header-actions{
+    width:100%;
+  }
+
+  .page-toolbar-group{
+    grid-template-columns:1fr;
+  }
+
+  .page-search{
+    grid-column:auto;
+  }
+
+  .inventory-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .page-chips{
+    gap:5px;
+  }
+
+  .page-chip{
+    font-size:8px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE — 380px
+   ========================================================= */
+
+@media (max-width:380px){
+
+  .dashboard-header h1,
+  .page-hero h1{
+    font-size:20px;
+  }
+
+  .dashboard-card-header,
+  .page-section-header{
+    padding:13px;
+  }
+
+  .dashboard-card-body,
+  .page-section-body{
+    padding:12px;
+  }
+
+  .dashboard-kpi{
+    padding:12px;
+  }
+
+  .dashboard-kpi-value{
+    font-size:18px;
+  }
+
+  .dashboard-operations{
+    grid-template-columns:1fr;
+  }
+
+  .inventory-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-stat-value{
+    font-size:20px;
+  }
+
+  .page-table{
+    min-width:680px;
+  }
+
+  .page-modal-body{
+    padding:14px;
+  }
+}
+
+/* =========================================================
+   LANDSCAPE PHONE
+   ========================================================= */
+
+@media (max-height:500px) and (orientation:landscape){
+
+  .page-modal-card{
+    max-height:96vh;
+  }
+
+  .page-modal{
+    align-items:center;
+    padding:8px;
+  }
+
+  .page-modal-card{
+    border-radius:20px;
+  }
+
+  .dashboard-header,
+  .page-hero{
+    margin-bottom:10px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover:none) and (pointer:coarse){
+
+  .dashboard-kpi:hover,
+  .dashboard-action:hover,
+  .dashboard-operation:hover,
+  .dashboard-courier:hover,
+  .page-stat:hover,
+  .inventory-item:hover,
+  .courier-card:hover{
+    transform:none;
+    box-shadow:var(--tipax-shadow);
+  }
+
+  .dashboard-chart-bar:hover .dashboard-chart-value{
+    opacity:0;
+  }
+
+  .page-table tbody tr:hover{
+    background:transparent;
+  }
+
+  /* Comfortable touch targets */
+  .page-tab,
+  .page-table-action,
+  .page-pagination button{
+    min-height:38px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+@media print{
+
+  body{
+    background:#fff !important;
+    color:#000 !important;
+    overflow:visible !important;
+  }
+
+  .dashboard-header-actions,
+  .page-hero-actions,
+  .page-toolbar,
+  .page-tabs,
+  .page-pagination,
+  .floating-top-button,
+  .scroll-top,
+  .back-to-top{
+    display:none !important;
+  }
+
+  .dashboard-card,
+  .page-section,
+  .page-table-card,
+  .page-stat{
+    box-shadow:none !important;
+    background:#fff !important;
+    border:1px solid #bbb !important;
+    break-inside:avoid;
+  }
+
+  .page-table-wrap{
+    overflow:visible !important;
+  }
+
+  .page-table{
+    min-width:0 !important;
+  }
+}
