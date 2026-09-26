@@ -1,1 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 640 180"
+     role="img"
+     aria-labelledby="tipaxLogoTitle tipaxLogoDesc"
+     focusable="false">
+  <title id="tipaxLogoTitle">Tipax</title>
+  <desc id="tipaxLogoDesc">Tipax logistics and parcel delivery logo</desc>
 
+  <defs>
+    <linearGradient id="tipaxGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#19b86a"/>
+      <stop offset="100%" stop-color="#087f4b"/>
+    </linearGradient>
+
+    <linearGradient id="tipaxAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#29d98a"/>
+      <stop offset="100%" stop-color="#0a9f60"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="7"
+                    flood-color="#063d28" flood-opacity=".18"/>
+    </filter>
+  </defs>
+
+  <!-- Symbol -->
+  <g transform="translate(18 18)" filter="url(#softShadow)">
+    <rect x="0" y="0" width="144" height="144" rx="36"
+          fill="url(#tipaxGreen)"/>
+
+    <!-- Abstract parcel / route mark -->
+    <path d="M36 58
+             L72 38
+             L108 58
+             L108 101
+             L72 122
+             L36 101
+             Z"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="9"
+          stroke-linejoin="round"/>
+
+    <path d="M36 58
+             L72 79
+             L108 58"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="9"
+          stroke-linejoin="round"/>
+
+    <path d="M72 79 L72 121"
+          fill="none"
+          stroke="#ffffff"
+          stroke-width="9"
+          stroke-linecap="round"/>
+
+    <!-- Motion / delivery accent -->
+    <path d="M25 38
+             C40 20 62 13 86 16"
+          fill="none"
+          stroke="#8ff0c2"
+          stroke-width="7"
+          stroke-linecap="round"/>
+
+    <circle cx="101" cy="19" r="6"
+            fill="#d7ffe9"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(190 48)">
+    <text x="0" y="68"
+          font-family="Tahoma, Arial, sans-serif"
+          font-size="78"
+          font-weight="800"
+          letter-spacing="-3"
+          fill="#087f4b">TIPAX</text>
+
+    <rect x="3" y="84" width="236" height="6" rx="3"
+          fill="url(#tipaxAccent)"/>
+
+    <text x="4" y="119"
+          font-family="Tahoma, Arial, sans-serif"
+          font-size="20"
+          font-weight="600"
+          letter-spacing="4"
+          fill="#4b665b">LOGISTICS</text>
+  </g>
+</svg>
