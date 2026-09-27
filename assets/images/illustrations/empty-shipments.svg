@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none" role="img" aria-labelledby="title">
+<title id="title">No Shipments</title>
+<defs>
+<linearGradient id="g" x1="100" y1="80" x2="1100" y2="620" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1f9d68"/><stop offset="1" stop-color="#0b6b4a"/>
+</linearGradient>
+</defs>
+
+<circle cx="600" cy="350" r="210" fill="#0f211b" stroke="#2aa978" stroke-opacity=".25" stroke-width="3"/>
+<rect x="430" y="260" width="340" height="220" rx="28" fill="#162722" stroke="#fff" stroke-opacity=".10"/>
+<path d="M430 320h340M500 260l35 60M700 260l-35 60" stroke="#39c98a" stroke-width="8" stroke-linecap="round"/>
+<path d="M520 390h160M520 425h110" stroke="#fff" stroke-opacity=".22" stroke-width="10" stroke-linecap="round"/>
+<circle cx="820" cy="220" r="54" fill="url(#g)"/>
+<path d="M820 194v52M794 220h52" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+
+</svg>

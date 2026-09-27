@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none" role="img" aria-labelledby="title">
+<title id="title">Tipax Reports</title>
+<defs>
+<linearGradient id="g" x1="100" y1="80" x2="1100" y2="620" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1f9d68"/><stop offset="1" stop-color="#0b6b4a"/>
+</linearGradient>
+</defs>
+
+<rect x="220" y="120" width="760" height="470" rx="30" fill="#101c19" stroke="#fff" stroke-opacity=".10" stroke-width="4"/>
+<rect x="270" y="170" width="660" height="80" rx="18" fill="#162722"/>
+<path d="M300 500V330M300 500H900" stroke="#fff" stroke-opacity=".16" stroke-width="4"/>
+<path d="M350 455 455 405 560 430 665 340 770 375 865 285" stroke="#39c98a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="455" cy="405" r="9" fill="#39c98a"/><circle cx="665" cy="340" r="9" fill="#39c98a"/><circle cx="865" cy="285" r="9" fill="#39c98a"/>
+
+</svg>

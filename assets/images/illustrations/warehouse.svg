@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none" role="img" aria-labelledby="title">
+<title id="title">Tipax Warehouse</title>
+<defs>
+<linearGradient id="g" x1="100" y1="80" x2="1100" y2="620" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1f9d68"/><stop offset="1" stop-color="#0b6b4a"/>
+</linearGradient>
+</defs>
+
+<path d="M170 290 600 110l430 180v300H170V290Z" fill="#0f1d19" stroke="#fff" stroke-opacity=".10" stroke-width="4"/>
+<path d="M170 290 600 110l430 180" stroke="#39c98a" stroke-width="12" stroke-linejoin="round"/>
+<path d="M270 335h660v205H270z" fill="#162722"/>
+<g fill="url(#g)">
+<rect x="320" y="370" width="125" height="70" rx="10"/><rect x="470" y="370" width="125" height="70" rx="10"/>
+<rect x="620" y="370" width="125" height="70" rx="10"/><rect x="770" y="370" width="110" height="70" rx="10"/>
+<rect x="320" y="455" width="125" height="70" rx="10"/><rect x="470" y="455" width="125" height="70" rx="10"/>
+<rect x="620" y="455" width="125" height="70" rx="10"/>
+</g>
+
+</svg>
