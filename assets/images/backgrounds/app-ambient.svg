@@ -1,1 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none" role="img" aria-labelledby="title">
+<title id="title">Tipax Ambient Background</title>
+<defs>
+<linearGradient id="g" x1="100" y1="80" x2="1100" y2="620" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1f9d68"/><stop offset="1" stop-color="#0b6b4a"/>
+</linearGradient>
+</defs>
 
+<rect width="1200" height="700" fill="#08110f"/>
+<circle cx="210" cy="120" r="220" fill="#0c6d4c" opacity=".14"/>
+<circle cx="1010" cy="590" r="300" fill="#159a68" opacity=".09"/>
+<circle cx="650" cy="300" r="250" fill="#1d8d68" opacity=".045"/>
+<path d="M0 540C220 430 330 640 560 500S920 410 1200 520" stroke="#42c996" stroke-opacity=".06" stroke-width="2"/>
+
+</svg>
