@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "generatedFor": "svgTipax",
+  "description": "Export templates for the Tipax management/reporting system.",
+  "formats": [
+    "csv"
+  ],
+  "exports": [
+    {
+      "file": "shipments-export.csv",
+      "key": "shipments",
+      "description": "Shipment records"
+    },
+    {
+      "file": "payments-export.csv",
+      "key": "payments",
+      "description": "Payment records"
+    },
+    {
+      "file": "warehouse-export.csv",
+      "key": "warehouse",
+      "description": "Warehouse inventory"
+    },
+    {
+      "file": "couriers-export.csv",
+      "key": "couriers",
+      "description": "Courier performance"
+    },
+    {
+      "file": "card-readers-export.csv",
+      "key": "cardReaders",
+      "description": "Card reader transactions"
+    },
+    {
+      "file": "daily-report-export.csv",
+      "key": "dailyReport",
+      "description": "Daily summary report"
+    }
+  ]
+}

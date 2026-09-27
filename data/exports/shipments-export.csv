@@ -1,1 +1,1 @@
-
+﻿shipmentId,branchId,trackingCode,registrationDate,customerName,destinationCity,serviceType,paymentType,amount,packageCount,weightKg,packageType,status,courierId,cardReaderId,notes
