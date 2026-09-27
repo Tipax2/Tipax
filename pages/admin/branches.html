@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10a86b">
+  <meta name="description" content="مدیریت شعب سامانه تیپاکس">
+  <title>مدیریت شعب | مالک سامانه تیپاکس</title>
+
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/responsive.css">
+  <link rel="stylesheet" href="../../css/admin.css">
+  <style>
+    .branch-page{min-height:100vh;background:var(--admin-bg);color:var(--admin-text)}
+    .branch-shell{max-width:1420px;margin:auto;padding:10px 28px 60px}
+    .branch-toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:18px 0}
+    .branch-title h1{margin:0 0 8px;font-size:30px}
+    .branch-title p{margin:0;color:var(--admin-muted);font-size:11px;line-height:2}
+    .branch-actions{display:flex;gap:9px;flex-wrap:wrap}
+    .branch-btn{border:0;border-radius:14px;padding:12px 17px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:800;transition:.2s}
+    .branch-btn:hover{transform:translateY(-2px)}
+    .branch-btn.primary{background:var(--admin-green);color:#fff;box-shadow:0 12px 25px rgba(16,168,107,.2)}
+    .branch-btn.secondary{background:var(--admin-surface);color:var(--admin-text);border:1px solid var(--admin-border)}
+    .branch-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+    .branch-summary-card{padding:19px;border:1px solid var(--admin-border);border-radius:21px;background:var(--admin-surface);box-shadow:var(--admin-shadow)}
+    .branch-summary-card small,.branch-summary-card strong{display:block}
+    .branch-summary-card small{font-size:10px;color:var(--admin-muted)}
+    .branch-summary-card strong{font-size:25px;margin-top:7px}
+    .branch-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px}
+    .branch-panel{padding:22px;border:1px solid var(--admin-border);border-radius:26px;background:var(--admin-surface);backdrop-filter:blur(25px);box-shadow:var(--admin-shadow)}
+    .branch-panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+    .branch-panel-head h2{font-size:17px;margin:0}
+    .branch-panel-head span{font-size:9px;color:var(--admin-muted)}
+    .branch-search{display:flex;gap:8px;margin-bottom:13px}
+    .branch-search input,.branch-form input,.branch-form select,.branch-form textarea{
+      width:100%;box-sizing:border-box;border:1px solid rgba(16,168,107,.12);
+      background:var(--admin-surface-strong);color:var(--admin-text);border-radius:13px;
+      padding:12px 13px;font:inherit;font-size:11px;outline:none
+    }
+    .branch-search input:focus,.branch-form input:focus,.branch-form select:focus,.branch-form textarea:focus{border-color:rgba(16,168,107,.45)}
+    .branch-table-wrap{overflow:auto;border-radius:17px}
+    .branch-table{width:100%;border-collapse:collapse;min-width:850px}
+    .branch-table th,.branch-table td{text-align:right;padding:14px 12px;border-bottom:1px solid rgba(16,168,107,.08);font-size:10px;white-space:nowrap}
+    .branch-table th{color:var(--admin-muted);font-size:9px;font-weight:700}
+    .branch-table tbody tr{transition:.18s}
+    .branch-table tbody tr:hover{background:rgba(16,168,107,.035)}
+    .branch-name{font-weight:800}.branch-code{color:var(--admin-muted);margin-top:4px;font-size:8px}
+    .status-pill{display:inline-flex;padding:5px 9px;border-radius:20px;font-size:8px;font-weight:800}
+    .status-pill.active{background:rgba(16,168,107,.1);color:var(--admin-green)}
+    .status-pill.inactive{background:rgba(220,80,80,.1);color:#d95757}
+    .branch-row-actions{display:flex;gap:6px}
+    .mini-btn{border:0;background:rgba(16,168,107,.07);color:var(--admin-green);border-radius:9px;padding:7px 9px;cursor:pointer;font-family:inherit;font-size:8px}
+    .mini-btn.danger{color:#d95757;background:rgba(220,80,80,.07)}
+    .branch-form{display:grid;gap:10px}
+    .branch-form label{font-size:9px;color:var(--admin-muted);margin-bottom:-5px}
+    .branch-form textarea{min-height:75px;resize:vertical}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .branch-empty{padding:35px;text-align:center;color:var(--admin-muted);font-size:10px}
+    .branch-notice{padding:12px 14px;border-radius:14px;background:rgba(16,168,107,.07);color:var(--admin-muted);font-size:9px;line-height:1.9;margin-top:12px}
+    .branch-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+    .branch-modal.show{display:flex}
+    .branch-modal-box{width:min(620px,100%);max-height:90vh;overflow:auto;background:var(--admin-surface-strong);border:1px solid var(--admin-border);border-radius:26px;padding:23px;box-shadow:0 30px 90px rgba(0,0,0,.3)}
+    .branch-modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+    .branch-modal-head h2{margin:0;font-size:18px}
+    .modal-close{width:36px;height:36px;border:0;border-radius:11px;background:rgba(16,168,107,.08);color:var(--admin-text);cursor:pointer}
+    .form-error{display:none;padding:10px;border-radius:11px;background:rgba(220,80,80,.08);color:#d95757;font-size:9px;margin-bottom:10px}
+    .form-error.show{display:block}
+    @media(max-width:1050px){.branch-layout{grid-template-columns:1fr}.branch-summary{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){.branch-shell{padding:10px 15px 50px}.branch-toolbar{align-items:stretch;flex-direction:column}.branch-summary{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+
+<body class="admin-page branch-page">
+
+<header class="admin-topbar">
+  <a class="admin-brand" href="index.html">
+    <span class="admin-logo">TPX</span>
+    <span><strong>مالک سامانه</strong><small>مدیریت مرکزی تیپاکس</small></span>
+  </a>
+
+  <div class="admin-top-actions">
+    <button id="themeToggle" class="admin-icon-btn" type="button">◐</button>
+    <a class="admin-icon-btn" href="index.html">⌂</a>
+  </div>
+</header>
+
+<main class="branch-shell">
+
+  <section class="branch-toolbar">
+    <div class="branch-title">
+      <h1>مدیریت شعب</h1>
+      <p>ایجاد و مدیریت اطلاعات شعب، وضعیت سرویس و اطلاعات پایه هر شعبه.</p>
+    </div>
+
+    <div class="branch-actions">
+      <button id="refreshBranches" class="branch-btn secondary" type="button">↻ بروزرسانی</button>
+      <button id="openCreateBranch" class="branch-btn primary" type="button">＋ ثبت شعبه جدید</button>
+    </div>
+  </section>
+
+  <section class="branch-summary">
+    <article class="branch-summary-card">
+      <small>کل شعب</small>
+      <strong id="totalBranches">—</strong>
+    </article>
+    <article class="branch-summary-card">
+      <small>شعب فعال</small>
+      <strong id="activeBranches">—</strong>
+    </article>
+    <article class="branch-summary-card">
+      <small>شعب غیرفعال</small>
+      <strong id="inactiveBranches">—</strong>
+    </article>
+    <article class="branch-summary-card">
+      <small>ثبت‌های این نشست</small>
+      <strong id="sessionCreated">0</strong>
+    </article>
+  </section>
+
+  <section class="branch-layout">
+
+    <article class="branch-panel">
+      <div class="branch-panel-head">
+        <div>
+          <h2>فهرست شعب</h2>
+          <span id="branchCountLabel">در حال دریافت اطلاعات...</span>
+        </div>
+      </div>
+
+      <div class="branch-search">
+        <input id="branchSearch" type="search" placeholder="جستجو بر اساس کد، نام، شهر یا مدیر...">
+      </div>
+
+      <div class="branch-table-wrap">
+        <table class="branch-table">
+          <thead>
+            <tr>
+              <th>شعبه</th>
+              <th>مدیر</th>
+              <th>شهر</th>
+              <th>تلفن</th>
+              <th>پلن</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="branchTableBody">
+            <tr><td colspan="7"><div class="branch-empty">در حال دریافت اطلاعات...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <aside class="branch-panel">
+      <div class="branch-panel-head">
+        <div>
+          <h2>چرخه ثبت شعبه</h2>
+          <span>ساختار پیشنهادی سامانه</span>
+        </div>
+      </div>
+
+      <div class="branch-notice">
+        <strong>مرحله ۱</strong><br>
+        اطلاعات شعبه ثبت می‌شود.
+      </div>
+
+      <div class="branch-notice">
+        <strong>مرحله ۲</strong><br>
+        سیستم برای شعبه یک شناسه یکتا تولید می‌کند.
+      </div>
+
+      <div class="branch-notice">
+        <strong>مرحله ۳</strong><br>
+        Apps Script پوشه اختصاصی شعبه را در Google Drive ایجاد می‌کند.
+      </div>
+
+      <div class="branch-notice">
+        <strong>مرحله ۴</strong><br>
+        شناسه پوشه در <code>storageFolderId</code> ذخیره می‌شود.
+      </div>
+
+      <div class="branch-notice">
+        <strong>مرحله ۵</strong><br>
+        بعد از اتصال API، ساخت کاربران و اشتراک شعبه از همین چرخه ادامه پیدا می‌کند.
+      </div>
+    </aside>
+
+  </section>
+</main>
+
+<div id="branchModal" class="branch-modal" aria-hidden="true">
+  <div class="branch-modal-box">
+
+    <div class="branch-modal-head">
+      <h2 id="modalTitle">ثبت شعبه جدید</h2>
+      <button id="closeBranchModal" class="modal-close" type="button">×</button>
+    </div>
+
+    <div id="formError" class="form-error"></div>
+
+    <form id="branchForm" class="branch-form" novalidate>
+
+      <div class="form-grid">
+        <div>
+          <label for="branchCode">کد شعبه *</label>
+          <input id="branchCode" name="branchCode" maxlength="30" required>
+        </div>
+
+        <div>
+          <label for="branchName">نام شعبه *</label>
+          <input id="branchName" name="branchName" maxlength="100" required>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="managerName">نام مدیر *</label>
+          <input id="managerName" name="managerName" maxlength="100" required>
+        </div>
+
+        <div>
+          <label for="phone">تلفن</label>
+          <input id="phone" name="phone" maxlength="30" inputmode="tel">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="email">ایمیل</label>
+          <input id="email" name="email" type="email" maxlength="120">
+        </div>
+
+        <div>
+          <label for="city">شهر *</label>
+          <input id="city" name="city" maxlength="80" required>
+        </div>
+      </div>
+
+      <div>
+        <label for="address">آدرس</label>
+        <textarea id="address" name="address" maxlength="500"></textarea>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label for="plan">پلن</label>
+          <select id="plan" name="plan">
+            <option value="trial">آزمایشی</option>
+            <option value="basic">پایه</option>
+            <option value="professional" selected>حرفه‌ای</option>
+            <option value="enterprise">سازمانی</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="status">وضعیت</label>
+          <select id="status" name="status">
+            <option value="active" selected>فعال</option>
+            <option value="inactive">غیرفعال</option>
+            <option value="suspended">معلق</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="notes">یادداشت</label>
+        <textarea id="notes" name="notes" maxlength="1000"></textarea>
+      </div>
+
+      <button class="branch-btn primary" type="submit">ثبت اطلاعات شعبه</button>
+
+    </form>
+  </div>
+</div>
+
+<div id="toast" class="admin-toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const STORAGE_KEY = "tipax_theme";
+  const LOCAL_BRANCHES_KEY = "tipax_admin_branch_preview";
+
+  const $ = (selector) => document.querySelector(selector);
+
+  let branches = [];
+  let editingId = null;
+
+  function showToast(message){
+    const el = $("#toast");
+    if(!el) return;
+    el.textContent = message;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2600);
+  }
+
+  function loadTheme(){
+    if(localStorage.getItem(STORAGE_KEY) === "dark"){
+      document.body.classList.add("dark");
+    }
+  }
+
+  function toggleTheme(){
+    const dark = document.body.classList.toggle("dark");
+    localStorage.setItem(STORAGE_KEY, dark ? "dark" : "light");
+  }
+
+  function readPreview(){
+    try{
+      return JSON.parse(localStorage.getItem(LOCAL_BRANCHES_KEY) || "[]");
+    }catch{
+      return [];
+    }
+  }
+
+  function savePreview(){
+    localStorage.setItem(
+      LOCAL_BRANCHES_KEY,
+      JSON.stringify(branches)
+    );
+  }
+
+  function normalize(value){
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function renderSummary(){
+    const total = branches.length;
+    const active = branches.filter(x => x.status === "active").length;
+    const inactive = branches.filter(x => x.status !== "active").length;
+
+    $("#totalBranches").textContent = total;
+    $("#activeBranches").textContent = active;
+    $("#inactiveBranches").textContent = inactive;
+    $("#branchCountLabel").textContent = `${total} شعبه در فهرست`;
+  }
+
+  function filteredBranches(){
+    const q = normalize($("#branchSearch")?.value);
+
+    if(!q) return branches;
+
+    return branches.filter(branch => {
+      return [
+        branch.branchId,
+        branch.branchCode,
+        branch.branchName,
+        branch.managerName,
+        branch.city,
+        branch.phone,
+        branch.plan
+      ].some(value => normalize(value).includes(q));
+    });
+  }
+
+  function renderTable(){
+    const body = $("#branchTableBody");
+    const list = filteredBranches();
+
+    if(!list.length){
+      body.innerHTML =
+        `<tr><td colspan="7"><div class="branch-empty">شعبه‌ای برای نمایش وجود ندارد.</div></td></tr>`;
+      renderSummary();
+      return;
+    }
+
+    body.innerHTML = list.map(branch => {
+      const statusClass =
+        branch.status === "active" ? "active" : "inactive";
+
+      const statusText =
+        branch.status === "active" ? "فعال" :
+        branch.status === "suspended" ? "معلق" : "غیرفعال";
+
+      return `
+        <tr>
+          <td>
+            <div class="branch-name">${escapeHtml(branch.branchName)}</div>
+            <div class="branch-code">${escapeHtml(branch.branchCode)} · ${escapeHtml(branch.branchId)}</div>
+          </td>
+          <td>${escapeHtml(branch.managerName)}</td>
+          <td>${escapeHtml(branch.city)}</td>
+          <td>${escapeHtml(branch.phone || "—")}</td>
+          <td>${escapeHtml(branch.plan || "—")}</td>
+          <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+          <td>
+            <div class="branch-row-actions">
+              <button class="mini-btn" data-edit="${escapeHtml(branch.branchId)}">ویرایش</button>
+              <button class="mini-btn danger" data-delete="${escapeHtml(branch.branchId)}">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    renderSummary();
+  }
+
+  function generateLocalId(){
+    const max = branches.reduce((highest, branch) => {
+      const match = String(branch.branchId || "").match(/(\d+)$/);
+      return Math.max(highest, match ? Number(match[1]) : 0);
+    }, 0);
+
+    return `BR-${String(max + 1).padStart(4,"0")}`;
+  }
+
+  function openModal(branch){
+    editingId = branch?.branchId || null;
+
+    $("#modalTitle").textContent =
+      editingId ? "ویرایش شعبه" : "ثبت شعبه جدید";
+
+    $("#branchForm").reset();
+    $("#formError").classList.remove("show");
+
+    if(branch){
+      for(const key of [
+        "branchCode","branchName","managerName",
+        "phone","email","city","address",
+        "plan","status","notes"
+      ]){
+        const el = $(`#${key}`);
+        if(el) el.value = branch[key] || "";
+      }
+    }
+
+    $("#branchModal").classList.add("show");
+    $("#branchModal").setAttribute("aria-hidden","false");
+    $("#branchCode").focus();
+  }
+
+  function closeModal(){
+    $("#branchModal").classList.remove("show");
+    $("#branchModal").setAttribute("aria-hidden","true");
+    editingId = null;
+  }
+
+  function showFormError(message){
+    const el = $("#formError");
+    el.textContent = message;
+    el.classList.add("show");
+  }
+
+  function collectForm(){
+    const form = $("#branchForm");
+
+    const data = Object.fromEntries(
+      new FormData(form).entries()
+    );
+
+    data.branchCode = data.branchCode.trim();
+    data.branchName = data.branchName.trim();
+    data.managerName = data.managerName.trim();
+    data.phone = data.phone.trim();
+    data.email = data.email.trim();
+    data.city = data.city.trim();
+    data.address = data.address.trim();
+    data.notes = data.notes.trim();
+
+    return data;
+  }
+
+  function validate(data){
+    if(!data.branchCode){
+      return "کد شعبه الزامی است.";
+    }
+
+    if(!data.branchName){
+      return "نام شعبه الزامی است.";
+    }
+
+    if(!data.managerName){
+      return "نام مدیر الزامی است.";
+    }
+
+    if(!data.city){
+      return "شهر شعبه الزامی است.";
+    }
+
+    if(data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
+      return "فرمت ایمیل صحیح نیست.";
+    }
+
+    const duplicate = branches.some(branch =>
+      normalize(branch.branchCode) === normalize(data.branchCode) &&
+      branch.branchId !== editingId
+    );
+
+    if(duplicate){
+      return "این کد شعبه قبلاً ثبت شده است.";
+    }
+
+    return "";
+  }
+
+  function submitBranch(event){
+    event.preventDefault();
+
+    const data = collectForm();
+    const error = validate(data);
+
+    if(error){
+      showFormError(error);
+      return;
+    }
+
+    if(editingId){
+      const index = branches.findIndex(
+        branch => branch.branchId === editingId
+      );
+
+      if(index !== -1){
+        branches[index] = {
+          ...branches[index],
+          ...data,
+          updatedAt: new Date().toISOString()
+        };
+      }
+
+      showToast("اطلاعات شعبه بروزرسانی شد.");
+    }else{
+      branches.push({
+        branchId: generateLocalId(),
+        ...data,
+        storageFolderId: "",
+        createdAt: new Date().toISOString(),
+        subscriptionStart: "",
+        subscriptionEnd: ""
+      });
+
+      const current =
+        Number($("#sessionCreated").textContent || 0);
+
+      $("#sessionCreated").textContent = current + 1;
+
+      showToast("شعبه در پیش‌نمایش ثبت شد.");
+    }
+
+    /*
+      توجه:
+      این ذخیره‌سازی فقط برای پیش‌نمایش UI است.
+      در مرحله اتصال API، همین عملیات به Apps Script
+      منتقل می‌شود و ثبت واقعی در Google Sheet انجام خواهد شد.
+    */
+
+    savePreview();
+    renderTable();
+    closeModal();
+  }
+
+  function editBranch(id){
+    const branch =
+      branches.find(item => item.branchId === id);
+
+    if(branch){
+      openModal(branch);
+    }
+  }
+
+  function deleteBranch(id){
+    const branch =
+      branches.find(item => item.branchId === id);
+
+    if(!branch) return;
+
+    const ok = window.confirm(
+      `آیا از حذف پیش‌نمایش شعبه «${branch.branchName}» مطمئن هستید؟`
+    );
+
+    if(!ok) return;
+
+    branches =
+      branches.filter(item => item.branchId !== id);
+
+    savePreview();
+    renderTable();
+    showToast("شعبه از پیش‌نمایش حذف شد.");
+  }
+
+  function loadBranches(){
+    /*
+      تا قبل از اتصال Apps Script، داده واقعی را جعل نمی‌کنیم.
+      اگر قبلاً در همین مرورگر شعبه‌ای برای تست ثبت شده باشد،
+      همان داده محلی نمایش داده می‌شود.
+    */
+
+    branches = readPreview();
+    renderTable();
+  }
+
+  function bind(){
+    $("#themeToggle")?.addEventListener(
+      "click",
+      toggleTheme
+    );
+
+    $("#openCreateBranch")?.addEventListener(
+      "click",
+      () => openModal(null)
+    );
+
+    $("#closeBranchModal")?.addEventListener(
+      "click",
+      closeModal
+    );
+
+    $("#branchModal")?.addEventListener(
+      "click",
+      event => {
+        if(event.target === $("#branchModal")){
+          closeModal();
+        }
+      }
+    );
+
+    $("#branchForm")?.addEventListener(
+      "submit",
+      submitBranch
+    );
+
+    $("#branchSearch")?.addEventListener(
+      "input",
+      renderTable
+    );
+
+    $("#refreshBranches")?.addEventListener(
+      "click",
+      () => {
+        loadBranches();
+        showToast("فهرست بروزرسانی شد.");
+      }
+    );
+
+    $("#branchTableBody")?.addEventListener(
+      "click",
+      event => {
+        const editButton =
+          event.target.closest("[data-edit]");
+
+        const deleteButton =
+          event.target.closest("[data-delete]");
+
+        if(editButton){
+          editBranch(editButton.dataset.edit);
+        }
+
+        if(deleteButton){
+          deleteBranch(deleteButton.dataset.delete);
+        }
+      }
+    );
+
+    document.addEventListener(
+      "keydown",
+      event => {
+        if(event.key === "Escape"){
+          closeModal();
+        }
+      }
+    );
+  }
+
+  loadTheme();
+  bind();
+  loadBranches();
+
+})();
+</script>
+
+</body>
+</html>
