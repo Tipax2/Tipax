@@ -1,0 +1,7 @@
+﻿itemId,branchId,name,category,unit,openingStock,received,issued,damaged,minimumStock
+BOX-S,BR-DEMO-001,کارتن کوچک,کارتن,عدد,120,80,55,3,40
+BOX-M,BR-DEMO-001,کارتن متوسط,کارتن,عدد,90,60,42,2,30
+BOX-L,BR-DEMO-001,کارتن بزرگ,کارتن,عدد,55,35,28,1,20
+A3,BR-DEMO-001,کاغذ A3,لوازم اداری,بسته,35,20,18,0,10
+B4,BR-DEMO-001,پاکت B4,پاکت,عدد,180,120,95,4,60
+ENV,BR-DEMO-001,پاکت معمولی,پاکت,عدد,300,200,170,5,100

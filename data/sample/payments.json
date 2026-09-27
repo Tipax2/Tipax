@@ -1,0 +1,122 @@
+[
+  {
+    "paymentId": "PAY-2609-0001",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0001",
+    "date": "2026-09-01",
+    "paymentType": "cod",
+    "amount": 221000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0002",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0002",
+    "date": "2026-09-02",
+    "paymentType": "card_reader",
+    "amount": 262000,
+    "cardReaderId": "POS-002",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0003",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0003",
+    "date": "2026-09-03",
+    "paymentType": "cash",
+    "amount": 303000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0004",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0004",
+    "date": "2026-09-04",
+    "paymentType": "cod",
+    "amount": 344000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0005",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0005",
+    "date": "2026-09-05",
+    "paymentType": "card_reader",
+    "amount": 385000,
+    "cardReaderId": "POS-001",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0006",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0006",
+    "date": "2026-09-06",
+    "paymentType": "cash",
+    "amount": 426000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0007",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0007",
+    "date": "2026-09-07",
+    "paymentType": "cod",
+    "amount": 467000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0008",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0008",
+    "date": "2026-09-08",
+    "paymentType": "card_reader",
+    "amount": 508000,
+    "cardReaderId": "POS-002",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0009",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0009",
+    "date": "2026-09-09",
+    "paymentType": "cash",
+    "amount": 549000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0010",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0010",
+    "date": "2026-09-10",
+    "paymentType": "cod",
+    "amount": 590000,
+    "cardReaderId": "",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0011",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0011",
+    "date": "2026-09-01",
+    "paymentType": "card_reader",
+    "amount": 631000,
+    "cardReaderId": "POS-001",
+    "status": "paid"
+  },
+  {
+    "paymentId": "PAY-2609-0012",
+    "branchId": "BR-DEMO-001",
+    "shipmentId": "TPX-2609-0012",
+    "date": "2026-09-02",
+    "paymentType": "cash",
+    "amount": 672000,
+    "cardReaderId": "",
+    "status": "paid"
+  }
+]

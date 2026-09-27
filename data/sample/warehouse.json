@@ -1,0 +1,74 @@
+[
+  {
+    "itemId": "BOX-S",
+    "branchId": "BR-DEMO-001",
+    "name": "کارتن کوچک",
+    "category": "کارتن",
+    "unit": "عدد",
+    "openingStock": 120,
+    "received": 80,
+    "issued": 55,
+    "damaged": 3,
+    "minimumStock": 40
+  },
+  {
+    "itemId": "BOX-M",
+    "branchId": "BR-DEMO-001",
+    "name": "کارتن متوسط",
+    "category": "کارتن",
+    "unit": "عدد",
+    "openingStock": 90,
+    "received": 60,
+    "issued": 42,
+    "damaged": 2,
+    "minimumStock": 30
+  },
+  {
+    "itemId": "BOX-L",
+    "branchId": "BR-DEMO-001",
+    "name": "کارتن بزرگ",
+    "category": "کارتن",
+    "unit": "عدد",
+    "openingStock": 55,
+    "received": 35,
+    "issued": 28,
+    "damaged": 1,
+    "minimumStock": 20
+  },
+  {
+    "itemId": "A3",
+    "branchId": "BR-DEMO-001",
+    "name": "کاغذ A3",
+    "category": "لوازم اداری",
+    "unit": "بسته",
+    "openingStock": 35,
+    "received": 20,
+    "issued": 18,
+    "damaged": 0,
+    "minimumStock": 10
+  },
+  {
+    "itemId": "B4",
+    "branchId": "BR-DEMO-001",
+    "name": "پاکت B4",
+    "category": "پاکت",
+    "unit": "عدد",
+    "openingStock": 180,
+    "received": 120,
+    "issued": 95,
+    "damaged": 4,
+    "minimumStock": 60
+  },
+  {
+    "itemId": "ENV",
+    "branchId": "BR-DEMO-001",
+    "name": "پاکت معمولی",
+    "category": "پاکت",
+    "unit": "عدد",
+    "openingStock": 300,
+    "received": 200,
+    "issued": 170,
+    "damaged": 5,
+    "minimumStock": 100
+  }
+]

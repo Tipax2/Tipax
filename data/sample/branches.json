@@ -1,0 +1,13 @@
+[
+  {
+    "branchId": "BR-DEMO-001",
+    "branchCode": "DEMO001",
+    "branchName": "شعبه نمونه تیپاکس",
+    "managerName": "مدیر نمونه",
+    "phone": "02100000000",
+    "status": "active",
+    "plan": "demo",
+    "createdAt": "2026-09-01",
+    "subscriptionEnd": "2026-12-31"
+  }
+]

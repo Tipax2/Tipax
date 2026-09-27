@@ -1,0 +1,4 @@
+﻿courierId,branchId,name,vehicle,phone,active,handedOverToday,deliveredToday,returnedToday,wrongRouteToday
+CR-001,BR-DEMO-001,پیک نمونه 1,motorcycle,09120000001,True,18,15,2,1
+CR-002,BR-DEMO-001,پیک نمونه 2,van,09120000002,True,24,20,3,1
+CR-003,BR-DEMO-001,پیک نمونه 3,car,09120000003,True,14,12,1,1

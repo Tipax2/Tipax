@@ -1,0 +1,20 @@
+[
+  {
+    "cardReaderId": "POS-001",
+    "branchId": "BR-DEMO-001",
+    "deviceCode": "TIP-POS-001",
+    "title": "دستگاه صندوق ۱",
+    "transactions": 46,
+    "totalAmount": 12850000,
+    "active": true
+  },
+  {
+    "cardReaderId": "POS-002",
+    "branchId": "BR-DEMO-001",
+    "deviceCode": "TIP-POS-002",
+    "title": "دستگاه صندوق ۲",
+    "transactions": 31,
+    "totalAmount": 7640000,
+    "active": true
+  }
+]

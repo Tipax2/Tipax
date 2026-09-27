@@ -1,0 +1,18 @@
+[
+  {
+    "userId": "USR-DEMO-001",
+    "branchId": "BR-DEMO-001",
+    "username": "demo",
+    "displayName": "مدیر شعبه نمونه",
+    "role": "branch_manager",
+    "active": true
+  },
+  {
+    "userId": "USR-DEMO-002",
+    "branchId": "BR-DEMO-001",
+    "username": "operator",
+    "displayName": "اپراتور نمونه",
+    "role": "operator",
+    "active": true
+  }
+]

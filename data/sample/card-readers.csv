@@ -1,0 +1,3 @@
+﻿cardReaderId,branchId,deviceCode,title,transactions,totalAmount,active
+POS-001,BR-DEMO-001,TIP-POS-001,دستگاه صندوق ۱,46,12850000,True
+POS-002,BR-DEMO-001,TIP-POS-002,دستگاه صندوق ۲,31,7640000,True

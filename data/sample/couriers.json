@@ -1,0 +1,38 @@
+[
+  {
+    "courierId": "CR-001",
+    "branchId": "BR-DEMO-001",
+    "name": "پیک نمونه 1",
+    "vehicle": "motorcycle",
+    "phone": "09120000001",
+    "active": true,
+    "handedOverToday": 18,
+    "deliveredToday": 15,
+    "returnedToday": 2,
+    "wrongRouteToday": 1
+  },
+  {
+    "courierId": "CR-002",
+    "branchId": "BR-DEMO-001",
+    "name": "پیک نمونه 2",
+    "vehicle": "van",
+    "phone": "09120000002",
+    "active": true,
+    "handedOverToday": 24,
+    "deliveredToday": 20,
+    "returnedToday": 3,
+    "wrongRouteToday": 1
+  },
+  {
+    "courierId": "CR-003",
+    "branchId": "BR-DEMO-001",
+    "name": "پیک نمونه 3",
+    "vehicle": "car",
+    "phone": "09120000003",
+    "active": true,
+    "handedOverToday": 14,
+    "deliveredToday": 12,
+    "returnedToday": 1,
+    "wrongRouteToday": 1
+  }
+]
