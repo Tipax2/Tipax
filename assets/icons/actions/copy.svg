@@ -1,4 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img">
-<title>Edit</title>
-<path d="m4 16.5-.8 3.3 3.3-.8L18.7 6.8a2.1 2.1 0 0 0-3-3L4 16.5Z"/><path d="m14.5 5.5 4 4"/>
+<title>Copy</title>
+<rect x="8" y="8" width="11" height="11" rx="1.5"/><path d="M16 8V5H5v11h3"/>
 </svg>
