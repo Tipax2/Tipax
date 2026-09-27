@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#10a86b">
+<title>مدیریت مالک | سامانه تیپاکس</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+<link rel="stylesheet" href="../../css/admin.css">
+</head>
+<body class="admin-page">
+<div class="admin-bg-grid" aria-hidden="true"></div>
+<div class="admin-orb admin-orb-one" aria-hidden="true"></div>
+<div class="admin-orb admin-orb-two" aria-hidden="true"></div>
 
+<header class="admin-topbar">
+<a class="admin-brand" href="../../index.html">
+<span class="admin-logo">TPX</span>
+<span><strong>مالک سامانه</strong><small>مدیریت مرکزی تیپاکس</small></span>
+</a>
+<div class="admin-top-actions">
+<button id="themeToggle" class="admin-icon-btn" type="button" aria-label="تغییر پوسته">◐</button>
+<a class="admin-icon-btn" href="../../dashboard.html" aria-label="داشبورد">⌂</a>
+<button id="logoutBtn" class="admin-icon-btn danger" type="button" aria-label="خروج">↪</button>
+</div>
+</header>
+
+<main class="admin-shell">
+<section class="admin-hero">
+<div>
+<span class="admin-eyebrow"><i></i> دسترسی سطح مالک</span>
+<h1>مرکز کنترل سامانه</h1>
+<p>مدیریت شعب، کاربران، اشتراک‌ها، دسترسی‌ها و رویدادهای امنیتی در یک محیط یکپارچه.</p>
+</div>
+<div class="admin-identity">
+<span class="identity-avatar">A</span>
+<div><small>کاربر فعال</small><strong id="adminName">در حال بررسی...</strong><em id="adminRole">super_admin</em></div>
+</div>
+</section>
+
+<section class="admin-stat-grid">
+<article class="admin-stat-card"><span class="stat-icon">🏢</span><div><small>شعب فعال</small><strong id="statBranches">—</strong></div><span class="stat-foot positive">وضعیت سامانه</span></article>
+<article class="admin-stat-card"><span class="stat-icon">👤</span><div><small>کاربران</small><strong id="statUsers">—</strong></div><span class="stat-foot">حساب‌های ثبت‌شده</span></article>
+<article class="admin-stat-card"><span class="stat-icon">💳</span><div><small>اشتراک‌های فعال</small><strong id="statSubscriptions">—</strong></div><span class="stat-foot">در حال سرویس</span></article>
+<article class="admin-stat-card"><span class="stat-icon">🛡️</span><div><small>وضعیت امنیت</small><strong>فعال</strong></div><span class="stat-foot positive">کنترل دسترسی فعال</span></article>
+</section>
+
+<section class="admin-content-grid">
+<article class="admin-panel main-panel">
+<div class="panel-heading"><div><span class="panel-kicker">Control Center</span><h2>مدیریت سامانه</h2></div><span class="live-dot"><i></i> آنلاین</span></div>
+<div class="admin-menu-grid">
+<a class="admin-menu-card" href="branches.html"><span>🏢</span><div><strong>مدیریت شعب</strong><small>ثبت، مشاهده و وضعیت شعب</small></div><b>←</b></a>
+<a class="admin-menu-card" href="users.html"><span>👤</span><div><strong>کاربران</strong><small>حساب‌ها و نقش‌های دسترسی</small></div><b>←</b></a>
+<a class="admin-menu-card" href="subscriptions.html"><span>💳</span><div><strong>اشتراک‌ها</strong><small>پلن، شروع و پایان اشتراک</small></div><b>←</b></a>
+<a class="admin-menu-card" href="permissions.html"><span>🔐</span><div><strong>سطوح دسترسی</strong><small>Permission و نقش‌ها</small></div><b>←</b></a>
+<a class="admin-menu-card" href="audit-log.html"><span>📋</span><div><strong>Audit Log</strong><small>ثبت رویدادهای حساس سامانه</small></div><b>←</b></a>
+<a class="admin-menu-card" href="drive.html"><span>☁️</span><div><strong>Google Drive</strong><small>وضعیت فضای ذخیره‌سازی شعب</small></div><b>←</b></a>
+</div>
+</article>
+
+<aside class="admin-panel security-panel">
+<div class="panel-heading compact"><div><span class="panel-kicker">Security</span><h2>امنیت</h2></div><span class="shield">✓</span></div>
+<div class="security-row"><span>احراز هویت</span><strong>فعال</strong></div>
+<div class="security-row"><span>Session</span><strong>21600s</strong></div>
+<div class="security-row"><span>نقش فعلی</span><strong id="securityRole">super_admin</strong></div>
+<div class="security-note">دسترسی این بخش فقط برای مالک سامانه طراحی شده است.</div>
+</aside>
+</section>
+
+<section class="admin-panel activity-panel">
+<div class="panel-heading"><div><span class="panel-kicker">System Activity</span><h2>آخرین رویدادها</h2></div><a href="audit-log.html">مشاهده همه ←</a></div>
+<div id="activityList" class="activity-list"><div class="empty-state">در حال دریافت رویدادها...</div></div>
+</section>
+</main>
+<div id="toast" class="admin-toast" role="status" aria-live="polite"></div>
+<script src="../../js/admin/admin.js"></script>
+</body>
+</html>
