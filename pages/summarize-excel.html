@@ -49,6 +49,45 @@ body{background:radial-gradient(ellipse at 7% 4%,rgba(23,196,113,.12),transparen
 .table th{backdrop-filter:blur(10px)}
 .footactions{background:rgba(20,190,105,.025)}
 @media(max-width:850px){.sidebar{backdrop-filter:blur(28px)}}
+
+/* Readability + polished top controls + subtle floating/rotating motion */
+html{font-size:16px}
+body{font-size:15px}
+.navtitle{font-size:12px;padding:10px 13px}
+.nav a{font-size:14px;gap:12px;padding:12px 13px}
+.navicon{width:36px;height:36px;font-size:16px;border-radius:12px}
+.brand b{font-size:17px}.brand small{font-size:11px}
+.side-status{font-size:12px;padding:14px}.side-status div:last-child{font-size:11px!important}
+.content{padding:24px 30px 80px}
+.topbar{min-height:82px;height:auto;padding:12px 16px;border-radius:25px;gap:14px}
+.page-title h1{font-size:24px}.page-title small{font-size:12px;line-height:1.7}
+.top-actions{gap:12px}.profile b{font-size:13px}.profile small{font-size:11px}
+.iconbtn{width:48px;height:48px;font-size:18px;border-radius:16px}
+.hero h2{font-size:34px}.hero p{font-size:14px;line-height:1.9;max-width:760px}
+.btn{font-size:14px;padding:14px 20px;border-radius:17px}
+.card{border-radius:28px}.head{padding:20px 23px}.head h3{font-size:17px}.head small{font-size:12px;line-height:1.7}
+.badge{font-size:11px;padding:8px 12px;border-radius:12px}
+.drop{padding:42px 22px;border-radius:25px}.excel{width:74px;height:74px;font-size:34px;border-radius:23px}
+.drop h3{font-size:18px}.drop p{font-size:13px;line-height:1.8}
+.statusline{padding:15px 18px;border-radius:18px}.statusline strong{font-size:14px}.statusline small{font-size:12px}
+.stats{gap:15px}.stat{padding:19px;border-radius:21px}.stat small{font-size:12px;line-height:1.7}.stat b{font-size:27px}
+.table{min-width:760px}.table th,.table td{font-size:13px;padding:15px 17px}
+.empty{font-size:13px;line-height:1.9;padding:42px 22px}
+.footactions{padding:18px 22px}.footactions small{font-size:12px;line-height:1.8}
+.toast{font-size:13px;min-width:260px;padding:16px 18px;border-radius:18px}
+.nav a.active[href="summarize-excel.html"]{animation:activeGlow 3.2s ease-in-out infinite}
+@keyframes activeGlow{0%,100%{box-shadow:0 11px 25px rgba(14,170,83,.22),0 0 0 0 rgba(22,195,110,.08)}50%{box-shadow:0 15px 34px rgba(14,170,83,.32),0 0 0 5px rgba(22,195,110,.08)}}
+.iconbtn:hover{animation:iconSpin .55s ease}
+@keyframes iconSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.brandmark{animation:floatMark 4s ease-in-out infinite}
+@keyframes floatMark{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.primary{position:relative}
+.primary:after{content:"";position:absolute;top:-120%;bottom:-120%;left:-45%;width:28%;transform:rotate(24deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);transition:left .7s}
+.primary:hover:after{left:130%}
+@media(max-width:1100px){.content{padding:18px 20px 70px}.hero h2{font-size:29px}}
+@media(max-width:850px){.content{padding:14px 12px 70px}.topbar{min-height:72px;padding:10px 12px}.page-title h1{font-size:21px}.page-title small{font-size:11px}.profile b,.profile small{font-size:11px}.hero h2{font-size:27px}.hero p{font-size:13px}.head h3{font-size:15px}.head small{font-size:11px}.nav a{font-size:14px}}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.stat b{font-size:23px}.drop h3{font-size:16px}.drop p{font-size:12px}.btn{font-size:13px}.footactions small{font-size:11px}.topbar{gap:8px}.top-actions{gap:6px}.iconbtn{width:42px;height:42px}.page-title h1{font-size:18px}.page-title small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
