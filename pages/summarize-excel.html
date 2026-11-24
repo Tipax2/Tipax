@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>خلاصه اکسل | سامانه مدیریت تیپاکس</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#f3f7f4;--card:rgba(255,255,255,.92);--text:#17231b;--muted:#78867d;--line:rgba(24,55,38,.1);--green:#16b968;--green2:#07884b;--soft:rgba(22,185,104,.085);--shadow:0 20px 60px rgba(18,55,35,.09)}
+body.dark{--bg:#080e0b;--card:rgba(17,26,21,.95);--text:#e9f1eb;--muted:#8b9990;--line:rgba(185,220,198,.09);--soft:rgba(22,185,104,.1);--shadow:0 20px 60px rgba(0,0,0,.38)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 8% 5%,rgba(22,185,104,.07),transparent 28%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",Arial,sans-serif;transition:.25s}button{font:inherit;cursor:pointer}a{color:inherit;text-decoration:none}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:23px 16px;background:rgba(255,255,255,.58);backdrop-filter:blur(26px);border-left:1px solid var(--line);z-index:20}.dark .sidebar{background:rgba(7,13,10,.91)}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 8px 27px}.brandmark{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#2bd27f,#078b4d);color:white;font-weight:900;font-size:18px;box-shadow:0 13px 30px rgba(22,185,104,.2)}.brand b{display:block;font-size:15px}.brand small{display:block;color:var(--muted);font-size:9px;margin-top:5px}.navtitle{padding:8px 13px;color:var(--muted);font-size:10px}.nav{display:flex;flex-direction:column;gap:6px}.nav a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:16px;color:var(--muted);font-size:12px;transition:.25s}.nav a:hover,.nav a.active{background:var(--soft);color:var(--green2);transform:translateX(-3px)}.nav a.active{font-weight:bold}.navicon{width:32px;height:32px;border-radius:11px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.35);font-size:14px}.dark .navicon{background:rgba(255,255,255,.025)}
+.side-status{position:absolute;bottom:17px;left:16px;right:16px;padding:13px;border:1px solid var(--line);border-radius:18px;background:var(--card);font-size:9px}.side-status div{display:flex;justify-content:space-between}.online{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(22,185,104,.09)}
+.content{min-width:0;padding:20px 26px 70px}.topbar{height:70px;padding:9px 12px;border:1px solid var(--line);border-radius:23px;background:var(--card);backdrop-filter:blur(23px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.top-actions,.profile{display:flex;align-items:center;gap:10px}.page-title h1{font-size:20px;margin:0 0 4px}.page-title small{font-size:9px;color:var(--muted)}.iconbtn{width:43px;height:43px;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--text);display:grid;place-items:center;font-size:15px}.avatar{width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#d8f7e5,#a5e8c0);display:grid;place-items:center;color:#087d45;font-weight:bold}.profile b{font-size:10px}.profile small{display:block;color:var(--muted);font-size:8px;margin-top:4px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 4px 20px}.hero h2{font-size:29px;margin:0}.hero p{font-size:11px;color:var(--muted);margin:8px 0 0}.btn{border:0;border-radius:14px;padding:12px 17px;font-size:10px;font-weight:bold;transition:.25s}.btn:hover{transform:translateY(-2px)}.primary{background:linear-gradient(135deg,#19bd6c,#078c4e);color:#fff;box-shadow:0 12px 28px rgba(22,185,104,.16)}.soft{background:var(--soft);color:var(--green2);border:1px solid var(--line)}
+.card{border:1px solid var(--line);border-radius:25px;background:var(--card);backdrop-filter:blur(24px);box-shadow:var(--shadow);overflow:hidden;margin-bottom:17px}.head{display:flex;align-items:center;justify-content:space-between;padding:17px 19px;border-bottom:1px solid var(--line)}.head h3{font-size:13px;margin:0}.head small{display:block;color:var(--muted);font-size:8px;margin-top:5px}.badge{padding:6px 9px;border-radius:9px;background:var(--soft);color:var(--green2);font-size:8px;font-weight:bold}.drop{margin:17px;padding:36px 18px;border:1.5px dashed rgba(22,185,104,.4);border-radius:21px;background:rgba(22,185,104,.035);text-align:center;transition:.2s}.drop.drag{background:rgba(22,185,104,.12);transform:scale(.995)}.excel{width:66px;height:66px;border-radius:20px;margin:0 auto 14px;display:grid;place-items:center;background:var(--soft);color:var(--green2);font-size:29px;font-weight:900}.drop h3{font-size:15px;margin:0 0 8px}.drop p{font-size:9px;color:var(--muted);margin:0 0 17px}.file-input{display:none}.statusline{display:none;margin:0 17px 17px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--soft);align-items:center;justify-content:space-between;gap:12px}.statusline.show{display:flex}.statusline strong{font-size:10px}.statusline small{display:block;color:var(--muted);font-size:8px;margin-top:5px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:17px}.stat{padding:15px;border:1px solid var(--line);border-radius:17px;background:rgba(22,185,104,.035)}.stat small{display:block;color:var(--muted);font-size:8px}.stat b{display:block;font-size:21px;margin-top:7px}.stat.green b{color:var(--green2)}.preview{overflow:auto;max-height:450px}.table{width:100%;border-collapse:collapse;min-width:700px}.table th,.table td{padding:12px 13px;border-bottom:1px solid var(--line);font-size:9px;text-align:right;white-space:nowrap}.table th{color:var(--muted);background:rgba(22,185,104,.035);position:sticky;top:0}.empty{text-align:center;padding:38px;color:var(--muted);font-size:10px}.footactions{padding:15px 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.footactions small{font-size:8px;color:var(--muted)}.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:230px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--shadow);font-size:9px;opacity:0;transform:translateY(18px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:none}
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:270px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}body.menu-open .sidebar{transform:none}.content{padding:12px}.mobile{display:grid}.hero{flex-direction:column;align-items:stretch}.profile div:last-child{display:none}}
+@media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.drop{margin:12px;padding:27px 12px}.footactions{align-items:stretch;flex-direction:column}.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="brand"><div class="brandmark">ت</div><div><b>مدیریت تیپاکس</b><small>سامانه گزارش و مدیریت شعبه</small></div></div>
+<div class="navtitle">مدیریت اصلی</div><nav class="nav">
+<a href="../dashboard.html"><span class="navicon">⌂</span>داشبورد</a><a href="shipments.html"><span class="navicon">▣</span>مرسولات</a><a href="register.html"><span class="navicon">＋</span>ثبت اطلاعات</a><a href="reports.html"><span class="navicon">▤</span>گزارش‌ها</a><a href="couriers.html"><span class="navicon">♧</span>پخش‌کننده‌ها</a><a href="warehouse.html"><span class="navicon">▦</span>انبار</a></nav>
+<div class="navtitle" style="margin-top:13px">سیستم و اتصال</div><nav class="nav"><a href="import-excel.html"><span class="navicon">⇩</span>ورود از Excel</a><a href="api.html"><span class="navicon">⌁</span>اتصال API</a><a href="settings.html"><span class="navicon">⚙</span>تنظیمات</a><a class="active" href="summarize-excel.html"><span class="navicon">▤</span>خلاصه اکسل</a></nav>
+<div class="side-status"><div><span>ابزار خلاصه‌سازی</span><i class="online"></i></div><div style="margin-top:8px;color:var(--muted)">آماده پردازش فایل Excel</div></div>
+</aside>
+<main class="content">
+<header class="topbar"><div class="top-left"><button class="iconbtn mobile" onclick="document.body.classList.toggle('menu-open')">☰</button><div class="page-title"><h1>خلاصه‌سازی Excel</h1><small>پاک‌سازی سریع فایل و آماده‌سازی برای ارسال به مشتری</small></div></div><div class="top-actions"><button class="iconbtn" onclick="toggleTheme()" title="تغییر تم">◐</button><div class="profile"><div class="avatar">م</div><div><b>مدیر شعبه</b><small>دسترسی کامل</small></div></div></div></header>
+<section class="hero"><div><h2>خلاصه اکسل مشتری</h2><p>فایل کامل را انتخاب کنید؛ فقط ۵ ستون موردنیاز نگه داشته می‌شود و خروجی جدید آماده دانلود خواهد شد.</p></div><button class="btn soft" onclick="clearAll()">↺ شروع مجدد</button></section>
+<section class="card"><div class="head"><div><h3>فایل اصلی Excel</h3><small>فایل مرسولات را وارد کنید؛ ستون‌های اضافی در خروجی حذف می‌شوند.</small></div><span class="badge">XLS / XLSX / CSV</span></div>
+<div class="drop" id="dropzone"><div class="excel">X</div><h3>فایل را اینجا رها کنید</h3><p>یا برای انتخاب فایل کلیک کنید · فایل اصلی دست‌نخورده باقی می‌ماند</p><button class="btn primary" id="pickBtn">انتخاب فایل از کامپیوتر</button><input class="file-input" id="fileInput" type="file" accept=".xlsx,.xls,.csv"></div>
+<div class="statusline" id="fileStatus"><div><strong id="fileName">—</strong><small id="fileDetails">—</small></div><button class="btn soft" onclick="clearAll()">حذف فایل</button></div>
+<div class="stats"><div class="stat"><small>تعداد ردیف‌های فایل</small><b id="rowCount">۰</b></div><div class="stat green"><small>ردیف‌های خروجی</small><b id="outCount">۰</b></div><div class="stat"><small>ستون‌های باقی‌مانده</small><b>۵</b></div></div>
+</section>
+<section class="card"><div class="head"><div><h3>پیش‌نمایش فایل خلاصه</h3><small>خروجی دقیقاً شامل ستون‌های زیر است؛ هیچ ستون دیگری باقی نمی‌ماند.</small></div><span class="badge" id="previewBadge">منتظر فایل</span></div>
+<div class="preview" id="preview"><div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div></div>
+<div class="footactions"><small>ستون‌ها: شماره قرارداد · شماره بارکد · گیرنده · شهر مقصد · استان مقصد</small><button class="btn primary" id="downloadBtn" disabled>⬇ دانلود اکسل خلاصه</button></div>
+</section>
+<div class="toast" id="toast"></div>
+</main></div>
+<script>
+const $=id=>document.getElementById(id);
+let workbook=null,rows=[],sourceName="";
+if(localStorage.getItem("tipax-theme")==="dark")document.body.classList.add("dark");
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("tipax-theme",document.body.classList.contains("dark")?"dark":"light")}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2600)}
+const targetHeaders=["شماره قرارداد","شماره بارکد","گیرنده","شهر مقصد","استان مقصد"];
+function normalize(s){return String(s??"").trim().replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[\u200c\s]/g,"").replace(/ـ/g,"").toLowerCase()}
+const aliases=[
+["شماره قرارداد","شمارهقرارداد","قرارداد","contractnumber","contractno"],
+["شماره بارکد","شمارهبارکد","بارکد","barcode","barcode number"],
+["گیرنده","گیرنده","نامگیرنده","receiver","recipient"],
+["شهر مقصد","شهرمقصد","مقصد","destinationcity","citydestination"],
+["استان مقصد","استانمقصد","مقصد-استان","destinationprovince","province"]
+];
+function findHeader(headers,idx){const keys=aliases[idx].map(normalize);return headers.findIndex(h=>keys.includes(normalize(h))||keys.some(k=>normalize(h).includes(k)))}
+function processFile(file){if(!window.XLSX){toast("کتابخانه Excel بارگذاری نشد؛ اینترنت را بررسی کنید.");return}
+sourceName=file.name;const reader=new FileReader();reader.onload=e=>{try{
+workbook=XLSX.read(e.target.result,{type:"array",cellDates:false});
+let selected=null,selectedHeaders=null,headerRowIndex=0,score=-1;
+workbook.SheetNames.forEach(sheetName=>{const ws=workbook.Sheets[sheetName];const matrix=XLSX.utils.sheet_to_json(ws,{header:1,defval:"",raw:false});for(let i=0;i<Math.min(matrix.length,20);i++){const hdr=matrix[i]||[];const found=aliases.reduce((n,a,idx)=>n+(findHeader(hdr,idx)>=0?1:0),0);if(found>score){score=found;selected={sheetName,matrix};selectedHeaders=hdr;headerRowIndex=i}}});
+if(!selected||score<3){toast("ستون‌های موردنیاز در فایل پیدا نشد. لطفاً فایل و ردیف عنوان‌ها را بررسی کنید.");workbook=null;return}
+const header=selected.matrix[headerRowIndex];const indices=targetHeaders.map((_,i)=>findHeader(header,i));
+rows=selected.matrix.slice(headerRowIndex+1).filter(r=>r.some(c=>String(c??"").trim()!=="")).map(r=>indices.map(ix=>ix>=0?(r[ix]??""):""));
+$("fileName").textContent=file.name;$("fileDetails").textContent="برگه: "+selected.sheetName+" · حجم: "+formatBytes(file.size);
+$("fileStatus").classList.add("show");$("rowCount").textContent=persian(selected.matrix.slice(headerRowIndex+1).filter(r=>r.some(c=>String(c??"").trim()!=="")).length);$("outCount").textContent=persian(rows.length);
+$("previewBadge").textContent="پردازش موفق";$("previewBadge").style.color="var(--green2)";renderPreview();$("downloadBtn").disabled=rows.length===0;toast("فایل آماده خلاصه‌سازی است ✓")
+}catch(err){console.error(err);toast("خطا در خواندن فایل. مطمئن شوید فایل سالم است.")}};reader.readAsArrayBuffer(file)}
+function renderPreview(){const shown=rows.slice(0,100);let html='<table class="table"><thead><tr>'+targetHeaders.map(h=>'<th>'+escapeHTML(h)+'</th>').join("")+'</tr></thead><tbody>';shown.forEach(r=>{html+='<tr>'+r.map(v=>'<td>'+escapeHTML(v)+'</td>').join("")+'</tr>'});html+='</tbody></table>';if(rows.length>100)html+='<div class="empty">پیش‌نمایش ۱۰۰ ردیف اول از '+persian(rows.length)+' ردیف نمایش داده شده است.</div>';$("preview").innerHTML=html}
+function download(){if(!rows.length||!workbook)return;const data=[targetHeaders,...rows];const ws=XLSX.utils.aoa_to_sheet(data);ws["!cols"]=[{wch:19},{wch:22},{wch:27},{wch:19},{wch:18}];ws["!autofilter"]={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:data.length-1,c:4})};const out=XLSX.utils.book_new();XLSX.utils.book_append_sheet(out,ws,"خلاصه مرسولات");const safe=sourceName.replace(/\.[^.]+$/,"");XLSX.writeFile(out,safe+"_خلاصه.xlsx");toast("فایل خلاصه دانلود شد ✓")}
+function clearAll(){workbook=null;rows=[];sourceName="";$("fileStatus").classList.remove("show");$("rowCount").textContent="۰";$("outCount").textContent="۰";$("previewBadge").textContent="منتظر فایل";$("previewBadge").style.color="";$("preview").innerHTML='<div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div>';$("downloadBtn").disabled=true;$("fileInput").value=""}
+function formatBytes(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"}
+function persian(n){return Number(n).toLocaleString("fa-IR")}
+function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("pickBtn").onclick=e=>{e.stopPropagation();$("fileInput").click()};$("dropzone").onclick=e=>{if(e.target.closest("button"))return;$("fileInput").click()};$("fileInput").onchange=e=>{if(e.target.files[0])processFile(e.target.files[0])};
+$("downloadBtn").onclick=download;
+const dz=$("dropzone");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f)processFile(f)});
+</script>
+</body></html>
