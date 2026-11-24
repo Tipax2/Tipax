@@ -17,6 +17,38 @@ body.dark{--bg:#080e0b;--card:rgba(17,26,21,.95);--text:#e9f1eb;--muted:#8b9990;
 .card{border:1px solid var(--line);border-radius:25px;background:var(--card);backdrop-filter:blur(24px);box-shadow:var(--shadow);overflow:hidden;margin-bottom:17px}.head{display:flex;align-items:center;justify-content:space-between;padding:17px 19px;border-bottom:1px solid var(--line)}.head h3{font-size:13px;margin:0}.head small{display:block;color:var(--muted);font-size:8px;margin-top:5px}.badge{padding:6px 9px;border-radius:9px;background:var(--soft);color:var(--green2);font-size:8px;font-weight:bold}.drop{margin:17px;padding:36px 18px;border:1.5px dashed rgba(22,185,104,.4);border-radius:21px;background:rgba(22,185,104,.035);text-align:center;transition:.2s}.drop.drag{background:rgba(22,185,104,.12);transform:scale(.995)}.excel{width:66px;height:66px;border-radius:20px;margin:0 auto 14px;display:grid;place-items:center;background:var(--soft);color:var(--green2);font-size:29px;font-weight:900}.drop h3{font-size:15px;margin:0 0 8px}.drop p{font-size:9px;color:var(--muted);margin:0 0 17px}.file-input{display:none}.statusline{display:none;margin:0 17px 17px;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:var(--soft);align-items:center;justify-content:space-between;gap:12px}.statusline.show{display:flex}.statusline strong{font-size:10px}.statusline small{display:block;color:var(--muted);font-size:8px;margin-top:5px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:17px}.stat{padding:15px;border:1px solid var(--line);border-radius:17px;background:rgba(22,185,104,.035)}.stat small{display:block;color:var(--muted);font-size:8px}.stat b{display:block;font-size:21px;margin-top:7px}.stat.green b{color:var(--green2)}.preview{overflow:auto;max-height:450px}.table{width:100%;border-collapse:collapse;min-width:700px}.table th,.table td{padding:12px 13px;border-bottom:1px solid var(--line);font-size:9px;text-align:right;white-space:nowrap}.table th{color:var(--muted);background:rgba(22,185,104,.035);position:sticky;top:0}.empty{text-align:center;padding:38px;color:var(--muted);font-size:10px}.footactions{padding:15px 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.footactions small{font-size:8px;color:var(--muted)}.toast{position:fixed;right:25px;bottom:25px;z-index:100;min-width:230px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--shadow);font-size:9px;opacity:0;transform:translateY(18px);pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:none}
 @media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{position:fixed;right:0;top:0;width:270px;transform:translateX(105%);transition:.3s;height:100vh;box-shadow:-20px 0 50px rgba(0,0,0,.2)}body.menu-open .sidebar{transform:none}.content{padding:12px}.mobile{display:grid}.hero{flex-direction:column;align-items:stretch}.profile div:last-child{display:none}}
 @media(max-width:560px){.stats{grid-template-columns:1fr 1fr}.drop{margin:12px;padding:27px 12px}.footactions{align-items:stretch;flex-direction:column}.btn{width:100%}}
+
+/* Premium glass + floating interaction refresh */
+:root{--green:#16c779;--green2:#07934f;--soft:rgba(20,198,112,.12);--line:rgba(20,80,48,.11);--shadow:0 24px 65px rgba(12,70,42,.10)}
+body{background:radial-gradient(ellipse at 7% 4%,rgba(23,196,113,.12),transparent 35%),radial-gradient(ellipse at 95% 12%,rgba(23,196,113,.07),transparent 28%),var(--bg)}
+.dark{--line:rgba(190,230,205,.10)}
+.sidebar{background:rgba(255,255,255,.54)!important;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:8px 0 38px rgba(12,50,30,.035)}
+.dark .sidebar{background:rgba(8,15,11,.75)!important}
+.nav a{border:1px solid transparent;position:relative;transition:transform .25s,box-shadow .25s,background .25s,color .25s}
+.nav a:hover{transform:translateY(-2px) translateX(-2px);box-shadow:0 12px 24px rgba(15,160,80,.11)}
+.nav a.active[href="summarize-excel.html"]{background:linear-gradient(135deg,#12bd69,#07874a);color:#fff!important;border-color:rgba(255,255,255,.18);box-shadow:0 12px 26px rgba(14,170,83,.26),inset 0 1px 0 rgba(255,255,255,.28);transform:translateY(-1px)}
+.nav a.active[href="summarize-excel.html"] .navicon{background:rgba(255,255,255,.19);border-color:rgba(255,255,255,.28);color:#fff}
+.nav a.active[href="summarize-excel.html"]:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 0 0 1px rgba(40,220,130,.16),0 0 24px rgba(20,190,100,.14)}
+.topbar,.card,.stat,.drop,.statusline,.toast{backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px)}
+.topbar{border-radius:24px;background:var(--card);box-shadow:0 15px 45px rgba(12,55,32,.075)}
+.card{transition:transform .28s,box-shadow .28s;border-radius:26px}
+.card:hover{transform:translateY(-3px);box-shadow:0 27px 70px rgba(10,65,38,.13)}
+.drop{border:1px dashed rgba(20,190,105,.5);background:linear-gradient(145deg,rgba(20,190,105,.055),rgba(255,255,255,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.24)}
+.drop:hover,.drop.drag{border-color:#13bd6b;background:rgba(20,190,105,.10);box-shadow:0 14px 35px rgba(20,190,105,.08)}
+.btn{border-radius:15px;position:relative;overflow:hidden;box-shadow:0 7px 20px rgba(10,55,32,.055);transition:transform .22s,box-shadow .22s,filter .22s}
+.btn:not(:disabled):hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,55,32,.14);filter:saturate(1.08)}
+.btn:not(:disabled):active{transform:translateY(0) scale(.98)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.2)}
+.primary{background:linear-gradient(135deg,#20d27d,#07894d);box-shadow:0 10px 26px rgba(15,175,90,.24)}
+.soft{background:rgba(20,190,105,.085);border:1px solid rgba(20,190,105,.18)}
+.iconbtn{border-radius:15px;transition:transform .22s,box-shadow .22s,border-color .22s}
+.iconbtn:hover{transform:translateY(-3px);border-color:rgba(20,190,105,.3);box-shadow:0 12px 25px rgba(20,190,105,.12)}
+.stat{border-radius:19px;transition:transform .24s,box-shadow .24s}
+.stat:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(10,70,40,.09)}
+.preview{border-radius:0 0 20px 20px}
+.table th{backdrop-filter:blur(10px)}
+.footactions{background:rgba(20,190,105,.025)}
+@media(max-width:850px){.sidebar{backdrop-filter:blur(28px)}}
 </style>
 </head>
 <body>
@@ -65,13 +97,13 @@ let selected=null,selectedHeaders=null,headerRowIndex=0,score=-1;
 workbook.SheetNames.forEach(sheetName=>{const ws=workbook.Sheets[sheetName];const matrix=XLSX.utils.sheet_to_json(ws,{header:1,defval:"",raw:false});for(let i=0;i<Math.min(matrix.length,20);i++){const hdr=matrix[i]||[];const found=aliases.reduce((n,a,idx)=>n+(findHeader(hdr,idx)>=0?1:0),0);if(found>score){score=found;selected={sheetName,matrix};selectedHeaders=hdr;headerRowIndex=i}}});
 if(!selected||score<3){toast("ستون‌های موردنیاز در فایل پیدا نشد. لطفاً فایل و ردیف عنوان‌ها را بررسی کنید.");workbook=null;return}
 const header=selected.matrix[headerRowIndex];const indices=targetHeaders.map((_,i)=>findHeader(header,i));
-rows=selected.matrix.slice(headerRowIndex+1).filter(r=>r.some(c=>String(c??"").trim()!=="")).map(r=>indices.map(ix=>ix>=0?(r[ix]??""):""));
+const dataRows=selected.matrix.slice(headerRowIndex+1).filter(r=>r.some(c=>String(c??"").trim()!==""));rows=dataRows.map(r=>indices.map(ix=>ix>=0?(r[ix]??""):""));
 $("fileName").textContent=file.name;$("fileDetails").textContent="برگه: "+selected.sheetName+" · حجم: "+formatBytes(file.size);
 $("fileStatus").classList.add("show");$("rowCount").textContent=persian(selected.matrix.slice(headerRowIndex+1).filter(r=>r.some(c=>String(c??"").trim()!=="")).length);$("outCount").textContent=persian(rows.length);
 $("previewBadge").textContent="پردازش موفق";$("previewBadge").style.color="var(--green2)";renderPreview();$("downloadBtn").disabled=rows.length===0;toast("فایل آماده خلاصه‌سازی است ✓")
 }catch(err){console.error(err);toast("خطا در خواندن فایل. مطمئن شوید فایل سالم است.")}};reader.readAsArrayBuffer(file)}
 function renderPreview(){const shown=rows.slice(0,100);let html='<table class="table"><thead><tr>'+targetHeaders.map(h=>'<th>'+escapeHTML(h)+'</th>').join("")+'</tr></thead><tbody>';shown.forEach(r=>{html+='<tr>'+r.map(v=>'<td>'+escapeHTML(v)+'</td>').join("")+'</tr>'});html+='</tbody></table>';if(rows.length>100)html+='<div class="empty">پیش‌نمایش ۱۰۰ ردیف اول از '+persian(rows.length)+' ردیف نمایش داده شده است.</div>';$("preview").innerHTML=html}
-function download(){if(!rows.length||!workbook)return;const data=[targetHeaders,...rows];const ws=XLSX.utils.aoa_to_sheet(data);ws["!cols"]=[{wch:19},{wch:22},{wch:27},{wch:19},{wch:18}];ws["!autofilter"]={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:data.length-1,c:4})};const out=XLSX.utils.book_new();XLSX.utils.book_append_sheet(out,ws,"خلاصه مرسولات");const safe=sourceName.replace(/\.[^.]+$/,"");XLSX.writeFile(out,safe+"_خلاصه.xlsx");toast("فایل خلاصه دانلود شد ✓")}
+function download(){if(!rows.length||!workbook)return;const data=[targetHeaders,...rows];const ws=XLSX.utils.aoa_to_sheet(data);ws["!cols"]=[{wch:19},{wch:22},{wch:27},{wch:19},{wch:18}];ws["!autofilter"]={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:data.length-1,c:4}})};const out=XLSX.utils.book_new();XLSX.utils.book_append_sheet(out,ws,"خلاصه مرسولات");const safe=sourceName.replace(/\.[^.]+$/,"");XLSX.writeFile(out,safe+"_خلاصه.xlsx");toast("فایل خلاصه دانلود شد ✓")}
 function clearAll(){workbook=null;rows=[];sourceName="";$("fileStatus").classList.remove("show");$("rowCount").textContent="۰";$("outCount").textContent="۰";$("previewBadge").textContent="منتظر فایل";$("previewBadge").style.color="";$("preview").innerHTML='<div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div>';$("downloadBtn").disabled=true;$("fileInput").value=""}
 function formatBytes(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"}
 function persian(n){return Number(n).toLocaleString("fa-IR")}
