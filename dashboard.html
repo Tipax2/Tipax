@@ -289,6 +289,39 @@ td{font-weight:600}
 .alert-float b{color:#b87918}
 @media(max-width:820px){.live-badge,.alert-float{top:84px}.float-tools{right:14px;bottom:14px}.float-action{font-size:8px}}
 
+
+/* Special floating emerald glass button for Excel summary — sidebar only */
+.nav a[href="pages/summarize-excel.html"]{
+  position:relative;isolation:isolate;overflow:hidden;
+  color:#eafff3!important;
+  background:linear-gradient(135deg,rgba(30,220,125,.28),rgba(8,125,69,.18))!important;
+  border:1px solid rgba(55,238,145,.38)!important;
+  box-shadow:0 9px 24px rgba(9,165,83,.15),inset 0 1px 0 rgba(255,255,255,.18);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  animation:summaryFloat 4s ease-in-out infinite;
+  transform-origin:center;
+}
+.nav a[href="pages/summarize-excel.html"] .nav-icon{
+  background:linear-gradient(145deg,#37f39a,#08a85c)!important;
+  color:#042514!important;border-color:rgba(255,255,255,.26)!important;
+  box-shadow:0 0 17px rgba(32,223,124,.22);
+  animation:summaryIconTurn 8s linear infinite;
+}
+.nav a[href="pages/summarize-excel.html"]:before{
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;
+  background:linear-gradient(110deg,transparent 15%,rgba(255,255,255,.16) 45%,transparent 68%);
+  transform:translateX(-120%);animation:summaryShine 5.5s ease-in-out infinite;
+}
+.nav a[href="pages/summarize-excel.html"]:hover{
+  transform:translateY(-4px) scale(1.025)!important;
+  border-color:rgba(63,245,153,.7)!important;
+  box-shadow:0 15px 34px rgba(12,190,91,.27),0 0 0 3px rgba(42,223,125,.07),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.nav a[href="pages/summarize-excel.html"]:hover .nav-icon{animation-duration:1.2s}
+@keyframes summaryFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes summaryIconTurn{0%,94%,100%{transform:rotate(0)}96%{transform:rotate(-12deg)}98%{transform:rotate(12deg)}}
+@keyframes summaryShine{0%,65%,100%{transform:translateX(-120%)}82%{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){.nav a[href="pages/summarize-excel.html"],.nav a[href="pages/summarize-excel.html"] .nav-icon,.nav a[href="pages/summarize-excel.html"]:before{animation:none!important}}
 </style>
 </head>
 <body>
