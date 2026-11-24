@@ -200,7 +200,43 @@ $("previewBadge").textContent="پردازش موفق";$("previewBadge").style.co
 }catch(err){console.error(err);toast("خطا در خواندن فایل. مطمئن شوید فایل سالم است.")}};reader.readAsArrayBuffer(file)}
 function renderColumnFilters(){const grid=$("columnGrid");grid.innerHTML=availableColumns.map(name=>'<label class="column-option" data-name="'+escapeHTML(name)+'"><input type="checkbox" value="'+escapeHTML(name)+'" '+(selectedColumns.includes(name)?"checked":"")+'><span>'+escapeHTML(name)+'</span></label>').join("");syncColumnCounts();grid.querySelectorAll("input").forEach(cb=>cb.addEventListener("change",()=>{selectedColumns=Array.from(grid.querySelectorAll("input:checked")).map(x=>x.value);syncColumnCounts()}))}
 function syncColumnCounts(){const n=selectedColumns.length;["selectedCount","colCount"].forEach(id=>{const el=$(id);if(el)el.textContent=persian(n)});const b=$("selectedBadge");if(b)b.textContent=persian(n)+" ستون انتخاب";const btn=$("applyFilterBtn");if(btn)btn.disabled=n===0}
-function rebuildRows(){if(!selectedSheetMatrix)return;const header=selectedSheetMatrix[selectedHeaderIndex]||[];const idx=selectedColumns.map(name=>headerIndex(header,name));const dataRows=selectedSheetMatrix.slice(selectedHeaderIndex+1).filter(r=>r.some(c=>String(c??"").trim()!==""));rows=dataRows.map(r=>idx.map(i=>i>=0?(r[i]??""):""));$("outCount").textContent=persian(rows.length);renderPreview();$("downloadBtn").disabled=rows.length===0}function applyFilters(){selectedColumns=Array.from($("columnGrid").querySelectorAll("input:checked")).map(x=>x.value);if(!selectedColumns.length){toast("حداقل یک ستون را انتخاب کنید.");return}rebuildRows();syncColumnCounts();toast("فیلترها اعمال شدند ✓")}function renderPreview(){const shown=rows.slice(0,100);let html='<table class="table"><thead><tr>'+selectedColumns.map(h=>'<th>'+escapeHTML(h)+'</th>').join("")+'</tr></thead><tbody>';shown.forEach(r=>{html+='<tr>'+selectedColumns.map((_,i)=>'<td>'+escapeHTML(r[i]??"")+'</td>').join("")+'</tr>'});html+='</tbody></table>';if(rows.length>100)html+='<div class="empty">پیش‌نمایش ۱۰۰ ردیف اول از '+persian(rows.length)+' ردیف نمایش داده شده است.</div>;$("preview").innerHTML=html}function download(){if(!rows.length||!workbook)return;const data=[selectedColumns,...rows];const ws=XLSX.utils.aoa_to_sheet(data);ws["!cols"]=selectedColumns.map(h=>({wch:Math.min(32,Math.max(16,h.length+4))}));ws["!autofilter"]={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:data.length-1,c:selectedColumns.length-1}})};const out=XLSX.utils.book_new();XLSX.utils.book_append_sheet(out,ws,"خلاصه مرسولات");const safe=sourceName.replace(/\\.[^.]+$/,"");XLSX.writeFile(out,safe+"_خلاصه.xlsx");toast("فایل خلاصه دانلود شد ✓")}function clearAll(){workbook=null;rows=[];sourceName="";selectedSheetMatrix=null;selectedHeaderIndex=0;$("fileStatus").classList.remove("show");$("rowCount").textContent="۰";$("outCount").textContent="۰";$("previewBadge").textContent="منتظر فایل";$("previewBadge").style.color="";$("preview").innerHTML='<div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div>';$("downloadBtn").disabled=true;$("fileInput").value=""}
+function rebuildRows(){
+ if(!selectedSheetMatrix)return;
+ const header=selectedSheetMatrix[selectedHeaderIndex]||[];
+ const indices=selectedColumns.map(name=>headerIndex(header,name));
+ const dataRows=selectedSheetMatrix.slice(selectedHeaderIndex+1).filter(r=>r.some(c=>String(c??"").trim()!==""));
+ rows=dataRows.map(r=>indices.map(ix=>ix>=0?(r[ix]??""):""));
+ $("outCount").textContent=persian(rows.length);
+ renderPreview();
+ $("downloadBtn").disabled=rows.length===0;
+}
+function applyFilters(){
+ selectedColumns=Array.from($("columnGrid").querySelectorAll("input:checked")).map(x=>x.value);
+ if(!selectedColumns.length){toast("حداقل یک ستون را انتخاب کنید.");return}
+ rebuildRows();syncColumnCounts();toast("فیلترها اعمال شدند ✓");
+}
+function renderPreview(){
+ const shown=rows.slice(0,100);
+ let html='<table class="table"><thead><tr>'+selectedColumns.map(h=>'<th>'+escapeHTML(h)+'</th>').join("")+'</tr></thead><tbody>';
+ shown.forEach(r=>{html+='<tr>'+selectedColumns.map((_,i)=>'<td>'+escapeHTML(r[i]??"")+'</td>').join("")+'</tr>';});
+ html+='</tbody></table>';
+ if(rows.length>100)html+='<div class="empty">پیش‌نمایش ۱۰۰ ردیف اول از '+persian(rows.length)+' ردیف نمایش داده شده است.</div>';
+ $("preview").innerHTML=html;
+}
+function download(){
+ if(!rows.length||!workbook)return;
+ const data=[selectedColumns,...rows];
+ const ws=XLSX.utils.aoa_to_sheet(data);
+ ws["!cols"]=selectedColumns.map(h=>({wch:Math.min(32,Math.max(16,h.length+4))}));
+ const endRow=data.length-1,endCol=selectedColumns.length-1;
+ ws["!autofilter"]={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:endRow,c:endCol}})};
+ const out=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(out,ws,"خلاصه مرسولات");
+ const safe=sourceName.replace(/\.[^.]+$/,"");
+ XLSX.writeFile(out,safe+"_خلاصه.xlsx");
+ toast("فایل خلاصه دانلود شد ✓");
+}
+function clearAll(){workbook=null;rows=[];sourceName="";selectedSheetMatrix=null;selectedHeaderIndex=0;$("fileStatus").classList.remove("show");$("rowCount").textContent="۰";$("outCount").textContent="۰";$("previewBadge").textContent="منتظر فایل";$("previewBadge").style.color="";$("preview").innerHTML='<div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div>';$("downloadBtn").disabled=true;$("fileInput").value=""}
 function formatBytes(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"}
 function persian(n){return Number(n).toLocaleString("fa-IR")}
 function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
