@@ -196,6 +196,27 @@ body:not(.dark) .drop{background:rgba(22,185,104,.04)}
 .preview-card .preview::-webkit-scrollbar-thumb,.preview-card .column-grid::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#39e998,#079b58);border-radius:20px}
 .preview-card .preview::-webkit-scrollbar-track,.preview-card .column-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.035);border-radius:20px}
 @media(max-width:560px){.preview-card .filter-toggle{margin:0 10px 10px}.preview-card .column-grid{max-height:155px!important}}
+
+/* Compact floating dropdown like a native selection list */
+#filterCard{position:relative;overflow:visible!important;border:0!important;background:transparent!important;margin:0 0 8px!important;box-shadow:none!important}
+#filterCard.open{z-index:35}
+#filterToggle{float:none!important;margin:0 16px 9px!important;min-height:34px!important;padding:6px 11px!important;border-radius:12px!important;gap:7px!important;font-size:12px!important}
+#filterToggle .filter-toggle-icon{width:22px!important;height:22px!important}
+#filterToggle .filter-toggle-text b{font-size:12px!important}
+#filterToggle .filter-chevron{font-size:11px!important}
+#filterPanel{position:absolute!important;top:calc(100% - 7px)!important;right:14px!important;width:min(360px,calc(100vw - 38px))!important;max-height:255px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;border:1px solid rgba(65,220,140,.22)!important;border-radius:14px!important;background:rgba(5,22,14,.96)!important;box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 18px rgba(22,185,104,.08)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
+#filterPanel[hidden]{display:none!important}
+#filterCard:not(.open) #filterPanel{display:none!important}
+#filterCard.open #filterPanel{display:flex!important}
+#filterPanel .filter-toolbar{display:flex!important;flex-wrap:wrap!important;gap:5px!important;padding:7px!important;flex:0 0 auto!important}
+#filterPanel .filter-toolbar .btn{font-size:10px!important;padding:6px 8px!important;border-radius:8px!important}
+#filterPanel .column-search{flex:1 1 100%!important;min-width:0!important;width:100%!important;padding:6px 8px!important;font-size:10px!important;border-radius:8px!important}
+#columnGrid{display:flex!important;flex-direction:column!important;grid-template-columns:1fr!important;gap:3px!important;max-height:145px!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:3px 7px 7px!important}
+#columnGrid .column-option{display:flex!important;flex:0 0 auto!important;width:100%!important;min-height:26px!important;height:26px!important;padding:4px 7px!important;margin:0!important;border-radius:7px!important;gap:7px!important;font-size:10px!important}
+#columnGrid .column-option input{width:13px!important;height:13px!important;flex:0 0 13px!important;margin:0!important;accent-color:#21d680!important}
+#columnGrid .column-option span{font-size:10px!important;line-height:1.3!important}
+#filterPanel .filter-footer{display:none!important}
+@media(max-width:560px){#filterPanel{right:8px!important;width:min(330px,calc(100vw - 24px))!important;max-height:235px!important}#columnGrid{max-height:130px!important}#filterToggle{margin-right:8px!important}}
 </style>
 </head>
 <body>
