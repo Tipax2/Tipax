@@ -4,7 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>خلاصه اکسل | سامانه مدیریت تیپاکس</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
+// Reliable filter dropdown control (single listener, no inline-handler dependency)
+(function(){
+ const button=document.getElementById('filterToggle'),card=document.getElementById('filterCard'),panel=document.getElementById('filterPanel');
+ if(!button||!card||!panel)return;
+ button.onclick=function(e){
+  e.preventDefault();e.stopPropagation();
+  const open=!card.classList.contains('open');
+  card.classList.toggle('open',open);
+  if(open){panel.removeAttribute('hidden');panel.style.setProperty('display','flex','important');}
+  else{panel.setAttribute('hidden','');panel.style.setProperty('display','none','important');}
+  button.setAttribute('aria-expanded',open?'true':'false');
+ };
+ document.addEventListener('click',function(e){if(!card.contains(e.target)&&card.classList.contains('open')){card.classList.remove('open');panel.setAttribute('hidden','');panel.style.setProperty('display','none','important');button.setAttribute('aria-expanded','false');}});
+})();
+
+</script>
 <style>
 :root{--bg:#f3f7f4;--card:rgba(255,255,255,.92);--text:#17231b;--muted:#78867d;--line:rgba(24,55,38,.1);--green:#16b968;--green2:#07884b;--soft:rgba(22,185,104,.085);--shadow:0 20px 60px rgba(18,55,35,.09)}
 body.dark{--bg:#080e0b;--card:rgba(17,26,21,.95);--text:#e9f1eb;--muted:#8b9990;--line:rgba(185,220,198,.09);--soft:rgba(22,185,104,.1);--shadow:0 20px 60px rgba(0,0,0,.38)}
@@ -186,6 +202,23 @@ body:not(.dark) .drop{background:rgba(22,185,104,.04)}
 #columnGrid::-webkit-scrollbar-thumb{background:#20d783;border-radius:20px}
 @media(max-width:560px){#filterCard{padding:7px 10px 5px!important}#filterPanel{right:10px!important;width:280px!important;max-width:calc(100vw - 30px)!important;max-height:260px!important}#columnGrid{max-height:135px!important}}
 
+
+/* Contrast upgrade for light theme */
+body:not(.dark){--text:#101b14;--muted:#45584b;--line:rgba(18,52,30,.22);--soft:rgba(10,145,73,.13);--shadow:0 14px 36px rgba(14,40,24,.12)}
+body:not(.dark) .sidebar{background:#f5faf6!important;border-left-color:#c5d7ca!important}
+body:not(.dark) .nav a{color:#43564a!important}
+body:not(.dark) .nav a:hover,body:not(.dark) .nav a.active{color:#086c39!important;background:#dff4e6!important}
+body:not(.dark) .card,body:not(.dark) .topbar{background:#fff!important;border-color:#c7d7cb!important}
+body:not(.dark) .hero p,body:not(.dark) .page-title small,body:not(.dark) .head small,body:not(.dark) .stat small,body:not(.dark) .footactions small,body:not(.dark) .empty,body:not(.dark) .side-status{color:#43584b!important}
+body:not(.dark) .table th{background:#dcefe3!important;color:#1d4b2c!important;border-color:#c2d8c8!important}
+body:not(.dark) .table td{color:#17271c!important;border-color:#d5e1d8!important}
+body:not(.dark) .column-option,body:not(.dark) input,body:not(.dark) select{color:#14231a!important}
+body:not(.dark) .filter-toggle-text b{color:#fff!important}
+body:not(.dark) .filter-card{z-index:80!important}
+#filterPanel{display:none!important}
+#filterPanel[hidden]{display:none!important}
+#filterCard.open #filterPanel{display:flex!important}
+
 </style>
 </head>
 <body>
@@ -205,7 +238,7 @@ body:not(.dark) .drop{background:rgba(22,185,104,.04)}
 <div class="statusline" id="fileStatus"><div><strong id="fileName">—</strong><small id="fileDetails">—</small></div><button class="btn soft" onclick="clearAll()">حذف فایل</button></div>
 <div class="stats"><div class="stat"><small>تعداد ردیف‌های فایل</small><b id="rowCount">۰</b></div><div class="stat green"><small>ردیف‌های خروجی</small><b id="outCount">۰</b></div><div class="stat"><small>ستون‌های انتخاب‌شده</small><b id="colCount">۵</b></div></div>
 </section>
-<section class="card preview-card"><div class="head"><div><h3>پیش‌نمایش فایل خلاصه</h3><small>ستون‌های خروجی را با فیلتر انتخاب کنید؛ فقط گزینه‌های تیک‌خورده صادر می‌شوند.</small></div><span class="badge" id="previewBadge">منتظر فایل</span></div><div class="filter-card" id="filterCard"><button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" onclick="var c=document.getElementById('filterCard'),p=document.getElementById('filterPanel'),o=!c.classList.contains('open');c.classList.toggle('open',o);p.hidden=!o;p.style.setProperty('display',o?'flex':'none','important');this.setAttribute('aria-expanded',String(o));" style="appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;min-width:82px;height:36px;padding:0 14px;gap:8px;border:1px solid rgba(104,255,174,.62);border-radius:11px;background:linear-gradient(135deg,#27d987,#087d49);color:#fff;font-family:inherit;font-size:12px;font-weight:700;line-height:1;box-shadow:0 5px 17px rgba(0,190,100,.25);cursor:pointer"><span class="filter-toggle-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6.3 7.1v5.2l-3.4 1.8v-7L4 5z"/></svg></span><span class="filter-toggle-text"><b>فیلتر</b></span><span class="filter-chevron" id="filterChevron">⌄</span></button><div class="filter-panel" id="filterPanel" hidden style="position:absolute;top:calc(100% - 1px);right:16px;left:auto;z-index:60;display:none;flex-direction:column;width:300px;max-width:calc(100vw - 42px);max-height:285px;min-height:0;margin:0;padding:0;overflow:hidden;border:1px solid rgba(56,220,133,.4);border-radius:13px;background:rgba(5,21,14,.98);color:#e8f8ee;box-shadow:0 16px 38px rgba(0,0,0,.42);backdrop-filter:blur(22px)"><div class="filter-toolbar"><button class="btn soft" id="selectAllBtn">✓ انتخاب همه</button><button class="btn soft" id="clearSelectBtn">× پاک‌کردن انتخاب</button><input id="columnSearch" class="column-search" type="search" placeholder="جستجوی ستون"></div><div class="column-grid" id="columnGrid" style="display:flex;flex:0 1 auto;flex-direction:column;gap:3px;width:100%;max-height:150px;min-height:0;overflow-x:hidden;overflow-y:auto;padding:4px 8px 8px;overscroll-behavior:contain"></div><div class="filter-footer"><small>انتخاب: <b id="selectedCount">۵</b></small><button class="btn primary" id="applyFilterBtn">اعمال انتخاب</button></div></div></div><div class="preview" id="preview" style="display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:auto;direction:ltr;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain"><div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div></div><div class="footactions"><small>ستون‌های انتخابی شما در فایل خروجی حفظ می‌شوند.</small><button class="btn primary" id="downloadBtn" disabled>⬇ دانلود اکسل خلاصه</button></div></section><div class="toast" id="toast"></div>
+<section class="card preview-card"><div class="head"><div><h3>پیش‌نمایش فایل خلاصه</h3><small>ستون‌های خروجی را با فیلتر انتخاب کنید؛ فقط گزینه‌های تیک‌خورده صادر می‌شوند.</small></div><span class="badge" id="previewBadge">منتظر فایل</span></div><div class="filter-card" id="filterCard"><button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false"  style="appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;min-width:82px;height:36px;padding:0 14px;gap:8px;border:1px solid rgba(104,255,174,.62);border-radius:11px;background:linear-gradient(135deg,#27d987,#087d49);color:#fff;font-family:inherit;font-size:12px;font-weight:700;line-height:1;box-shadow:0 5px 17px rgba(0,190,100,.25);cursor:pointer"><span class="filter-toggle-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6.3 7.1v5.2l-3.4 1.8v-7L4 5z"/></svg></span><span class="filter-toggle-text"><b>فیلتر</b></span><span class="filter-chevron" id="filterChevron">⌄</span></button><div class="filter-panel" id="filterPanel" hidden style="position:absolute;top:calc(100% - 1px);right:16px;left:auto;z-index:60;display:none;flex-direction:column;width:300px;max-width:calc(100vw - 42px);max-height:285px;min-height:0;margin:0;padding:0;overflow:hidden;border:1px solid rgba(56,220,133,.4);border-radius:13px;background:rgba(5,21,14,.98);color:#e8f8ee;box-shadow:0 16px 38px rgba(0,0,0,.42);backdrop-filter:blur(22px)"><div class="filter-toolbar"><button class="btn soft" id="selectAllBtn">✓ انتخاب همه</button><button class="btn soft" id="clearSelectBtn">× پاک‌کردن انتخاب</button><input id="columnSearch" class="column-search" type="search" placeholder="جستجوی ستون"></div><div class="column-grid" id="columnGrid" style="display:flex;flex:0 1 auto;flex-direction:column;gap:3px;width:100%;max-height:150px;min-height:0;overflow-x:hidden;overflow-y:auto;padding:4px 8px 8px;overscroll-behavior:contain"></div><div class="filter-footer"><small>انتخاب: <b id="selectedCount">۵</b></small><button class="btn primary" id="applyFilterBtn">اعمال انتخاب</button></div></div></div><div class="preview" id="preview" style="display:block;width:100%;max-width:100%;overflow-x:auto;overflow-y:auto;direction:ltr;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain"><div class="empty">ابتدا فایل Excel خود را انتخاب کنید تا خلاصه آن نمایش داده شود.</div></div><div class="footactions"><small>ستون‌های انتخابی شما در فایل خروجی حفظ می‌شوند.</small><button class="btn primary" id="downloadBtn" disabled>⬇ دانلود اکسل خلاصه</button></div></section><div class="toast" id="toast"></div>
 </main></div>
 <script>
 const $=id=>document.getElementById(id);
