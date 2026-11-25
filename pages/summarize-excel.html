@@ -213,6 +213,19 @@ body:not(.dark) .table td{color:#17271b!important;border-color:#cbd9ce!important
 body:not(.dark) .nav a.active{background:#d7f0df!important;color:#075d2b!important}
 /* Removed contradictory panel-hide override. Use #filterCard.open + hidden state. */
 </style>
+
+<style>
+/* High contrast white theme: dark readable text and clear green states */
+body:not(.dark) { --text:#111b14; --muted:#273b2c; --line:rgba(15,45,23,.32); --soft:rgba(8,133,61,.16); }
+body:not(.dark) .hero h2,body:not(.dark) .page-title h1,body:not(.dark) .head h3,body:not(.dark) .drop h3,body:not(.dark) .stat b,body:not(.dark) .table td,body:not(.dark) .nav a,body:not(.dark) .side-status,body:not(.dark) .footactions small,body:not(.dark) .hero p,body:not(.dark) .page-title small,body:not(.dark) .head small,body:not(.dark) .stat small,body:not(.dark) .empty {color:#101810!important}
+body:not(.dark) .table th{color:#123d20!important;background:#cde8d5!important}
+body:not(.dark) .badge,body:not(.dark) .soft{color:#075b2a!important;background:#d5f0df!important;border-color:#91c7a3!important}
+body:not(.dark) .card,body:not(.dark) .topbar,body:not(.dark) .stat,body:not(.dark) .side-status{border-color:#9ebba7!important}
+/* Single deterministic filter panel visibility rule */
+#filterPanel{display:none!important;visibility:hidden!important}
+#filterCard.open #filterPanel:not([hidden]){display:flex!important;visibility:visible!important}
+#filterPanel[hidden]{display:none!important;visibility:hidden!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -324,15 +337,3 @@ $("downloadBtn").onclick=download;renderColumnFilters();$("selectAllBtn").onclic
 const dz=$("dropzone");["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag")}));["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag")}));dz.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f)processFile(f)});
 </script>
 </body></html>
-<style>
-/* High contrast white theme: dark readable text and clear green states */
-body:not(.dark) { --text:#111b14; --muted:#273b2c; --line:rgba(15,45,23,.32); --soft:rgba(8,133,61,.16); }
-body:not(.dark) .hero h2,body:not(.dark) .page-title h1,body:not(.dark) .head h3,body:not(.dark) .drop h3,body:not(.dark) .stat b,body:not(.dark) .table td,body:not(.dark) .nav a,body:not(.dark) .side-status,body:not(.dark) .footactions small,body:not(.dark) .hero p,body:not(.dark) .page-title small,body:not(.dark) .head small,body:not(.dark) .stat small,body:not(.dark) .empty {color:#101810!important}
-body:not(.dark) .table th{color:#123d20!important;background:#cde8d5!important}
-body:not(.dark) .badge,body:not(.dark) .soft{color:#075b2a!important;background:#d5f0df!important;border-color:#91c7a3!important}
-body:not(.dark) .card,body:not(.dark) .topbar,body:not(.dark) .stat,body:not(.dark) .side-status{border-color:#9ebba7!important}
-/* Single deterministic filter panel visibility rule */
-#filterPanel{display:none!important;visibility:hidden!important}
-#filterCard.open #filterPanel:not([hidden]){display:flex!important;visibility:visible!important}
-#filterPanel[hidden]{display:none!important;visibility:hidden!important}
-</style>
