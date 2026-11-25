@@ -284,7 +284,7 @@ body.dark .sender-search::placeholder{color:#8fa99a}
 <header class="topbar"><div class="top-left"><button class="iconbtn mobile" onclick="document.body.classList.toggle('menu-open')">☰</button><div class="page-title"><h1>خلاصه‌سازی Excel</h1><small>پاک‌سازی سریع فایل و آماده‌سازی برای ارسال به مشتری</small></div></div><div class="top-actions"><button class="iconbtn" onclick="toggleTheme()" title="تغییر تم">◐</button><div class="profile"><div class="avatar">م</div><div><b>مدیر شعبه</b><small>دسترسی کامل</small></div></div></div></header>
 <section class="hero"><div><h2>خلاصه اکسل مشتری</h2><p>فایل را انتخاب کنید، ستون‌های دلخواه را تیک بزنید و خروجی سفارشی بگیرید.</p></div><button class="btn soft" onclick="clearAll()">↺ شروع مجدد</button></section>
 <section class="card"><div class="head"><div><h3>فایل اصلی Excel</h3><small>فایل مرسولات را وارد کنید؛ ستون‌های اضافی در خروجی حذف می‌شوند.</small></div><span class="badge">XLS / XLSX / CSV</span></div>
-<div class="drop" id="dropzone"><div class="excel">X</div><h3>فایل را اینجا رها کنید</h3><p>یا برای انتخاب فایل کلیک کنید · فایل اصلی دست‌نخورده باقی می‌ماند</p><button class="btn primary" id="pickBtn">انتخاب فایل از کامپیوتر</button><input class="file-input" id="fileInput" type="file" accept=".xlsx,.xls,.csv"></div>
+<div class="drop" id="dropzone"><div class="excel">X</div><h3>فایل را اینجا رها کنید</h3><p>یا برای انتخاب فایل کلیک کنید · فایل اصلی دست‌نخورده باقی می‌ماند</p><button class="btn primary" id="pickBtn">انتخاب فایل از کامپیوتر</button><input class="file-input" id="fileInput" type="file" accept=".xlsx,.xls,.csv" style="position:fixed;left:-10000px;top:0;width:1px;height:1px;opacity:0;display:block" tabindex="-1" aria-hidden="true"></div>
 <div class="statusline" id="fileStatus"><div><strong id="fileName">—</strong><small id="fileDetails">—</small></div><button class="btn soft" onclick="clearAll()">حذف فایل</button></div>
 <div class="stats"><div class="stat"><small>تعداد ردیف‌های فایل</small><b id="rowCount">۰</b></div><div class="stat green"><small>ردیف‌های خروجی</small><b id="outCount">۰</b></div><div class="stat"><small>ستون‌های انتخاب‌شده</small><b id="colCount">۵</b></div></div>
 </section>
@@ -346,7 +346,7 @@ function clearAll(){workbook=null;rows=[];sourceName="";selectedSheetMatrix=null
 function formatBytes(b){return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"}
 function persian(n){return Number(n).toLocaleString("fa-IR")}
 function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-$("pickBtn").onclick=e=>{e.stopPropagation();$("fileInput").click()};$("dropzone").onclick=e=>{if(e.target.closest("button"))return;$("fileInput").click()};$("fileInput").onchange=e=>{if(e.target.files[0])processFile(e.target.files[0])};
+const filePicker=$("fileInput");const pickFile=()=>{if(filePicker){filePicker.value="";filePicker.click()}};$("pickBtn").addEventListener("click",e=>{e.preventDefault();e.stopPropagation();pickFile()});$("dropzone").addEventListener("click",e=>{if(e.target.closest("button"))return;pickFile()});filePicker.addEventListener("change",e=>{const file=e.target.files&&e.target.files[0];if(file)processFile(file)});
 // Reliable filter toggle: handler is attached after both controls exist
 (function(){
  const button=$("filterToggle"),card=$("filterCard"),panel=$("filterPanel");
